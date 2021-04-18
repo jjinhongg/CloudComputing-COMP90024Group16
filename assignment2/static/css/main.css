@@ -1,0 +1,90 @@
+#title{
+    position: absolute;
+    width: 40%;
+    height: 10%;
+    top: 0;
+    left: 30%;
+    background:lightsteelblue;
+    font-size: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#totalTweeters{
+    position: absolute;
+    width: 30%;
+    height: 20%;
+    top: 0;
+    left: 0;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#analysisResult{
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    top: 20% ;
+    left: 0;
+    background: white;
+}
+
+#tweetShow{
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    top: 60%;
+    left: 0;
+    background: white;
+}
+
+.num{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    color: black;
+    font-size: 5px;
+}
+
+#time{
+    position: absolute;
+    width: 40%;
+    height: 10%;
+    top: 10%;
+    left: 30%;
+    background: lightblue;
+}
+
+#mapshow{
+    position: absolute;
+    width: 40%;
+    height: 80%;
+    top: 20%;
+    left: 30%;
+    /*background: lightcyan;*/
+}
+
+#wordworld{
+    position: absolute;
+    width: 30%;
+    height: 60%;
+    top: 0;
+    right: 0;
+    background: white;
+}
+
+#rest{
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    top: 40%;
+    left: 70%;
+    background: white;
+}
+
+
