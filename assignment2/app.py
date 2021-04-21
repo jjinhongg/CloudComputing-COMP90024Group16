@@ -9,6 +9,10 @@ app = Flask(__name__)
 def hello_world():
     return render_template('main.html')
 
+@app.route('/test')
+def template_test():
+    return render_template('template_assignemnt2.html')
+
 #显示时间
 @app.route("/time")
 def gettime():
