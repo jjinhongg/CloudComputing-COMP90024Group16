@@ -8,6 +8,7 @@ echarts_32();
 echarts_33();
 echarts_5();
 echarts_6();
+
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
@@ -29,7 +30,7 @@ function echarts_1() {
     },
     xAxis: [{
         type: 'category',
-      		data: ['商超门店', '教育培训', '房地产', '生活服务', '汽车销售', '旅游酒店', '五金建材'],
+      		data: ['Australia', 'China', 'America', 'Japan', 'Korea', 'India', 'New Zealand'],
         axisLine: {
             show: true,
          lineStyle: {
@@ -97,13 +98,13 @@ function echarts_1() {
 		
 	]
 };
-      
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
         window.addEventListener("resize",function(){
             myChart.resize();
         });
     }
+
 function echarts_2() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart2'));
@@ -123,7 +124,7 @@ function echarts_2() {
     },
     xAxis: [{
         type: 'category',
-      		data: ['浙江', '上海', '江苏', '广东', '北京', '深圳', '安徽'],
+      		data: ['A1', 'A2', 'A3', 'A4', 'B1', 'B2', 'B3','B4','C1','C2','C3','C4','C5','D3','D4','D5'],
         axisLine: {
             show: true,
          lineStyle: {
@@ -178,7 +179,7 @@ function echarts_2() {
 		{
        
         type: 'bar',
-        data: [1500, 1200, 600, 200, 300, 300, 900],
+        data: [1500, 1200, 600, 200, 300, 300, 900,234,545,656,467,765,765,854,564,123],
         barWidth:'35%', //柱子宽度
        // barGap: 1, //柱子之间间距
         itemStyle: {
@@ -200,100 +201,58 @@ function echarts_2() {
         });
     }
 function echarts_5() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echart5'));
 
-       option = {
-  //  backgroundColor: '#00265f',
+    var myChartFour = echarts.init(document.getElementById('echart5'));
+    var JosnList = [
+    {name: "龙头镇", value: "111"},
+    {name: "大埔镇", value: "222"},
+    {name: "太平镇", value: "458"},
+    {name: "沙埔镇", value: "445"},
+    {name: "东泉镇", value: "456"},
+    {name: "凤山镇", value: "647"},
+    {name: "六塘镇", value: "189"},
+    {name: "冲脉镇", value: "864"},
+    {name: "寨隆镇", value: "652"},
+];
+var option = {
     tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
+        show: true
     },
-    
-    grid: {
-        left: '0%',
-		top:'10px',
-        right: '0%',
-        bottom: '2%',
-       containLabel: true
-    },
-    xAxis: [{
-        type: 'category',
-      		data: ['浙江', '上海', '江苏', '广东', '北京', '深圳', '安徽', '四川'],
-        axisLine: {
-            show: true,
-         lineStyle: {
-                color: "rgba(255,255,255,.1)",
-                width: 1,
-                type: "solid"
-            },
-        },
-		
-        axisTick: {
-            show: false,
-        },
-		axisLabel:  {
-                interval: 0,
-               // rotate:50,
-                show: true,
-                splitNumber: 15,
-                textStyle: {
- 					color: "rgba(255,255,255,.6)",
-                    fontSize: '12',
-                },
-            },
-    }],
-    yAxis: [{
-        type: 'value',
-        axisLabel: {
-           //formatter: '{value} %'
-			show:true,
-			 textStyle: {
- 					color: "rgba(255,255,255,.6)",
-                    fontSize: '12',
-                },
-        },
-        axisTick: {
-            show: false,
-        },
-        axisLine: {
-            show: true,
-            lineStyle: {
-                color: "rgba(255,255,255,.1	)",
-                width: 1,
-                type: "solid"
-            },
-        },
-        splitLine: {
-            lineStyle: {
-               color: "rgba(255,255,255,.1)",
-            }
-        }
-    }],
     series: [{
-        type: 'bar',
-        data: [2, 3, 3, 9, 15, 12, 6, 4, 6, 7, 4, 10],
-        barWidth:'35%', //柱子宽度
-       // barGap: 1, //柱子之间间距
-        itemStyle: {
+        name: '项目分析',
+        type: 'wordCloud',
+        sizeRange: [10, 50],//文字范围
+        //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
+        rotationRange: [-45, 90],
+        rotationStep: 45,
+        textRotation: [0, 45, 90, -45],
+        //形状
+        shape: 'circle',
+        textStyle: {
             normal: {
-                color:'#2f89cf',
-                opacity: 1,
-				barBorderRadius: 5,
+                color: function() {//文字颜色的随机色
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 250),
+                        Math.round(Math.random() * 250),
+                        Math.round(Math.random() * 250)
+                    ].join(',') + ')';
+                }
+            },
+            //悬停上去的字体的阴影设置
+            emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#333'
             }
-        }
-    }
-	]
+        },
+        data: JosnList
+    }]
 };
-      
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        //使用制定的配置项和数据显示图表
+        myChartFour.setOption(option);
         window.addEventListener("resize",function(){
-            myChart.resize();
-        });
-    }
+                    myChartFour.resize();
+                });
+}
 	
 function echarts_4() {
         // 基于准备好的dom，初始化echarts实例

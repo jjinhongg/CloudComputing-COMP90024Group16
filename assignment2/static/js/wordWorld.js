@@ -42,6 +42,6 @@ var optionFour = {
         data: JosnList
     }]
 };
-var myChartFour = echarts.init(document.getElementById('wordworld'));
+var myChartFour = echarts.init(document.getElementById('echart5'));
 //使用制定的配置项和数据显示图表
 myChartFour.setOption(optionFour);
