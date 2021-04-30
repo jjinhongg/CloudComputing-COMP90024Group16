@@ -37,9 +37,10 @@ def run_spider():
         schedule.run_pending()
         time.sleep(1)
 
-def save_into_couchdb():
+def save_or_load_data(save_data=True):
     '''
     保存当前爬取的1000条推文，到couchdb,json格式
+    如果save等于true，保存数据，要么读取数据
     :return: None
     '''
 
@@ -50,9 +51,15 @@ def save_into_couchdb():
         db = couch[db_name]
     except:
         db = couch.create(db_name)
-    ##读取文档并插入到数据库：
-    df = pd.read_json("file.json", orient='records')
-    doc = json.loads(df.to_json(orient='table'))
-    doc['_id'] = 'db_doc'
-    db.save(doc)
+    if save_data:
+        df = pd.read_json("file.json", orient='records')
+        doc = json.loads(df.to_json(orient='table'))
+        doc['_id'] = 'db_doc'
+        db.save(doc)
+    else:
+        with open("./current.json", 'w') as json_file:
+            json.dump(db['db_doc'], json_file, ensure_ascii=False)
+
+
+
 
