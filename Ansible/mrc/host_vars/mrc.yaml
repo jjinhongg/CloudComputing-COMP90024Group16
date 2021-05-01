@@ -1,0 +1,69 @@
+# Prerequisites
+# Instance Flavor: uom.mse.2c9g
+# Available Zone: melbourne-qh2-uom
+# Image Id: Ubuntu 20.04 LTS
+
+# Common vars
+availability_zone: melbourne-qh2-uom
+
+# Volume
+volumes:
+  - vol_name: db_1
+    vol_size: 40
+  - vol_name: db_2
+    vol_size: 40
+  - vol_name: db_3
+    vol_size: 40
+  - vol_name: db_4
+    vol_size: 40
+  - vol_name: persistent
+    vol_size: 90
+
+# Security group
+security_groups:
+  - name: ssh
+    description: "Security group for SSH access"
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+
+  - name: http
+    description: "Security group for HTTP"
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+
+  - name: http
+    description: "http"
+    protocol: tcp
+    port_range_min: 8080
+    port_range_max: 8080
+    remote_ip_prefix: 0.0.0.0/0
+
+# Instance
+instances:
+  - name: server1
+    volumes: ['db_1', 'persistent']
+    description: server1
+  - name: server2
+    volumes: ['db_2']
+    description: server2
+  - name: server3
+    volumes: ['db_3']
+    description: server3
+
+instances2:
+  - name: server4
+    volumes: ['db_4']
+    description: server4
+
+# Ubuntu 20.04 LTS (Focal) amd64
+instance_image: f8b79936-6616-4a22-b55d-0d0a1d27bceb
+instance_key_name: COMP90024
+instance_flavor: uom.mse.2c9g
+instance_flavor2: uom.mse.1c4g
+
+server_list: []
+volume_ids: []
