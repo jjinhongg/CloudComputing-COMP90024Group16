@@ -19,29 +19,6 @@ volumes:
   - vol_name: persistent
     vol_size: 90
 
-# Security group
-security_groups:
-  - name: ssh
-    description: "Security group for SSH access"
-    protocol: tcp
-    port_range_min: 22
-    port_range_max: 22
-    remote_ip_prefix: 0.0.0.0/0
-
-  - name: http
-    description: "Security group for HTTP"
-    protocol: tcp
-    port_range_min: 80
-    port_range_max: 80
-    remote_ip_prefix: 0.0.0.0/0
-
-  - name: http
-    description: "http"
-    protocol: tcp
-    port_range_min: 8080
-    port_range_max: 8080
-    remote_ip_prefix: 0.0.0.0/0
-
 # Instance
 instances:
   - name: server1
@@ -68,9 +45,9 @@ instance_flavor2: uom.mse.1c4g
 server_list: []
 volume_ids: []
 
-# Volume Mounting
 volume_path: /volume
 backup_path: /backup
+
 docker_swarm_ports:
   - port: 2377
     protocol: tcp
@@ -81,12 +58,48 @@ docker_swarm_ports:
   - port: 4789
     protocol: udp
 
-# CouchDB
-couchdb_container_name: 'couchdb_'
-couchdb_image: ibmcom/couchdb3:latest
-couchdb_port: 5984
-couchdb_user: admin
-couchdb_pass: root
-couchdb_config_path: /home/ubuntu/couchdb/etc
-couchdb_cookie: 'helloworld'
+# Security group
+security_groups:
+  - name: administration
+    description: "Security group for server administration and remote access (e.g. access via SSH or HTTP for Frontend)"
+  - name: intra_cluster_communication
+    description: "Security group for communication between CouchDB nodes in cluster"
 
+security_group_rules_public: 
+  - name: administration
+    protocol: tcp
+    port_range_min: 22
+    port_range_max: 22
+    remote_ip_prefix: 0.0.0.0/0
+  - name: administration
+    protocol: tcp
+    port_range_min: 5984
+    port_range_max: 5984
+    remote_ip_prefix: 0.0.0.0/0
+  - name: administration
+    protocol: tcp
+    port_range_min: 80
+    port_range_max: 80
+    remote_ip_prefix: 0.0.0.0/0
+  - name: administration
+    protocol: tcp
+    port_range_min: 8000
+    port_range_max: 8000
+    remote_ip_prefix: 0.0.0.0/0
+
+security_group_rules_private: 
+  - name: intra_cluster_communication
+    protocol: tcp
+    port_range_min: 9100
+    port_range_max: 9200
+    remote_group: intra_cluster_communication
+  - name: intra_cluster_communication
+    protocol: tcp
+    port_range_min: 5984
+    port_range_max: 5984
+    remote_group: intra_cluster_communication
+  - name: intra_cluster_communication
+    protocol: tcp
+    port_range_min: 4369
+    port_range_max: 4369
+    remote_group: intra_cluster_communication

@@ -1,10 +1,9 @@
 
 ---
-
 # Add nodes to CouchDB cluster
 - name: Add nodes to CouchDB cluster
   uri:
-    url: http://{{ masternode }}:5984/_cluster_setup
+    url: http://{{ groups['Masternode'][0] }}:5984/_cluster_setup
     method: POST
     user: "{{ user }}"
     password: "{{ pass }}"
@@ -18,7 +17,7 @@
 # Join nodes to CouchDB cluster
 - name: Join nodes to CouchDB cluster
   uri:
-    url: http://{{ masternode }}:5984/_cluster_setup
+    url: http://{{ groups['Masternode'][0] }}:5984/_cluster_setup
     method: POST
     user: "{{ user }}"
     password: "{{ pass }}"
@@ -27,12 +26,12 @@
     headers:
       Content-Type: "application/json"
     body_format: json
-    body: "{\"action\":\"add_node\",\"host\":\"{{ inventory_hostname }}\",\"port\":\"5984\",\"username\":\"{{ user }}\",\"password\":\"{{ pass }}\"}"
+    body: "{\"action\":\"add_node\",\"host\":\"{{ inventory_hostname }}\",\"port\":\"5984\",\"username\":\"{{ user }}\",\"password\":\"{{ pass }}\"}"
 
 # Empty request to avoid error messages when finishing cluster setup
 - name: Empty request to avoid error messages when finishing cluster setup
   uri:
-    url: http://{{ masternode }}:5984/
+    url: http://{{ groups['Masternode'][0] }}:5984/
     method: GET
     user: "{{ user }}"
     password: "{{ pass }}"
@@ -42,7 +41,7 @@
 # Finish cluster setup
 - name: Finish cluster setup
   uri:
-    url: http://{{ masternode }}:5984/_cluster_setup
+    url: http://{{ groups['Masternode'][0] }}:5984/_cluster_setup
     method: POST
     user: "{{ user }}"
     password: "{{ pass }}"

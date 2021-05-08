@@ -1,5 +1,0 @@
----
-
-- import_playbook: mrc.yaml
-# - import_playbook: remote-setup.yaml
-
