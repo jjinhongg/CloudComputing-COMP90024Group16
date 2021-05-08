@@ -18,6 +18,8 @@
     path: /{{ volume_path }}/couchdb/{{ item }}
     state: directory
     mode: '0755'
+    owner: 'couchdb'
+    group: 'root'
   with_items:
     - ["data", "local.d"]
 

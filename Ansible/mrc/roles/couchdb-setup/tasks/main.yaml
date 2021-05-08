@@ -21,7 +21,7 @@
       - "4369:4369"
       - "9100-9200:9100-9200"
     volumes:
-      - /data
+      - /volume/couchdb/data
     pull: yes
     env:
       COUCHDB_USER: "{{ user }}"

@@ -3,10 +3,24 @@
 172.26.133.212 
 172.26.131.34 
 
+[Workernode]
+172.26.133.212 
+172.26.131.34 
+
 [Masternode]
 172.26.133.205
 
 [ProcessingNodes]
+172.26.133.109 
+
+[database:children]
+Masternode
+Workernode
+
+[all_cluster_nodes]
+172.26.133.205 
+172.26.133.212 
+172.26.131.34
 172.26.133.109 
 
 [DataNodes:vars]
