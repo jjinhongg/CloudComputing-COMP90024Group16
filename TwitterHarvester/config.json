@@ -1,0 +1,53 @@
+{
+    "accounts": {
+        "wenqinl": {
+            "consumer_key": "U1lUxhPRqkgJnjcYxzR9l882D",
+            "consumer_secret": "eWyY3NaI02ZmNXT3V4ITbPGGWvrGzUyb6Lr71ecfraw8VaYQ3i",
+            "access_token": "1118399076653944833-cpAmEuFX694kK4i7JSQy9DnRzsfZG9",
+            "access_token_secret": "Wh3MzRqIwqXcymvRcticPRkewb06s8DuuRiHvEXEQDdjm"
+        },
+
+        "wenqinl2": {
+            "consumer_key": "hlLhDvzUkUoVref8vJcxIetPm",
+            "consumer_secret": "wI0pbOwrg4smkiF7b6Rbqf9sS8COIHulbEbZYIZMkulwAng4Li",
+            "access_token": "30395342-cIjs4oKDaraeLH2WLeWp0raMUpQ1UBdz0TTDnSDTr",
+            "access_token_secret": "1LmiK8OTbYgKZhrmplRsoiUFHij7OnYtRgvS6xcchSGfa"
+        },
+
+        "zixuanz": {
+            "consumer_key": "NlxfH8KHuVhKUPZZeSh90y12o",
+            "consumer_secret": "wJWb1D0qqM9b2nikhKy2ZTXus5acV6yQoHVCs6WJC1MzegsEKD",
+            "access_token": "1367986631983046658-mMydlFKzFPtRPrZW13TTikgyHdpIaw",
+            "access_token_secret": "EJR6yGb2HTgj4mkHa1joXj5tZspLhdA3hFkbCwiCzZicH"
+        },
+
+        "jinyongy": {
+            "consumer_key": "MYIJ96NtNqPKL7smamIlMcuD8",
+            "consumer_secret": "L868VsEU4bZnUM3AJODNqHz1fpRIIBhlXwE8M4RNf1dgO4ryrF",
+            "access_token": "1366207880727203843-Kng0F2UMDtErS0g6QTGKMSTXTER3Hs",
+            "access_token_secret": "hXKUGE1h1MgoFkuZ5xOayqkw0qxaRXOia7XdBRzzKIMca"
+        },
+        
+        "new1" :{
+            "consumer_key": "9yzZucgdrZ92SH9Sy1HC0kqRR",
+            "consumer_secret": "YlCvDefeX61wsUAFpG8v6yeU8EJWAhuePQWutZoMGQ6iZt5L3j",
+            "access_token": "1257681698373775360-eDwFqLAycB1EWE42VMntCnMCA4djEU",
+            "access_token_secret": "H4u1GKTpluZHOVj5SRy0XgURuMtl7E7WV6TtoZk2v6QvP"
+        }
+    },
+
+    "target_location": {
+        "melbourne": [[-38.465387, 144.566830],[-37.517320, 145.401791]],
+        "australia": [[-45.134095, 109.041799], [-11.585642, 153.162890]]
+    },
+
+    "db": {
+        "user": "shibachan",
+        "password": "MuchWOWSuchAmAzE",
+        "url": "http://172.26.131.132",
+        "db": "junlin",
+        "sentiments-table" : "twitter_sentiments_3",
+        "population_data": "population_data",
+        "top-sentiments-table" : "top_twitter_sentiments_3"
+    }
+}
