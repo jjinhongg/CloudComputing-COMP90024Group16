@@ -68,6 +68,19 @@ instance_flavor2: uom.mse.1c4g
 server_list: []
 volume_ids: []
 
+# Volume Mounting
+volume_path: /volume
+backup_path: /backup
+docker_swarm_ports:
+  - port: 2377
+    protocol: tcp
+  - port: 7946
+    protocol: tcp
+  - port: 7946
+    protocol: udp
+  - port: 4789
+    protocol: udp
+
 # CouchDB
 couchdb_container_name: 'couchdb_'
 couchdb_image: ibmcom/couchdb3:latest
@@ -76,3 +89,4 @@ couchdb_user: admin
 couchdb_pass: root
 couchdb_config_path: /home/ubuntu/couchdb/etc
 couchdb_cookie: 'helloworld'
+
