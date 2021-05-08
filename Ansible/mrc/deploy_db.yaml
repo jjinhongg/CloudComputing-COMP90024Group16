@@ -1,13 +1,17 @@
 ---
-- host: database
-  var_files:
+- hosts: database
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
+  vars_files:
     - host_vars/mrc.yaml
   gather_facts: true
   roles:
     - role: deploy-couchdb
 
-- host: mainnode
-  var_files:
+- hosts: mainnode
+  vars:
+    ansible_python_interpreter: /usr/local/bin/python3
+  vars_files:
     - host_vars/mrc.yaml
   gather_facts: true
   roles:
