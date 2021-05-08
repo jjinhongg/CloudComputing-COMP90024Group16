@@ -1,0 +1,19 @@
+---
+- host: database
+  var_files:
+    - host_vars/mrc.yaml
+  gather_facts: true
+  roles:
+    - role: deploy-couchdb
+
+- host: mainnode
+  var_files:
+    - host_vars/mrc.yaml
+  gather_facts: true
+  roles:
+    - role: deploy-couchdb-cluster
+
+
+
+
+

@@ -10,6 +10,7 @@
 
   roles:
     - role: http-proxy-setup
+    - role: deploy-environment
     - role: docker-installation
     - role: docker-proxy
   
