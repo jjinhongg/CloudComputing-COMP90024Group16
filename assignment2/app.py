@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 import time
 import utils
+import couchdb
 app = Flask(__name__)
 
 
@@ -43,6 +44,40 @@ def get_result_info():
 @app.route('/wordworld')
 def get_hot_words():
     return ['123','456']
+
+#存储数据到本地
+@app.route('/testinsert')
+def insert_data():
+    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
+    db = None
+    dbName = 'test'
+    try:
+        db = couch[dbName]
+    except:
+        db = couch.create(dbName)
+
+    doc = {'foo': 'bar'}
+    db.save(doc)
+    return 'success'
+
+#读取数据 根据指定database 和 key
+@app.route('/testget/<database>')
+def get_data(database):
+    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
+    db = couch[database]
+    for id in db:
+        print(db[id])
+    return 'success'
+
+#删除数据库
+@app.route('/testdel/<database>')
+def del_database(database):
+    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
+    try:
+        couch.delete(database)
+        return 'success'
+    except:
+        return 'failed'
 
 
 if __name__ == '__main__':
