@@ -1,3 +1,11 @@
+// var ausjson;
+
+// axios.get('/static/data/aus_geo.json')
+// .then(response => {
+//   ausjson = response.data
+//   console.log(response.data)
+// });
+
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.

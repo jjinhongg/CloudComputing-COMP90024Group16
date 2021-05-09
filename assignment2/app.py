@@ -3,8 +3,10 @@ from flask import render_template
 import time
 import utils
 import couchdb
-app = Flask(__name__)
-
+app = Flask(__name__,
+            static_url_path='/static', 
+            static_folder='static',
+            template_folder='templates')
 
 @app.route('/')
 def hello_world():
@@ -12,7 +14,8 @@ def hello_world():
 
 @app.route('/test')
 def template_test():
-    return render_template('template_assignemnt2.html')
+    # return render_template('template_assignemnt2.html')
+    return render_template('test_1.html')
 
 #显示时间
 @app.route("/time")
