@@ -1,17 +1,28 @@
 ---
-- name: copy the ssh key to whole hosts
-  copy:
-    src: "GitHub.key"
-    dest: /home/ubuntu/.ssh/GitKey
-    mode: 600
+# - name: copy the ssh key to whole hosts
+#   copy:
+#     src: "GitHub.key"
+#     dest: /home/ubuntu/.ssh/GitKey
+#     mode: 600
 
-- name: configure ssh
-  template:
-    src: "ssh_config"
-    dest: /home/ubuntu/.ssh/config
-    mode: 644
+# - name: configure ssh
+#   template:
+#     src: "ssh_config"
+#     dest: /home/ubuntu/.ssh/config
+#     mode: 644
 
 - name: git pull lastest repo
   shell: git pull
   args:
     chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
+
+# Run Docker compose to activate flask web app
+- name: Run docker compose
+  become: yes
+  docker_compose:
+    project_src: "/home/ubuntu/COMP90024/COMP90024Group16/webapp/"
+    pull: false
+    build: yes
+    state: present
+    remove_orphans: no
+    recreate: always
