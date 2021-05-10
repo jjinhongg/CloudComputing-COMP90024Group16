@@ -8,9 +8,9 @@ app = Flask(__name__)
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-#@app.route('/')
-#def hello_world():
-#    return render_template('main.html')
+@app.route('/123')
+def hello_world():
+   return render_template('main.html')
 
 @app.route('/')
 def template_test():
