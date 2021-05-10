@@ -1,0 +1,22 @@
+---
+- name: copy the ssh key to whole hosts
+  copy:
+    src: "GitHub.key"
+    dest: /home/ubuntu/.ssh/GitKey
+    mode: 600
+
+- name: configure ssh
+  template:
+    src: "ssh_config"
+    dest: /home/ubuntu/.ssh/config
+    mode: 644
+
+- name: creates directory
+  file:
+    path: '/home/ubuntu/COMP90024'
+    state: directory
+
+- name: git clone repo
+  shell: git clone git@github.com:williamjz/COMP90024Group16.git --config core.sshCommand="ssh -i /home/ubuntu/.ssh/GitKey"
+  args:
+    chdir: '/home/ubuntu/COMP90024'
