@@ -6,6 +6,7 @@
     current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
   vars_files:
       - host_vars/mrc.yaml
+      - host_vars/couchdb_settings.yaml
   gather_facts: true
 
   roles:
