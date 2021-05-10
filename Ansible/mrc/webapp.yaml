@@ -10,5 +10,5 @@
   gather_facts: true
 
   roles:
-    - role: git-clone-repositoty
-    - role: git-clone-late
+    # - role: git-clone-repositoty
+    - role: git-pull-latest
