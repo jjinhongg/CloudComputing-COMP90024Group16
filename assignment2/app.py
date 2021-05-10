@@ -3,16 +3,21 @@ from flask import render_template
 import time
 import utils
 import couchdb
+
+from cloudant.client import Cloudant
 app = Flask(__name__,
             static_url_path='/static', 
             static_folder='static',
             template_folder='templates')
+            
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+#@app.route('/')
+#def hello_world():
+#    return render_template('main.html')
 
 @app.route('/')
-def hello_world():
-    return render_template('main.html')
-
-@app.route('/test')
 def template_test():
     # return render_template('template_assignemnt2.html')
     return render_template('test_1.html')
@@ -48,20 +53,7 @@ def get_result_info():
 def get_hot_words():
     return ['123','456']
 
-#存储数据到本地
-@app.route('/testinsert')
-def insert_data():
-    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
-    db = None
-    dbName = 'test'
-    try:
-        db = couch[dbName]
-    except:
-        db = couch.create(dbName)
 
-    doc = {'foo': 'bar'}
-    db.save(doc)
-    return 'success'
 
 #读取数据 根据指定database 和 key
 @app.route('/testget/<database>')
@@ -81,6 +73,7 @@ def del_database(database):
         return 'success'
     except:
         return 'failed'
+
 
 
 if __name__ == '__main__':

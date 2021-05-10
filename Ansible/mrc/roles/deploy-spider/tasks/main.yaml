@@ -1,0 +1,17 @@
+---
+- name: copy spider config to hosts
+  copy:
+    src: 'configs/spiderSetting.py'
+    dest: '/home/ubuntu/COMP90024/TwitterHarvester'
+
+- name: Shut down docker previopus server
+  become: yes
+  shell: docker-compose down --rmi local
+  args:
+    chdir: '/home/ubuntu/COMP90024/TwitterHarvester'
+
+- name: start server
+  become: yes
+  shell: docker-compose up --build -d
+  args:
+    chdir: '/home/ubuntu/COMP90024/TwitterHarvester'

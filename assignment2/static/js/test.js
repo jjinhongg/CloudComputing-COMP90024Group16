@@ -650,7 +650,7 @@ $(function() {
                 min: 80,
                 max: 600,
                 inRange: {
-                    colorLightness: [0, 1]
+                    colorLightness: [0.5, 1]
                 }
             },
             series: [pie_data[0]]
@@ -875,7 +875,7 @@ $(function() {
                             }
                         },
                         animation: false,
-                        data: mapData
+                        data: mapData[n]
                     },
                     //地图中闪烁的点
                     {

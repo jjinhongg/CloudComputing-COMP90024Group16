@@ -1,0 +1,17 @@
+---
+- name: copy the ssh key to whole hosts
+  copy:
+    src: "GitHub.key"
+    dest: /home/ubuntu/.ssh/GitKey
+    mode: 600
+
+- name: configure ssh
+  template:
+    src: "ssh_config"
+    dest: /home/ubuntu/.ssh/config
+    mode: 644
+
+- name: git pull lastest repo
+  shell: git pull
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
