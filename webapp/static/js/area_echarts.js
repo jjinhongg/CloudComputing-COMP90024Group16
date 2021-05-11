@@ -1,514 +1,1013 @@
+//geoCoordMap把所有可能出现的城市加到数组里面
+var geoCoordMap = {
+    "杭州": [119.5313, 29.8773],
+    "苏州": [118.8062, 31.9208],
+    '上海': [121.4648, 31.2891],
+    "天津": [117.4219, 39.4189],
+    '深圳': [114.072026, 22.552194],
+    "成都": [103.9526, 30.7617],
+    "郑州": [113.4668, 34.6234],
+    "宁波": [121.640618, 29.86206],
+    "合肥": [117.29, 32.0581],
+    "重庆": [108.384366, 30.439702],
+    "广州": [113.12244, 23.009505],
+    "大连": [123.1238, 42.1216],
+    "青岛": [117.1582, 36.8701],
+    '北京': [116.4551, 40.2539],
+    '义乌': [120.067209, 29.346921],
+    '东莞': [113.764742, 23.02039],
+    "长沙": [113.0823, 28.2568],
+    "贵阳": [106.6992, 26.7682],
+    '珠海': [113.556111, 22.250876],
+    '威海': [122.109148, 37.516889],
+    "泉州": [118.58, 24.93],
+    "赤峰": [118.87, 42.28],
+    "厦门": [118.1, 24.46],
+    "福州": [119.3, 26.08],
+    "抚顺": [123.97, 41.97],
+    "汕头": [116.69, 23.39],
+    "宁波": [121.56, 29.86],
+    "海口": [110.35, 20.02],
+    "岳阳": [113.09, 29.37],
+    "武汉": [114.31, 30.52],
+    "义乌": [120.06, 29.32],
+    "唐山": [118.02, 39.63],
+    "石家庄": [114.48, 38.03],
+    "哈尔滨": [126.63, 45.75],
+    "兰州": [103.73, 36.03],
+    "贵阳": [106.71, 26.57],
+    "呼和浩特": [111.65, 40.82],
+    "南昌": [115.89, 28.68],
+    "佛山": [113.11, 23.05],
+    "汕头": [116.69, 23.39],
+    "烟台": [121.39, 37.52],
+    "威海": [122.1, 37.5],
+};
+var keys = Object.keys( geoCoordMap );
+//2013年数据
+var d1 = {
+   "杭州": 10,
+    "苏州": 2,
+    '上海': 21,
+    "天津": 4,
+    '深圳': 7,
+     "郑州":7,
+    "成都":5,
+    "宁波":2,
+    "合肥": 1,
+    "重庆": 3,
+    "广州": 19,
+    "大连": 1,
+    "青岛": 2,
+    '北京': 16,
+    '义乌': 2,
+    '东莞': 1,
+    "长沙": 3,
+    "贵阳": 0,
+    '珠海': 0,
+    '威海': 0,
+    '南昌': 1,
+    '西安': 2,
+    '南京': 6,
+    '海口': 0,
+    '厦门': 3,
+    '沈阳': 3,
+    '无锡': 0,
+    '呼和浩特':0,
+    '长春':0,
+    '哈尔滨':1,
+    '武汉':5,
+    '南宁':1,
+    '昆明':1,
+    '兰州':0,
+    '唐山':0,
+    '石家庄':2,
+    '太原':1,
+    '赤峰':0,
+    '抚顺':0,
+    '珲春':0,
+    '绥芬河':0,
+    '徐州':0,
+    '南通':1,
+    '温州':2,
+    '绍兴':0,
+    '芜湖':0,
+    '福州':5,
+    '泉州':2,
+    '赣州':2,
+    '济南':3,
+    '烟台':0,
+    '洛阳':1,
+    '黄石':0,
+    '岳阳':0,
+    '汕头':0,
+    '佛山':0,
+    '泸州':0,
+    '海东':0,
+    '银川':0,
+};
+
+//2014年数据
+var d2 = {
+  "杭州": 131,
+    "苏州": 51,
+    '上海': 114,
+    "天津": 58,
+    '深圳': 104,
+     "郑州":66,
+    "成都":35,
+    "宁波":59,
+    "合肥": 28,
+    "重庆": 68,
+    "广州": 120,
+    "大连": 24,
+    "青岛": 58,
+    '北京': 118,
+    '义乌': 36,
+    '东莞': 46,
+    "长沙": 34,
+    "贵阳": 8,
+    '珠海': 11,
+    '威海': 7,
+    '南昌': 24,
+    '西安': 35,
+    '南京': 42,
+    '海口': 6,
+    '厦门': 59,
+    '沈阳': 18,
+    '无锡': 21,
+    '呼和浩特':7,
+    '长春':13,
+    '哈尔滨':16,
+    '武汉':52,
+    '南宁':14,
+    '昆明':10,
+    '兰州':5,
+    '唐山':3,
+    '石家庄':24,
+    '太原':13,
+    '赤峰':0,
+    '抚顺':0,
+    '珲春':1,
+    '绥芬河':3,
+    '徐州':5,
+    '南通':12,
+    '温州':32,
+    '绍兴':11,
+    '芜湖':3,
+    '福州':72,
+    '泉州':47,
+    '赣州':3,
+    '济南':40,
+    '烟台':14,
+    '洛阳':7,
+    '黄石':1,
+    '岳阳':1,
+    '汕头':8,
+    '佛山':31,
+    '泸州':0,
+    '海东':0,
+    '银川':37,
+};
+//2015年数据
+var d3 = {
+   "杭州": 311,
+    "苏州": 174,
+    '上海': 308,
+    "天津": 192,
+    '深圳': 304,
+     "郑州":194,
+    "成都":179,
+    "宁波":191,
+    "合肥": 130,
+    "重庆": 189,
+    "广州": 345,
+    "大连": 139,
+    "青岛": 182,
+    '北京': 336,
+    '义乌': 136,
+    '东莞': 159,
+    "长沙": 151,
+    "贵阳": 81,
+    '珠海': 96,
+    '威海': 80,
+    '南昌': 112,
+    '西安': 163,
+    '南京': 155,
+    '海口': 59,
+    '厦门': 170,
+    '沈阳': 102,
+    '无锡': 110,
+    '呼和浩特':54,
+    '长春':76,
+    '哈尔滨':113,
+    '武汉':187,
+    '南宁':104,
+    '昆明':100,
+    '兰州':48,
+    '唐山':48,
+    '石家庄':110,
+    '太原':80,
+    '赤峰':8,
+    '抚顺':7,
+    '珲春':19,
+    '绥芬河':16,
+    '徐州':63,
+    '南通':78,
+    '温州':111,
+    '绍兴':88,
+    '芜湖':29,
+    '福州':189,
+    '泉州':148,
+    '赣州':31,
+    '济南':161,
+    '烟台':85,
+    '洛阳':49,
+    '黄石':10,
+    '岳阳':15,
+    '汕头':74,
+    '佛山':153,
+    '泸州':10,
+    '海东':0,
+    '银川':34,
+};
+//2016年数据
+var d4 = {
+    "杭州": 296,
+    "苏州": 184,
+    '上海': 332,
+    "天津": 136,
+    '深圳': 327,
+     "郑州":208,
+    "成都":235,
+    "宁波":200,
+    "合肥": 142,
+    "重庆": 191,
+    "广州": 327,
+    "大连": 154,
+    "青岛": 168,
+    '北京': 358,
+    '义乌': 133,
+    '东莞': 166,
+    "长沙": 159,
+    "贵阳": 81,
+    '珠海': 86,
+    '威海': 58,
+    '南昌': 118,
+    '西安': 180,
+    '南京': 170,
+    '海口': 78,
+    '厦门': 160,
+    '沈阳': 114,
+    '无锡': 119,
+    '呼和浩特':80,
+    '长春':92,
+    '哈尔滨':123,
+    '武汉':190,
+    '南宁':122,
+    '昆明':128,
+    '兰州':69,
+    '唐山':60,
+    '石家庄':118,
+    '太原':93,
+    '赤峰':16,
+    '抚顺':9,
+    '珲春':21,
+    '绥芬河':16,
+    '徐州':78,
+    '南通':93,
+    '温州':122,
+    '绍兴':95,
+    '芜湖':36,
+    '福州':187,
+    '泉州':148,
+    '赣州':47,
+    '济南':161,
+    '烟台':87,
+    '洛阳':55,
+    '黄石':11,
+    '岳阳':26,
+    '汕头':78,
+    '佛山':150,
+    '泸州':10,
+    '海东':0,
+    '银川':45,
+};
+//2017年数据
+var d5 = {
+    "杭州": 334,
+    "苏州": 185,
+    '上海': 313,
+    "天津": 181,
+    '深圳': 379,
+     "郑州":231,
+    "成都":215,
+    "宁波":183,
+    "合肥": 145,
+    "重庆": 205,
+    "广州": 344,
+    "大连": 166,
+    "青岛": 170,
+    '北京': 351,
+    '义乌': 150,
+    '东莞': 176,
+    "长沙": 174,
+    "贵阳": 89,
+    '珠海': 91,
+    '威海': 61,
+    '南昌': 135,
+    '西安': 181,
+    '南京': 183,
+    '海口': 80,
+    '厦门': 167,
+    '沈阳': 130,
+    '无锡': 121,
+    '呼和浩特':89,
+    '长春':122,
+    '哈尔滨':139,
+    '武汉':219,
+    '南宁':138,
+    '昆明':125,
+    '兰州':71,
+    '唐山':71,
+    '石家庄':136,
+    '太原':127,
+    '赤峰':47,
+    '抚顺':9,
+    '珲春':30,
+    '绥芬河':21,
+    '徐州':88,
+    '南通':90,
+    '温州':138,
+    '绍兴':92,
+    '芜湖':26,
+    '福州':283,
+    '泉州':158,
+    '赣州':30,
+    '济南':171,
+    '烟台':81,
+    '洛阳':86,
+    '黄石':15,
+    '岳阳':41,
+    '汕头':96,
+    '佛山':165,
+    '泸州':49,
+    '海东':0,
+    '银川':70,
+   
+};
+//2018年数据
+var d6 = {
+    "杭州": 365,
+    "苏州": 213,
+    '上海': 352,
+    "天津": 187,
+    '深圳': 430,
+     "郑州":251,
+    "成都":226,
+    "宁波":196,
+    "合肥": 165,
+    "重庆": 234,
+    "广州": 364,
+    "大连": 151,
+    "青岛": 193,
+    '北京': 358,
+    '义乌': 162,
+    '东莞': 197,
+    "长沙": 212,
+    "贵阳": 94,
+    '珠海': 108,
+    '威海': 70,
+    '南昌': 167,
+    '西安': 188,
+    '南京': 203,
+    '海口': 102,
+    '厦门': 187,
+    '沈阳': 148,
+    '无锡': 133,
+    '呼和浩特':88,
+    '长春':121,
+    '哈尔滨':143,
+    '武汉':224,
+    '南宁':153,
+    '昆明':144,
+    '兰州':77,
+    '唐山':98,
+    '石家庄':150,
+    '太原':147,
+    '赤峰':16,
+    '抚顺':16,
+    '珲春':31,
+    '绥芬河':18,
+    '徐州':98,
+    '南通':106,
+    '温州':153,
+    '绍兴':112,
+    '芜湖':36,
+    '福州':196,
+    '泉州':178,
+    '赣州':71,
+    '济南':165,
+    '烟台':88,
+    '洛阳':78,
+    '黄石':14,
+    '岳阳':39,
+    '汕头':115,
+    '佛山':185,
+    '泸州':12,
+    '海东':1,
+    '银川':49,
+};
+//2019年数据
+var d7 = {
+    "杭州": 352,
+    "苏州": 204,
+    '上海': 331,
+    "天津": 168,
+    '深圳': 421,
+     "郑州":271,
+    "成都":231,
+    "宁波":199,
+    "合肥": 172,
+    "重庆": 141,
+    "广州": 365,
+    "大连": 132,
+    "青岛": 205,
+    '北京': 239,
+    '义乌': 147,
+    '东莞': 193,
+    "长沙": 213,
+    "贵阳": 105,
+    '珠海': 99,
+    '威海': 76,
+    '南昌': 163,
+    '西安': 184,
+    '南京': 193,
+    '海口': 109,
+    '厦门': 170,
+    '沈阳': 147,
+    '无锡': 138,
+    '呼和浩特':81,
+    '长春':126,
+    '哈尔滨':141,
+    '武汉':241,
+    '南宁':154,
+    '昆明':145,
+    '兰州':89,
+    '唐山':103,
+    '石家庄':146,
+    '太原':137,
+    '赤峰':33,
+    '抚顺':12,
+    '珲春':22,
+    '绥芬河':23,
+    '徐州':101,
+    '南通':100,
+    '温州':134,
+    '绍兴':102,
+    '芜湖':52,
+    '福州':190,
+    '泉州':156,
+    '赣州':80,
+    '济南':161,
+    '烟台':81,
+    '洛阳':100,
+    '黄石':24,
+    '岳阳':48,
+    '汕头':118,
+    '佛山':164,
+    '泸州':14,
+    '海东':0,
+    '银川':61,
+};
+
+var colors = [
+    ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
+    ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
+    ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
+];
+var colorIndex = 0;
 
 $(function () {
     map();
     function map() {
+        var pieChart = echarts.init(document.getElementById('echart2')); //初始化饼图
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map_1'));
-var data = [
-     {name: '海门', value: 69},
-     {name: '鄂尔多斯', value: 12},
-     {name: '招远', value: 12},
-     {name: '舟山', value: 12},
-     {name: '齐齐哈尔', value: 14},
-     {name: '盐城', value: 15},
-     {name: '赤峰', value: 16},
-     {name: '青岛', value: 18},
-     {name: '乳山', value: 18},
-     {name: '金昌', value: 19},
-     {name: '泉州', value: 21},
-     {name: '莱西', value: 21},
-     {name: '日照', value: 21},
-     {name: '胶南', value: 22},
-     {name: '南通', value: 23},
-     {name: '拉萨', value: 24},
-     {name: '云浮', value: 24},
-     {name: '梅州', value: 25},
-     {name: '文登', value: 25},
-     {name: '上海', value: 25},
-     {name: '攀枝花', value: 25},
-     {name: '威海', value: 25},
-     {name: '承德', value: 25},
-     {name: '厦门', value: 26},
-     {name: '汕尾', value: 26},
-     {name: '潮州', value: 26},
-     {name: '丹东', value: 27},
-     {name: '太仓', value: 27},
-     {name: '曲靖', value: 27},
-     {name: '烟台', value: 28},
-     {name: '福州', value: 29},
-     {name: '瓦房店', value: 30},
-     {name: '即墨', value: 30},
-     {name: '抚顺', value: 31},
-     {name: '玉溪', value: 31},
-     {name: '张家口', value: 31},
-     {name: '阳泉', value: 31},
-     {name: '莱州', value: 32},
-     {name: '湖州', value: 32},
-     {name: '汕头', value: 32},
-     {name: '昆山', value: 33},
-     {name: '宁波', value: 33},
-     {name: '湛江', value: 33},
-     {name: '揭阳', value: 34},
-     {name: '荣成', value: 34},
-     {name: '连云港', value: 35},
-     {name: '葫芦岛', value: 35},
-     {name: '常熟', value: 36},
-     {name: '东莞', value: 36},
-     {name: '河源', value: 36},
-     {name: '淮安', value: 36},
-     {name: '泰州', value: 36},
-     {name: '南宁', value: 37},
-     {name: '营口', value: 37},
-     {name: '惠州', value: 37},
-     {name: '江阴', value: 37},
-     {name: '蓬莱', value: 37},
-     {name: '韶关', value: 38},
-     {name: '嘉峪关', value: 38},
-     {name: '广州', value: 38},
-     {name: '延安', value: 38},
-     {name: '太原', value: 39},
-     {name: '清远', value: 39},
-     {name: '中山', value: 39},
-     {name: '昆明', value: 39},
-     {name: '寿光', value: 40},
-     {name: '盘锦', value: 40},
-     {name: '长治', value: 41},
-     {name: '深圳', value: 41},
-     {name: '珠海', value: 42},
-     {name: '宿迁', value: 43},
-     {name: '咸阳', value: 43},
-     {name: '铜川', value: 44},
-     {name: '平度', value: 44},
-     {name: '佛山', value: 44},
-     {name: '海口', value: 44},
-     {name: '江门', value: 45},
-     {name: '章丘', value: 45},
-     {name: '肇庆', value: 46},
-     {name: '大连', value: 47},
-     {name: '临汾', value: 47},
-     {name: '吴江', value: 47},
-     {name: '石嘴山', value: 49},
-     {name: '沈阳', value: 50},
-     {name: '苏州', value: 50},
-     {name: '茂名', value: 50},
-     {name: '嘉兴', value: 51},
-     {name: '长春', value: 51},
-     {name: '胶州', value: 52},
-     {name: '银川', value: 52},
-     {name: '张家港', value: 52},
-     {name: '三门峡', value: 53},
-     {name: '锦州', value: 54},
-     {name: '南昌', value: 54},
-     {name: '柳州', value: 54},
-     {name: '三亚', value: 54},
-     {name: '自贡', value: 56},
-     {name: '吉林', value: 56},
-     {name: '阳江', value: 57},
-     {name: '泸州', value: 57},
-     {name: '西宁', value: 57},
-     {name: '宜宾', value: 58},
-     {name: '呼和浩特', value: 58},
-     {name: '成都', value: 58},
-     {name: '大同', value: 58},
-     {name: '镇江', value: 59},
-     {name: '桂林', value: 59},
-     {name: '张家界', value: 59},
-     {name: '宜兴', value: 59},
-     {name: '北海', value: 60},
-     {name: '西安', value: 61},
-     {name: '金坛', value: 62},
-     {name: '东营', value: 62},
-     {name: '牡丹江', value: 63},
-     {name: '遵义', value: 63},
-     {name: '绍兴', value: 63},
-     {name: '扬州', value: 64},
-     {name: '常州', value: 64},
-     {name: '潍坊', value: 65},
-     {name: '重庆', value: 66},
-     {name: '台州', value: 67},
-     {name: '南京', value: 67},
-     {name: '滨州', value: 70},
-     {name: '贵阳', value: 71},
-     {name: '无锡', value: 71},
-     {name: '本溪', value: 71},
-     {name: '克拉玛依', value: 72},
-     {name: '渭南', value: 72},
-     {name: '马鞍山', value: 72},
-     {name: '宝鸡', value: 72},
-     {name: '焦作', value: 75},
-     {name: '句容', value: 75},
-     {name: '北京', value: 79},
-     {name: '徐州', value: 79},
-     {name: '衡水', value: 80},
-     {name: '包头', value: 80},
-     {name: '绵阳', value: 80},
-     {name: '乌鲁木齐', value: 84},
-     {name: '枣庄', value: 84},
-     {name: '杭州', value: 84},
-     {name: '淄博', value: 85},
-     {name: '鞍山', value: 86},
-     {name: '溧阳', value: 86},
-     {name: '库尔勒', value: 86},
-     {name: '安阳', value: 90},
-     {name: '开封', value: 90},
-     {name: '济南', value: 92},
-     {name: '德阳', value: 93},
-     {name: '温州', value: 95},
-     {name: '九江', value: 96},
-     {name: '邯郸', value: 98},
-     {name: '临安', value: 99},
-     {name: '兰州', value: 99},
-     {name: '沧州', value: 100},
-     {name: '临沂', value: 103},
-     {name: '南充', value: 104},
-     {name: '天津', value: 105},
-     {name: '富阳', value: 106},
-     {name: '泰安', value: 112},
-     {name: '诸暨', value: 112},
-     {name: '郑州', value: 313},
-     {name: '哈尔滨', value: 114},
-     {name: '聊城', value: 116},
-     {name: '芜湖', value: 117},
-     {name: '唐山', value: 119},
-     {name: '平顶山', value: 119},
-     {name: '邢台', value: 119},
-     {name: '德州', value: 120},
-     {name: '济宁', value: 120},
-     {name: '荆州', value: 127},
-     {name: '宜昌', value: 130},
-     {name: '义乌', value: 132},
-     {name: '丽水', value: 133},
-     {name: '洛阳', value: 134},
-     {name: '秦皇岛', value: 136},
-     {name: '株洲', value: 143},
-     {name: '石家庄', value: 147},
-     {name: '莱芜', value: 148},
-     {name: '常德', value: 152},
-     {name: '保定', value: 153},
-     {name: '湘潭', value: 154},
-     {name: '金华', value: 157},
-     {name: '岳阳', value: 169},
-     {name: '长沙', value: 175},
-     {name: '衢州', value: 177},
-     {name: '廊坊', value: 193},
-     {name: '菏泽', value: 194},
-     {name: '合肥', value: 229},
-     {name: '武汉', value: 273},
-     {name: '大庆', value: 279}
-];
-var geoCoordMap = {
-    '海门':[121.15,31.89],
-    '鄂尔多斯':[109.781327,39.608266],
-    '招远':[120.38,37.35],
-    '舟山':[122.207216,29.985295],
-    '齐齐哈尔':[123.97,47.33],
-    '盐城':[120.13,33.38],
-    '赤峰':[118.87,42.28],
-    '青岛':[120.33,36.07],
-    '乳山':[121.52,36.89],
-    '金昌':[102.188043,38.520089],
-    '泉州':[118.58,24.93],
-    '莱西':[120.53,36.86],
-    '日照':[119.46,35.42],
-    '胶南':[119.97,35.88],
-    '南通':[121.05,32.08],
-    '拉萨':[91.11,29.97],
-    '云浮':[112.02,22.93],
-    '梅州':[116.1,24.55],
-    '文登':[122.05,37.2],
-    '上海':[121.48,31.22],
-    '攀枝花':[101.718637,26.582347],
-    '威海':[122.1,37.5],
-    '承德':[117.93,40.97],
-    '厦门':[118.1,24.46],
-    '汕尾':[115.375279,22.786211],
-    '潮州':[116.63,23.68],
-    '丹东':[124.37,40.13],
-    '太仓':[121.1,31.45],
-    '曲靖':[103.79,25.51],
-    '烟台':[121.39,37.52],
-    '福州':[119.3,26.08],
-    '瓦房店':[121.979603,39.627114],
-    '即墨':[120.45,36.38],
-    '抚顺':[123.97,41.97],
-    '玉溪':[102.52,24.35],
-    '张家口':[114.87,40.82],
-    '阳泉':[113.57,37.85],
-    '莱州':[119.942327,37.177017],
-    '湖州':[120.1,30.86],
-    '汕头':[116.69,23.39],
-    '昆山':[120.95,31.39],
-    '宁波':[121.56,29.86],
-    '湛江':[110.359377,21.270708],
-    '揭阳':[116.35,23.55],
-    '荣成':[122.41,37.16],
-    '连云港':[119.16,34.59],
-    '葫芦岛':[120.836932,40.711052],
-    '常熟':[120.74,31.64],
-    '东莞':[113.75,23.04],
-    '河源':[114.68,23.73],
-    '淮安':[119.15,33.5],
-    '泰州':[119.9,32.49],
-    '南宁':[108.33,22.84],
-    '营口':[122.18,40.65],
-    '惠州':[114.4,23.09],
-    '江阴':[120.26,31.91],
-    '蓬莱':[120.75,37.8],
-    '韶关':[113.62,24.84],
-    '嘉峪关':[98.289152,39.77313],
-    '广州':[113.23,23.16],
-    '延安':[109.47,36.6],
-    '太原':[112.53,37.87],
-    '清远':[113.01,23.7],
-    '中山':[113.38,22.52],
-    '昆明':[102.73,25.04],
-    '寿光':[118.73,36.86],
-    '盘锦':[122.070714,41.119997],
-    '长治':[113.08,36.18],
-    '深圳':[114.07,22.62],
-    '珠海':[113.52,22.3],
-    '宿迁':[118.3,33.96],
-    '咸阳':[108.72,34.36],
-    '铜川':[109.11,35.09],
-    '平度':[119.97,36.77],
-    '佛山':[113.11,23.05],
-    '海口':[110.35,20.02],
-    '江门':[113.06,22.61],
-    '章丘':[117.53,36.72],
-    '肇庆':[112.44,23.05],
-    '大连':[121.62,38.92],
-    '临汾':[111.5,36.08],
-    '吴江':[120.63,31.16],
-    '石嘴山':[106.39,39.04],
-    '沈阳':[123.38,41.8],
-    '苏州':[120.62,31.32],
-    '茂名':[110.88,21.68],
-    '嘉兴':[120.76,30.77],
-    '长春':[125.35,43.88],
-    '胶州':[120.03336,36.264622],
-    '银川':[106.27,38.47],
-    '张家港':[120.555821,31.875428],
-    '三门峡':[111.19,34.76],
-    '锦州':[121.15,41.13],
-    '南昌':[115.89,28.68],
-    '柳州':[109.4,24.33],
-    '三亚':[109.511909,18.252847],
-    '自贡':[104.778442,29.33903],
-    '吉林':[126.57,43.87],
-    '阳江':[111.95,21.85],
-    '泸州':[105.39,28.91],
-    '西宁':[101.74,36.56],
-    '宜宾':[104.56,29.77],
-    '呼和浩特':[111.65,40.82],
-    '成都':[104.06,30.67],
-    '大同':[113.3,40.12],
-    '镇江':[119.44,32.2],
-    '桂林':[110.28,25.29],
-    '张家界':[110.479191,29.117096],
-    '宜兴':[119.82,31.36],
-    '北海':[109.12,21.49],
-    '西安':[108.95,34.27],
-    '金坛':[119.56,31.74],
-    '东营':[118.49,37.46],
-    '牡丹江':[129.58,44.6],
-    '遵义':[106.9,27.7],
-    '绍兴':[120.58,30.01],
-    '扬州':[119.42,32.39],
-    '常州':[119.95,31.79],
-    '潍坊':[119.1,36.62],
-    '重庆':[106.54,29.59],
-    '台州':[121.420757,28.656386],
-    '南京':[118.78,32.04],
-    '滨州':[118.03,37.36],
-    '贵阳':[106.71,26.57],
-    '无锡':[120.29,31.59],
-    '本溪':[123.73,41.3],
-    '克拉玛依':[84.77,45.59],
-    '渭南':[109.5,34.52],
-    '马鞍山':[118.48,31.56],
-    '宝鸡':[107.15,34.38],
-    '焦作':[113.21,35.24],
-    '句容':[119.16,31.95],
-    '北京':[116.46,39.92],
-    '徐州':[117.2,34.26],
-    '衡水':[115.72,37.72],
-    '包头':[110,40.58],
-    '绵阳':[104.73,31.48],
-    '乌鲁木齐':[87.68,43.77],
-    '枣庄':[117.57,34.86],
-    '杭州':[120.19,30.26],
-    '淄博':[118.05,36.78],
-    '鞍山':[122.85,41.12],
-    '溧阳':[119.48,31.43],
-    '库尔勒':[86.06,41.68],
-    '安阳':[114.35,36.1],
-    '开封':[114.35,34.79],
-    '济南':[117,36.65],
-    '德阳':[104.37,31.13],
-    '温州':[120.65,28.01],
-    '九江':[115.97,29.71],
-    '邯郸':[114.47,36.6],
-    '临安':[119.72,30.23],
-    '兰州':[103.73,36.03],
-    '沧州':[116.83,38.33],
-    '临沂':[118.35,35.05],
-    '南充':[106.110698,30.837793],
-    '天津':[117.2,39.13],
-    '富阳':[119.95,30.07],
-    '泰安':[117.13,36.18],
-    '诸暨':[120.23,29.71],
-    '郑州':[113.65,34.76],
-    '哈尔滨':[126.63,45.75],
-    '聊城':[115.97,36.45],
-    '芜湖':[118.38,31.33],
-    '唐山':[118.02,39.63],
-    '平顶山':[113.29,33.75],
-    '邢台':[114.48,37.05],
-    '德州':[116.29,37.45],
-    '济宁':[116.59,35.38],
-    '荆州':[112.239741,30.335165],
-    '宜昌':[111.3,30.7],
-    '义乌':[120.06,29.32],
-    '丽水':[119.92,28.45],
-    '洛阳':[112.44,34.7],
-    '秦皇岛':[119.57,39.95],
-    '株洲':[113.16,27.83],
-    '石家庄':[114.48,38.03],
-    '莱芜':[117.67,36.19],
-    '常德':[111.69,29.05],
-    '保定':[115.48,38.85],
-    '湘潭':[112.91,27.87],
-    '金华':[119.64,29.12],
-    '岳阳':[113.09,29.37],
-    '长沙':[113,28.21],
-    '衢州':[118.88,28.97],
-    '廊坊':[116.7,39.53],
-    '菏泽':[115.480656,35.23375],
-    '合肥':[117.27,31.86],
-    '武汉':[114.31,30.52],
-    '大庆':[125.03,46.58]
-};
-var convertData = function (data) {
-    var res = [];
-    for (var i = 0; i < data.length; i++) {
-        var geoCoord = geoCoordMap[data[i].name];
-        if (geoCoord) {
-            res.push({
-                name: data[i].name,
-                value: geoCoord.concat(data[i].value)
+        var year = ["2017", "2018","2019"];
+        var mapData = [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ];
+    
+        /*柱子Y名称*/
+        var categoryData = [];
+        var barData = [];
+        var pie_data = [];
+    
+        for (var key in geoCoordMap) {
+            mapData[0].push({
+                "year": '2013',
+                "name": key,
+                "value": d1[key],
+            });
+            mapData[1].push({
+                "year": '2014',
+                "name": key,
+                "value": d2[key],
+            });
+            mapData[2].push({
+                "year": '2015',
+                "name": key,
+                "value": d3[key],
+            });
+            mapData[3].push({
+                "year": '2016',
+                "name": key,
+                "value": d4[key],
+            });
+            mapData[4].push({
+                "year": '2017',
+                "name": key,
+                "value": d5[key],
+            });
+            mapData[5].push({
+                "year": '2018',
+                "name": key,
+                "value": d6[key],
+            });
+              mapData[6].push({
+                "year": '2019',
+                "name": key,
+                "value": d7[key],
             });
         }
-    }
-    return res;
-};
+    
+        for (var i = 0; i < mapData.length; i++) {
+            mapData[i].sort(function sortNumber(a, b) {
+                return a.value - b.value
+            });
+            barData.push([]);
+            categoryData.push([]);
+            for (var j = 0; j < mapData[i].length; j++) {
+                barData[i].push(mapData[i][j].value);
+                categoryData[i].push(mapData[i][j].name);
+            }
+        }
 
-option = {
-   // backgroundColor: '#404a59',
-  /***  title: {
-        text: '实时行驶车辆',
-        subtext: 'data from PM25.in',
-        sublink: 'http://www.pm25.in',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },**/
-    tooltip : {
-        trigger: 'item',
-		formatter: function (params) {
-              if(typeof(params.value)[2] == "undefined"){
-              	return params.name + ' : ' + params.value;
-              }else{
-              	return params.name + ' : ' + params.value[2];
-              }
+        var myChart = echarts.init(document.getElementById('map_1'));
+        var convertData = function(data) {
+            var res = [];
+            for (var i = 0; i < data.length; i++) {
+                var geoCoord = geoCoordMap[data[i].name];
+                if (geoCoord) {
+                    res.push({
+                        name: data[i].name,
+                        value: geoCoord.concat(data[i].value)
+                    });
+                }
             }
-    },
-  
-    geo: {
-        map: 'china',
-        label: {
-            emphasis: {
-                show: false
-            }
-        },
-        roam: false,//禁止其放大缩小
-        itemStyle: {
-            normal: {
-                areaColor: '#4c60ff',
-                borderColor: '#002097'
-            },
-            emphasis: {
-                areaColor: '#293fff'
-            }
-        }
-    },
-    series : [
-        {
-            name: '消费金额',
-            type: 'scatter',
-            coordinateSystem: 'geo',
-            data: convertData(data),
-            symbolSize: function (val) {
-                return val[2] / 15;
-            },
-            label: {
-                normal: {
-                    formatter: '{b}',
-                    position: 'right',
-                    show: false
+            return res;
+        };
+
+        var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800']
+        // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i]; 
+            var lang1 = parseInt(Math.random() * (200 - 0 + 1) + 0); //值取随机数
+            var lang2 = parseInt(Math.random() * (200 - 0 + 1) + 0);
+            var lang3 = parseInt(Math.random() * (200 - 0 + 1) + 0);
+            var lang4 = parseInt(Math.random() * (200 - 0 + 1) + 0);
+            var lang5 = parseInt(Math.random() * (200 - 0 + 1) + 0);
+            pie_data.push({
+                // zlevel: 2,
+                // z:3,
+                name: keyname,
+                type: 'pie',
+                radius: ['40%', '60%'],
+                center: ['50%', '50%'],
+                color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                data: [
+                    {value: lang1, name: 'EN'},
+                    {value: lang2, name: 'CN'},
+                    {value: lang3, name: 'JP'},
+                    {value: lang4, name: 'KR'},
+                    {value: lang5, name: 'FR'}
+                ].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    color: 'rgba(255, 255, 255, 0.3)',
+                    normal: {
+                        Show: true, // ​​whether to display the label
+                        //// The location of the tag. The 'outside' is outside the pie slice and is connected to the corresponding sector by a visual guide. 'inside', 'inner' Same as 'inside', inside the pie slice. 'center' is at the center of the pie chart.
+                        position: 'left',
+                        // The content of the displayed label
+                        //a (series name), b (data item name), c (number), d (percentage)
+                        formatter: "{b}:{c}({d}%)", 
+                        emphasis: {
+                                 //The label style displayed by the mouse on the ring
+                            show: true,
+                            textStyle: {
+                                fontSize: '10',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    }
                 },
-                emphasis: {
-                    show: true
+                labelLine: {
+                    lineStyle: {
+                        color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    smooth: 0.2,
+                    length: 10,
+                    length2: 20
+                },
+                itemStyle: {
+                    // color: '#c23531',
+                    shadowBlur: 200,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    label:{  
+                        show:true,  
+                        formatter:'{d}%'  
+                    }, 
+                },
+    
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
                 }
-            },
-            itemStyle: {
-                normal: {
-                    color: '#ffeb7b'
-                }
-            }
+            })
         }
-		
-		/**
-		,
-        {
-            name: 'Top 5',
-            type: 'effectScatter',
-            coordinateSystem: 'geo',
-            data: convertData(data.sort(function (a, b) {
-                return b.value - a.value;
-            }).slice(0, 6)),
-            symbolSize: function (val) {
-                return val[2] / 20;
-            },
-            showEffectOn: 'render',
-            rippleEffect: {
-                brushType: 'stroke'
-            },
-            hoverAnimation: true,
-            label: {
-                normal: {
-                    formatter: '{b}',
-                    position: 'right',
-                    show: true
+
+
+
+        // 饼状图配置
+        var option = {
+            // backgroundColor: '#2c343c',
+            title: {
+                zlevel: 2,
+                // z:3,
+                text: pie_data[0]['name'],
+                top: 'middle',
+                left: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '16'
                 }
             },
-            itemStyle: {
-                normal: {
-                    color: '#ffd800',
-                    shadowBlur: 10,
-                    shadowColor: 'rgba(0,0,0,.3)'
+            legend: {
+                // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
+                selectedMode: true, 
+                /* orient: 'vertical', */
+                /* x : 'right', //the legend is shown on the right
+                y: 'center', */ //The legend is centered above the vertical display
+                bottom:0,
+                itemWidth: 10, // the width of the legend mark
+                itemHeight: 10, //Graph height of the legend mark
+                Data:['EN', 'CN', 'JP', 'KR', 'FR'],
+                textStyle: { // style of legend text
+                color: 'rgba(255,255,255,.5)',
+                // Color: '#A6A8B6', //text color
+                fontSize: 10 // text size
+                }
+            },   		  
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)",
+                textStyle: { // style of legend text
+                            Color:'#fff', //text color
+                            fontSize: 10 // text size
                 }
             },
-            zlevel: 1
+            visualMap: {
+                show: false,
+                min: 0,
+                max: 300,
+                inRange: {
+                    colorLightness: [0.5, 1]
+                }
+            },
+            series: [pie_data[0]]
+        };
+        // 饼状图初始化数据
+        pieChart.setOption(option);
+        window.addEventListener("resize",function(){
+            pieChart.resize();
+        });
+
+
+        optionXyMap01 = {
+            timeline: {
+                data: year,
+                axisType: 'category',
+                autoPlay: true,
+                playInterval: 3000,
+                left: '10%',
+                right: '10%',
+                bottom: '3%',
+                width: '80%',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: '#ddd'
+                        }
+                    },
+                    emphasis: {
+                        textStyle: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                symbolSize: 10,
+                lineStyle: {
+                    color: '#555'
+                },
+                checkpointStyle: {
+                    borderColor: '#777',
+                    borderWidth: 2
+                },
+                controlStyle: {
+                    showNextBtn: true,
+                    showPrevBtn: true,
+                    normal: {
+                        color: '#666',
+                        borderColor: '#666'
+                    },
+                    emphasis: {
+                        color: '#aaa',
+                        borderColor: '#aaa'
+                    }
+                },
+
+            },
+            baseOption: {
+                animation: true,
+                animationDuration: 1000,
+                animationEasing: 'cubicInOut',
+                animationDurationUpdate: 1000,
+                animationEasingUpdate: 'cubicInOut',
+                grid: {
+                    right: '1%',
+                    top: '15%',
+                    bottom: '10%',
+                    width: '20%'
+                },
+                tooltip: {
+                    trigger: 'axis', // hover触发器 时间轴
+                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+                        shadowStyle: {
+                            color: 'rgba(150,150,150,0.1)' //hover颜色
+                        }
+                    }
+                },
+                geo: { //地图设置
+                    show: true,
+                    map: 'china',
+                    roam: false,
+                    zoom: 1,
+                    layoutCenter: ['50%', '50%'],
+                    // If width-height ratio is larger than 1, then width is set to be 100.
+                    // Otherwise, height is set to be 100.
+                    // This makes sure that it will not exceed the area of 100x100
+                    layoutSize: 500,
+                    center: [113.83531246, 34.0267395887],
+                    label: {
+                        emphasis: {
+                            show: false
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            // areaColor: '#4c60ff',
+                            // borderColor: '#002097',
+                            borderColor: 'rgba(147, 235, 248, 1)',
+                            borderWidth: 1,
+                            areaColor: {
+                                type: 'radial',
+                                x: 0.5,
+                                y: 0.5,
+                                r: 0.8,
+                                colorStops: [{
+                                    offset: 0,
+                                    color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                                }],
+                                globalCoord: false // 缺省为 false
+                            },
+                            shadowColor: 'rgba(128, 217, 248, 1)',
+                            // shadowColor: 'rgba(255, 255, 255, 1)',
+                            shadowOffsetX: -2,
+                            shadowOffsetY: 2,
+                            shadowBlur: 10
+                        },
+                        emphasis: {
+                            // areaColor: '#293fff',
+                            areaColor: '#389BB7',
+                            borderWidth: 0
+                        }
+                    }
+                },
+            },
+            options: []
+
+        };
+    // geo: {
+    //     map: 'china',
+    //     label: {
+    //         emphasis: {
+    //             show: false
+    //         }
+    //     },
+    //     roam: false,//禁止其放大缩小
+    //     itemStyle: {
+    //         normal: {
+    //             areaColor: '#4c60ff',
+    //             borderColor: '#002097'
+    //         },
+    //         emphasis: {
+    //             areaColor: '#293fff'
+    //         }
+    //     }
+    // },
+        for (var n = 0; n < year.length; n++) {
+            optionXyMap01.options.push({
+                // backgroundColor: '#013954',
+                title:
+                    [{
+                            text: 'Area Tweets',
+                            left: '42%',
+                            top: '8%',
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 25
+                            }
+                        },
+                        {
+                            id: 'statistic',
+                            text: year[n] + " Statistics",
+                            left: '70%',
+                            top: '8%',
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: 25
+                            }
+                        }
+                    ],
+                xAxis: {
+                    type: 'value',
+                    scale: true,
+                    position: 'top',
+                    min: 0,
+                    boundaryGap: false,
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        margin: 2,
+                        textStyle: {
+                            color: '#aaa'
+                        }
+                    },
+                },
+                yAxis: {
+                    type: 'category',
+                    //  name: 'TOP 20',
+                    nameGap: 16,
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: '#ddd'
+                        }
+                    },
+                    axisTick: {
+                        show: false,
+                        lineStyle: {
+                            color: '#ddd'
+                        }
+                    },
+                    axisLabel: {
+                        interval: 0,
+                        textStyle: {
+                            color: '#ddd'
+                        }
+                    },
+                    data: categoryData[n]
+                },
+
+                series: [
+                    //地图
+                    {
+                        type: 'map',
+                        map: 'china',
+                        geoIndex: 0,
+                        aspectScale: 0.75, //长宽比
+                        showLegendSymbol: false, // 存在legend时显示
+                        label: {
+                            normal: {
+                                show: false
+                            },
+                            emphasis: {
+                                show: false,
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            }
+                        },
+                        roam: true,
+                        itemStyle: {
+                            normal: {
+                                areaColor: '#031525',
+                                borderColor: '#FFFFFF',
+                            },
+                            emphasis: {
+                                areaColor: '#2B91B7'
+                            }
+                        },
+                        animation: false,
+                        data: mapData[n]
+                    },
+                    //地图中闪烁的点
+                    {
+                        //  name: 'Top 5',
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo',
+                        data: convertData(mapData[n].sort(function(a, b) {
+                            return b.value - a.value;
+                        }).slice(0, 20)),
+                        symbolSize: function(val) {
+                            return val[2] / 10;
+                        },
+                        showEffectOn: 'render',
+                        rippleEffect: {
+                            brushType: 'stroke'
+                        },
+                        hoverAnimation: true,
+                        label: {
+                            normal: {
+                                formatter: '{b}',
+                                position: 'right',
+                                show: true
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: colors[colorIndex][n],
+                                shadowBlur: 10,
+                                shadowColor: colors[colorIndex][n]
+                            }
+                        },
+                        zlevel: 1
+                    },
+                    //柱状图
+                    {
+                        zlevel: 1.5,
+                        type: 'bar',
+                        symbol: 'none',
+                        itemStyle: {
+                            normal: {
+                                color: colors[colorIndex][n]
+                            }
+                        },
+                        data: barData[n]
+                    }
+                ]
+            })
         }
-		**/
-    ]
-};
-		
-        myChart.setOption(option);
+        myChart.setOption(optionXyMap01);
         window.addEventListener("resize",function(){
             myChart.resize();
         });
+
+
+        myChart.on('click', function (params) {
+            var city = params.name;
+            var index = mapData[0].findIndex(function(item) {
+                return item.name === city;
+            });
+            option['title']['text'] = city;
+            option['series'] = [pie_data[index]];
+            pieChart.setOption(option);
+        });
+
+        window.addEventListener("resize",function(){
+            pieChart.resize();
+        });
+
     }
 
 })

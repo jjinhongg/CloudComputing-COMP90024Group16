@@ -1,7 +1,7 @@
 ﻿
 $(function () {
 echarts_1();
-echarts_2();
+// echarts_2();
 echarts_4();
 echarts_31();
 echarts_32();
