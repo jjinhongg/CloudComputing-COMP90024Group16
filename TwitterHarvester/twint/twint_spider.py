@@ -13,7 +13,7 @@ def twintCongig(coordinate, range, outputf):
     c.Geo = geo
     # c.Since = "2019-01-01"
     # c.Until = date
-    # c.Limit = 5000000
+    c.Limit = 100000
     c.Output = outputf
     c.Store_json = True
     return c
