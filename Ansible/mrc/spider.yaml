@@ -1,4 +1,4 @@
-- hosts: Workernode
+- hosts: DataNodes
   vars:
     # ansible_python_interpreter: /usr/local/bin/python3
     ansible_user: ubuntu
@@ -6,7 +6,7 @@
     current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
   vars_files:
       - host_vars/mrc.yaml
-      - host_vars/couchdb_settings.yaml
+      - host_vars/environment_variables.yaml
   gather_facts: true
 
   roles:
