@@ -1,17 +1,26 @@
 ---
+- name: git pull lastest repo
+  shell: git pull
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
+
 - name: copy spider config to hosts
   copy:
     src: 'configs/spiderSetting.py'
-    dest: '/home/ubuntu/COMP90024/TwitterHarvester'
+    dest: '/home/ubuntu/COMP90024/TwitterHarvester/twint'
 
 - name: Shut down docker previopus server
   become: yes
   shell: docker-compose down --rmi local
   args:
-    chdir: '/home/ubuntu/COMP90024/TwitterHarvester'
+    chdir: '/home/ubuntu/COMP90024/TwitterHarvester/twint/'
 
-- name: start server
+- name: Run docker compose
   become: yes
-  shell: docker-compose up --build -d
-  args:
-    chdir: '/home/ubuntu/COMP90024/TwitterHarvester'
+  docker_compose:
+    project_src: "/home/ubuntu/COMP90024/COMP90024Group16/twint/"
+    pull: false
+    build: yes
+    state: present
+    remove_orphans: no
+    recreate: always
