@@ -8,10 +8,10 @@ def run_threaded(func):
     job.start()
 
 if __name__ == '__main__':
-
+    name = 'remove all files'
     # schedule.every().minutes.do(run_threaded, run_spider())
     schedule.every(10).minutes.do(run_threaded, process_and_save())
-    schedule.every(60).minutes.do(remove_per_hours())
+    schedule.every(60).minutes.do(run_threaded,remove_per_hours())
 
     while True:
         run_spider()
