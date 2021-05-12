@@ -12,9 +12,9 @@ def twintCongig(coordinate, range, outputf):
     geo = ",".join([str(coordinate[0]), str(coordinate[1]), range])
     c = twint.Config()
     c.Geo = geo
-    # c.Since = "2019-01-01"
-    c.Until = "2019-05-09"
-    c.Limit = 100000
+    c.Since = "2019-05-09"
+    # c.Until = "2019-05-09"
+    c.Limit = 1000
     c.Output = outputf
     c.Store_json = True
     return c
@@ -29,6 +29,3 @@ def run_spider():
 
     for city in cities:
         tweetCrawling(city, cities_geo[city], "20km")
-
-if __name__ == '__main__':
-    run_spider()

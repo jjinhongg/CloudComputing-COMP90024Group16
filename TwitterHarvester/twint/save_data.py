@@ -1,3 +1,5 @@
+import time
+
 from cloudant.client import CouchDB
 from textblob import TextBlob
 import nltk
@@ -43,9 +45,8 @@ def process_and_save():
     # save the preprocessed data into corresponding database
     for datafile, dbname in data.items():
         citydb = client[dbname]
-
         if os.path.exists(datafile):
-            with open(datafile,'r') as f:
+            with open(datafile,'r',encoding='utf-8') as f:
                 row = f.readline()
                 while(row):
                     try:
@@ -67,7 +68,10 @@ def process_and_save():
                         pass
                     row = f.readline()
 
+    remove_per_hours()
+
 def remove_per_hours():
+    # time.sleep(3600)
     data = {'Melbourne.json': 'melbourne',
             'Sydney.json': 'sydney',
             'Adelaide.json': 'adelaide',
@@ -78,3 +82,5 @@ def remove_per_hours():
     for datafile,_ in data.items():
         if os.path.exists(datafile):
             os.remove(datafile)
+
+
