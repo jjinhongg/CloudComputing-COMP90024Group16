@@ -9,11 +9,12 @@ def run_threaded(func):
 
 if __name__ == '__main__':
 
-    schedule.every(3).minutes.do(run_threaded, run_spider())
+    # schedule.every().minutes.do(run_threaded, run_spider())
     schedule.every(10).minutes.do(run_threaded, process_and_save())
     schedule.every(60).minutes.do(remove_per_hours())
 
     while True:
+        run_spider()
         schedule.run_pending()
 
 
