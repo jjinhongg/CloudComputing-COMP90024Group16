@@ -35,34 +35,33 @@ class SentimentScore():
 
 
 def process_and_save():
-    while True:
-        data = {'Melbourne.json': 'melbourne',
-                'Sydney.json': 'sydney',
-                'Adelaide.json': 'adelaide',
-                'Canberra.json':'canberra',
-                'Brisbane.json': 'brisbane'}
+    data = {'Melbourne.json': 'melbourne',
+            'Sydney.json': 'sydney',
+            'Adelaide.json': 'adelaide',
+            'Canberra.json':'canberra',
+            'Brisbane.json': 'brisbane'}
 
-        # save the preprocessed data into corresponding database
-        for datafile, dbname in data.items():
-            citydb = client[dbname]
-            with open(datafile,'r') as f:
+    # save the preprocessed data into corresponding database
+    for datafile, dbname in data.items():
+        citydb = client[dbname]
+        with open(datafile,'r') as f:
+            row = f.readline()
+            while(row):
+                try:
+                    rowjson = json.loads(row)
+                    docid = str(rowjson["id"])
+                    exists = docid in citydb
+                    if exists:
+                        print("Tweet {} already stored in {} db!".format(docid, dbname))
+                    if not exists:
+                        t = SentimentScore()
+                        newjson = {"_id": docid, "date": rowjson["date"], "time": rowjson["time"],
+                                "timezone": rowjson["timezone"], "user_id": rowjson["user_id"],
+                                "place": rowjson["place"], "tweet": rowjson["tweet"],
+                                "language": rowjson["language"], "hashtags": rowjson["hashtags"],
+                                "sentiment": t.socre(rowjson["tweet"])
+                                }
+                        doc = citydb.create_document(newjson)
+                except:
+                    pass
                 row = f.readline()
-                while(row):
-                    try:
-                        rowjson = json.loads(row)
-                        docid = str(rowjson["id"])
-                        exists = docid in citydb
-                        if exists:
-                            print("Tweet {} already stored in {} db!".format(docid, dbname))
-                        if not exists:
-                            t = SentimentScore()
-                            newjson = {"_id": docid, "date": rowjson["date"], "time": rowjson["time"],
-                                    "timezone": rowjson["timezone"], "user_id": rowjson["user_id"],
-                                    "place": rowjson["place"], "tweet": rowjson["tweet"],
-                                    "language": rowjson["language"], "hashtags": rowjson["hashtags"],
-                                    "sentiment": t.socre(rowjson["tweet"])
-                                    }
-                            doc = citydb.create_document(newjson)
-                    except:
-                        pass
-                    row = f.readline()
