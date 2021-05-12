@@ -15,7 +15,11 @@
 #   file:
 #     path: '/home/ubuntu/COMP90024'
 #     state: directory
-
+- name: Remove directory
+  file:
+    path: /home/ubuntu/COMP90024
+    state: absent
+    
 - name: git clone repo
   shell: git pull https://github.com/williamjz/COMP90024Group16.git
   args:
