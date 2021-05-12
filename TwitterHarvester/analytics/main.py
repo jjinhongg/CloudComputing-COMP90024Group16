@@ -39,6 +39,10 @@ sentiment = '''
     "senti_sum" : {
       "map" : "function(doc){emit(doc.date.substr(0,4),doc.sentiment)}",
       "reduce" : "_sum"
+    },
+    "en_count" : {
+      "map" : "function(doc){if (doc.language === 'en') {emit(doc.date.substr(0,4))}}",
+      "reduce" : "_count"
     }
   }
 }
@@ -61,7 +65,7 @@ hashtags = '''
   "_id" : "_design/hashtags",
   "views" : {
     "all_hashtags" : {
-      "map" : "function(doc){emit(doc.hashtags)}"
+      "map" : "function(doc){if ((!(doc.hashtags.length === 0)) && (doc.date.substr(0,4)==='2021')) {emit(doc.hashtags)}}"
     }
   }
 }
@@ -69,7 +73,8 @@ hashtags = '''
 
 client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
 
-cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
+# cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
+cities = ['canberra']
 
 for city in cities:
     citydb = client[city]
@@ -120,6 +125,15 @@ with open('lang_dis.json','w') as f:
     f.write(json.dumps(lang_dis))
     
 # average sentiment score each year each city
+en_twts = {}
+for city in cities:
+    citydb = client[city]
+    en_count = {}
+    view = View(citydb['_design/sentiment'], 'en_count')
+    with view.custom_result(group=True) as results:
+        for result in results:
+            en_count[result['key']] = result['value']
+    en_twts[city] = en_count
 senti_score = {}
 for city in cities:
     citydb = client[city]
@@ -127,7 +141,7 @@ for city in cities:
     view = View(citydb['_design/sentiment'], 'senti_sum')
     with view.custom_result(group=True) as results:
         for result in results:
-            senti_avg[result['key']] = result['value']/total_twts[city][result['key']]
+            senti_avg[result['key']] = result['value']/en_twts[city][result['key']]
     senti_score[city] = senti_avg
 with open('senti_score.json','w') as f:
     f.write(json.dumps(senti_score))
@@ -145,7 +159,7 @@ for city in cities:
 with open('time_dis.json','w') as f:
     f.write(json.dumps(time_dis))
     
-# top 30 used hashtags each city
+# top 30 used hashtags this year each city
 top_hashtags = {}
 for city in cities:
     citydb = client[city]
