@@ -1,7 +1,6 @@
 cloudant
 twint
 nltk
-TextBlob
-CouchDB
+textblob
 os
 schedule
