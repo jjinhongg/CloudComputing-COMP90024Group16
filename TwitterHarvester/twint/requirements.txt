@@ -2,5 +2,3 @@ cloudant
 twint
 nltk
 textblob
-os
-schedule

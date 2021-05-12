@@ -138,7 +138,7 @@ var t = null;
       get_cur_month_tweeters:function(){
         var that =this;
 
-        axios.get("/totalTweeters")
+        axios.get("/totaltweeters")
                 .then(function (response) {
                   console.log(response);
                   that.totalltweets=response.data['number'];
@@ -146,7 +146,7 @@ var t = null;
                 .catch(function (error) {
                   console.log(error);
                 });
-        that.totalltweets=response;
+
       }
     }
 
