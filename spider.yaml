@@ -1,0 +1,13 @@
+- hosts: Workernode
+  vars:
+    # ansible_python_interpreter: /usr/local/bin/python3
+    ansible_user: ubuntu
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+    current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+  vars_files:
+      - host_vars/mrc.yaml
+      - host_vars/couchdb_settings.yaml
+  gather_facts: true
+
+  roles:
+    - role: deploy-spider
