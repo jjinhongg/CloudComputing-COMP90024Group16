@@ -40,44 +40,58 @@
 #     remove_orphans: no
 #     recreate: always
     
-# Build Docker image for tweet harvester
-- name: Build an image and push it to local repo
-  docker_image:
-    build:
-      path: "/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint/"
-      pull: yes
-    name: cloud-assignment-2/tweet-harvester
-    tag: latest
-    source: build
-    force: yes
-  become: yes
-  environment: "{{ proxy_env }}"
-
-# Stop existing Docker containers for Twitter Harvesters and remove them (if any)
-- name: Stop Twitter Harvester Docker container
-  become: yes
-  docker_container:
-    name: twitter-harvester
-    state: absent
-
-# # Install cloudant python package to reset Twitter Harvester configuration in CouchDB 
-# - pip:
-#     name: cloudant
-#   become: true
+# # Build Docker image for tweet harvester
+# - name: Build an image and push it to local repo
+#   docker_image:
+#     build:
+#       path: "/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint/"
+#       pull: yes
+#     name: cloud-assignment-2/tweet-harvester
+#     tag: latest
+#     source: build
+#     force: yes
+#   become: yes
 #   environment: "{{ proxy_env }}"
+  
+#  - name: build container image
+#       docker_image:
+#         name: democontainer:v1.0
+#         build:
+#           path: /root/demo-dockerfile
+#           source: build
+#         state: present
 
-# Run script to reset Twitter Harvester configuration in CouchDB 
-- name: Reset twitter harvesters
-  command: 'python3  /home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint/main.py'
-  become: true
-  run_once: true
+# # Stop existing Docker containers for Twitter Harvesters and remove them (if any)
+# - name: Stop Twitter Harvester Docker container
+#   become: yes
+#   docker_container:
+#     name: twitter-harvester
+#     state: absent
 
-# Create new docker container for Twitter Harvester and start container
-- name: Create and start Twitter Harvester Docker container
-  become: yes
-  docker_container:
-    name: twitter-harvester
-    image: cloud-assignment-2/tweet-harvester
-    state: started
-    pull: false
-    recreate: true
+# # # Install cloudant python package to reset Twitter Harvester configuration in CouchDB 
+# # - pip:
+# #     name: cloudant
+# #   become: true
+# #   environment: "{{ proxy_env }}"
+
+# # Run script to reset Twitter Harvester configuration in CouchDB 
+# - name: Reset twitter harvesters
+#   command: 'python3  /home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint/main.py'
+#   become: true
+#   run_once: true
+
+# # Create new docker container for Twitter Harvester and start container
+# - name: Create and start Twitter Harvester Docker container
+#   become: yes
+#   docker_container:
+#     name: twitter-harvester
+#     image: cloud-assignment-2/tweet-harvester
+#     state: started
+#     pull: false
+#     recreate: true
+- name: Start server
+  become:
+    yes
+  shell: docker-compose up  --build -d
+  args:
+    chdir: /home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint
