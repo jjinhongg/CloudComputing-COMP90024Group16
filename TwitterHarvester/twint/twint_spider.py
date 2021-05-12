@@ -1,4 +1,5 @@
 import twint
+import threading
 
 
 def tweetCrawling(location, coordinate, range):
@@ -12,7 +13,7 @@ def twintCongig(coordinate, range, outputf):
     c = twint.Config()
     c.Geo = geo
     # c.Since = "2019-01-01"
-    # c.Until = date
+    c.Until = "2019-05-09"
     c.Limit = 100000
     c.Output = outputf
     c.Store_json = True
@@ -28,3 +29,6 @@ def run_spider():
 
     for city in cities:
         tweetCrawling(city, cities_geo[city], "20km")
+
+if __name__ == '__main__':
+    run_spider()

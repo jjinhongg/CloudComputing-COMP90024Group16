@@ -1,6 +1,6 @@
 import threading
 from twint_spider import run_spider
-from save_data import process_and_save
+from save_data import process_and_save,remove_per_hours
 import schedule
 
 def run_threaded(func):
@@ -9,15 +9,9 @@ def run_threaded(func):
 
 if __name__ == '__main__':
 
-    schedule.every(10).minutes.do(run_threaded, run_spider())
+    schedule.every(3).minutes.do(run_threaded, run_spider())
     schedule.every(10).minutes.do(run_threaded, process_and_save())
-    # threads = []
-    # threads.append(threading.Thread(target=run_spider()))
-    # # run_spider()
-    # # threads.append(threading.Thread(target=process_and_save()))
-    # # process_and_save()
-    # for t in threads:
-    #     t.start()
+    schedule.every(60).minutes.do(remove_per_hours())
 
     while True:
         schedule.run_pending()

@@ -2,8 +2,7 @@ from cloudant.client import CouchDB
 from textblob import TextBlob
 import nltk
 import json
-import twint
-import time
+import os
 USERNAME = 'admin'
 PASSWORD = 'data-miner!'
 client = CouchDB(USERNAME, PASSWORD, url='http://172.26.133.205:5984', connect=True)
@@ -65,3 +64,15 @@ def process_and_save():
                 except:
                     pass
                 row = f.readline()
+
+def remove_per_hours():
+    data = {'Melbourne.json': 'melbourne',
+            'Sydney.json': 'sydney',
+            'Adelaide.json': 'adelaide',
+            'Canberra.json': 'canberra',
+            'Brisbane.json': 'brisbane'}
+
+    # remove the json
+    for datafile,_ in data.items():
+        if os.path.exists(datafile):
+            os.remove(datafile)

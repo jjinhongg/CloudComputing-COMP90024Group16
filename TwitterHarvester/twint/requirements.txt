@@ -3,3 +3,5 @@ twint
 nltk
 TextBlob
 CouchDB
+os
+schedule
