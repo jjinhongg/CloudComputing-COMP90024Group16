@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>index</title>
 <script type="text/javascript" src="../static/js/jquery.js"></script>
-
+  <script type="text/javascript" src="../static/js/axios.min.js"></script>
 <link rel="stylesheet" href="../static/css/comon0.css">
 </head>
 	<script>
@@ -128,15 +128,25 @@ var t = null;
   var vue = new Vue({
     el:'#app',
     data:{
-      totalltweets:1231245,
-      testdata:false
+      totalltweets:0
+
     },
     mounted:function(){
-      this.test();
+      this.get_cur_month_tweeters();
     },
     methods:{
-      test:function(){
-        this.totalltweets++;
+      get_cur_month_tweeters:function(){
+        var that =this;
+
+        axios.get("/totalTweeters")
+                .then(function (response) {
+                  console.log(response);
+                  that.totalltweets=response.data['number'];
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+        that.totalltweets=response;
       }
     }
 

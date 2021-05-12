@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 import time
 import utils
+import data_analysis
 from cloudant.client import Cloudant
 app = Flask(__name__)
 
@@ -24,8 +25,8 @@ def gettime():
 #显示当前处理推特数量
 @app.route("/totalTweeters")
 def get_all_number():
-    number = utils.count_all_tweet()
-    return '一共'+str(number)+'推特数量'
+    current_twts = data_analysis.current_twts()
+    return current_twts
 
 #地图散点图显示推特分布
 @app.route("/mapshow")
