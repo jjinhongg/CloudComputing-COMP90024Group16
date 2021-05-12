@@ -125,7 +125,7 @@ $(function () {
                 // z:3,
                 name: keyname,
                 type: 'pie',
-                radius: ['40%', '60%'],
+                radius: ['50%', '70%'],
                 center: ['50%', '50%'],
                 color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
                 data: [
@@ -157,7 +157,7 @@ $(function () {
                 },
                 labelLine: {
                     lineStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)'
+                        // color: 'rgba(255, 255, 255, 0.3)'
                     },
                     smooth: 0.2,
                     length: 10,
@@ -304,7 +304,7 @@ $(function () {
                     }
                 },
                 geo: { //地图设置
-                    nameProperty: 'STATE_NAME',
+                    nameProperty: "STATE_NAME",
                     show: true,
                     map: 'australia',
                     roam: false,
@@ -314,7 +314,7 @@ $(function () {
                     // Otherwise, height is set to be 100.
                     // This makes sure that it will not exceed the area of 100x100
                     layoutSize: 500,
-                    center: [133.7751, -25.2744],
+                    // center: [133.7751, -25.2744],
                     label: {
                         emphasis: {
                             show: false
@@ -449,12 +449,12 @@ $(function () {
                 series: [
                     //地图
                     {
-                        nameProperty: 'STATE_NAME',
                         type: 'map',
                         map: 'australia',
                         geoIndex: 0,
                         aspectScale: 0.75, //长宽比
                         showLegendSymbol: false, // 存在legend时显示
+                        nameProperty: 'STATE_NAME',
                         label: {
                             normal: {
                                 show: false
@@ -477,7 +477,7 @@ $(function () {
                             }
                         },
                         animation: false,
-                        data: mapData[n]
+                        data: mapData
                     },
                     //地图中闪烁的点
                     {
