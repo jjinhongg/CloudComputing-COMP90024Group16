@@ -1,24 +1,24 @@
 ---
-# - name: Shut down docker previopus server
+# - name: Shut down docker previous server
 #   become: yes
 #   shell: docker-compose down --rmi local
 #   args:
 #     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
 
-# - name: Remove directory
-#   file:
-#     path: /home/ubuntu/COMP90024
-#     state: absent
+- name: Remove directory
+  file:
+    path: /home/ubuntu/COMP90024
+    state: absent
 
-# - name: creates directory
-#   file:
-#     path: '/home/ubuntu/COMP90024'
-#     state: directory
+- name: creates directory
+  file:
+    path: '/home/ubuntu/COMP90024'
+    state: directory
 
-# - name: git clone repo
-#   shell: git clone https://github.com/williamjz/COMP90024Group16.git
-#   args:
-#     chdir: '/home/ubuntu/COMP90024'
+- name: git clone repo
+  shell: git clone https://github.com/williamjz/COMP90024Group16.git
+  args:
+    chdir: '/home/ubuntu/COMP90024'
 
 - name: git pull lastest repo
   shell: git pull
@@ -30,9 +30,19 @@
     src: 'configs/spiderSetting.py'
     dest: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
 
-- name: Start server
-  become:
-    yes
-  shell: docker-compose up  --build -d
-  args:
-    chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+# - name: Start server
+#   become:
+#     yes
+#   shell: docker-compose up  --build -d
+#   args:
+#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+
+- name: Run docker compose
+  become: yes
+  docker_compose:
+    project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+    pull: false
+    build: yes
+    state: present
+    remove_orphans: no
+    recreate: always
