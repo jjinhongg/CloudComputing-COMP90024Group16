@@ -50,26 +50,5 @@ def get_hot_words():
 
 
 
-#读取数据 根据指定database 和 key
-@app.route('/testget/<database>')
-def get_data(database):
-    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
-    db = couch[database]
-    for id in db:
-        print(db[id])
-    return 'success'
-
-#删除数据库
-@app.route('/testdel/<database>')
-def del_database(database):
-    couch = couchdb.Server('http://admin:admin@127.0.0.1:5984/')
-    try:
-        couch.delete(database)
-        return 'success'
-    except:
-        return 'failed'
-
-
-
 if __name__ == '__main__':
     app.run()
