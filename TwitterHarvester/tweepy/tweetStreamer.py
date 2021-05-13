@@ -112,7 +112,7 @@ class TweetListener(StreamListener):
 
         tweetJson = js.loads(data, encoding= 'utf-8')
         
-    	# need to filter out the retweet
+# need to filter out the retweet
         if not tweetJson["text"].startswith('RT') and tweetJson["retweeted"] == False:
             file.write(data)
             db.create_document(tweetJson)

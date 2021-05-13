@@ -1,4 +1,4 @@
 cloudant
-twint
+tweepy
 nltk
 textblob

@@ -9,7 +9,7 @@ ENV no_proxy localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ../tweepy .
 
 RUN pip install -r requirements.txt
 
