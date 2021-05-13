@@ -5,6 +5,7 @@ from textblob import TextBlob
 import nltk
 import json
 import os
+from datetime import datetime
 USERNAME = 'admin'
 PASSWORD = 'data-miner!'
 client = CouchDB(USERNAME, PASSWORD, url='http://172.26.133.205:5984', connect=True)
@@ -36,11 +37,11 @@ class SentimentScore():
 
 
 def process_and_save():
-    data = {'Melbourne.json': 'melbourne',
-            'Sydney.json': 'sydney',
-            'Adelaide.json': 'adelaide',
-            'Canberra.json':'canberra',
-            'Brisbane.json': 'brisbane'}
+    data = {'melbourne.json': 'melbourne',
+            'sydney.json': 'sydney',
+            'adelaide.json': 'adelaide',
+            'canberra.json':'canberra',
+            'brisbane.json': 'brisbane'}
 
     # save the preprocessed data into corresponding database
     for datafile, dbname in data.items():
@@ -57,11 +58,15 @@ def process_and_save():
                             print("Tweet {} already stored in {} db!".format(docid, dbname))
                         if not exists:
                             t = SentimentScore()
-                            newjson = {"_id": docid, "date": rowjson["date"], "time": rowjson["time"],
-                                    "timezone": rowjson["timezone"], "user_id": rowjson["user_id"],
-                                    "place": rowjson["place"], "tweet": rowjson["tweet"],
-                                    "language": rowjson["language"], "hashtags": rowjson["hashtags"],
-                                    "sentiment": t.socre(rowjson["tweet"])
+                            date = rowjson["created_at"]
+                            newdate = datetime.strptime(date, '%a %b %d %H:%M:%S %z %Y').strftime('%Y-%m-%d %H:%M:%S')
+                            newdate = newdate.split()
+                            user_id = rowjson["user"]['id']
+                            newjson = {"_id": docid, "date": newdate[0], "time": newdate[1],
+                                    "timezone": "+0000", "user_id": user_id,
+                                    "place": rowjson["place"]['name'], "tweet": rowjson["text"],
+                                    "language": rowjson["lang"], "hashtags": rowjson["entities"]['hashtags'],
+                                    "sentiment": t.socre(rowjson["text"])
                                     }
                             doc = citydb.create_document(newjson)
                     except:
@@ -72,11 +77,11 @@ def process_and_save():
 
 def remove_per_hours():
     # time.sleep(3600)
-    data = {'Melbourne.json': 'melbourne',
-            'Sydney.json': 'sydney',
-            'Adelaide.json': 'adelaide',
-            'Canberra.json': 'canberra',
-            'Brisbane.json': 'brisbane'}
+    data = {'melbourne.json': 'melbourne',
+            'sydney.json': 'sydney',
+            'adelaide.json': 'adelaide',
+            'canberra.json': 'canberra',
+            'brisbane.json': 'brisbane'}
 
     # remove the json
     for datafile,_ in data.items():

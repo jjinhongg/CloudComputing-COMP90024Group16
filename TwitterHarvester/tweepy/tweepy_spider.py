@@ -1,6 +1,6 @@
 import tweepy
 import json
-
+import time
 
 def tweepy_init():
     '''
@@ -53,7 +53,6 @@ def run_spider():
                 wp.write(json.dumps(tweets[i]._json)+'\n')
 
 
-if __name__ == '__main__':
-    run_spider()
+    time.sleep(100)
 
 
