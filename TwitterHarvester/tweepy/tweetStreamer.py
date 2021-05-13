@@ -10,11 +10,11 @@ import json
 
 # My keys and tokens
 
-USERNAME = 'wenqinl'
-PASSWORD = 'p19980228/'
-URL = 'http://127.0.0.1:5984'
+USERNAME = 'admin'
+PASSWORD = 'data-miner!'
+URL = 'http://172.26.133.205:5984'
 client = Cloudant(USERNAME, PASSWORD, url=URL, connect=True, auto_renew=True)
-# print(client.all_dbs())
+print(client.all_dbs())
 db = client.create_database('mydb', partitioned=False)
 
 config_file = 'config.json'
