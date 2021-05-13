@@ -3,7 +3,7 @@
 #   become: yes
 #   shell: docker-compose down --rmi local
 #   args:
-#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
 - name: Remove directory
   file:
@@ -28,19 +28,19 @@
 - name: copy spider config to hosts
   copy:
     src: 'configs/spiderSetting.py'
-    dest: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+    dest: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
 # - name: Start server
 #   become:
 #     yes
 #   shell: docker-compose up  --build -d
 #   args:
-#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
 - name: Run docker compose
   become: yes
   docker_compose:
-    project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/twint'
+    project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
     pull: false
     build: yes
     state: present
