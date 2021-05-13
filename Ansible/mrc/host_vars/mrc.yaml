@@ -86,6 +86,11 @@ security_group_rules_public:
     port_range_min: 8000
     port_range_max: 8000
     remote_ip_prefix: 0.0.0.0/0
+  - name: administration
+    protocol: tcp
+    port_range_min: 443
+    port_range_max: 443
+    remote_ip_prefix: 0.0.0.0/0
 
 security_group_rules_private: 
   - name: intra_cluster_communication
@@ -103,3 +108,5 @@ security_group_rules_private:
     port_range_min: 4369
     port_range_max: 4369
     remote_group: intra_cluster_communication
+
+  
