@@ -102,7 +102,7 @@ def run_spider():
         max_tweets = 1000
 
         tweets = tweepy.Cursor(api.search, geocode=coordinates,result_type=result_type,
-                               until=until_date, count=100).items(max_tweets)
+                               count=100).items(max_tweets)
         alltw = []
         for tweet in tweets:
             cur = tweet._json
@@ -126,6 +126,10 @@ def run_spider():
 
 
     time.sleep(100)
+
+
+if __name__ == '__main__':
+    run_spider()
 
 
 
