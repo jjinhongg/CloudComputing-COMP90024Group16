@@ -5,6 +5,20 @@
 #   args:
 #     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
+- name: Shut down previous server
+  become:
+    yes
+  shell: docker-compose down -d
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
+
+- name: Remove directory __pycache__
+  become: 
+    yes
+  file:
+    path: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy/__pycache__'
+    state: absent
+
 - name: Remove directory
   file:
     path: /home/ubuntu/COMP90024
