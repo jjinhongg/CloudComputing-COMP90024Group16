@@ -2,9 +2,11 @@ import threading
 from tweepy_spider import run_spider
 from save_data import process_and_save,couchdb_init
 import schedule
+import nltk
 
 
 if __name__ == '__main__':
+    nltk.download('punkt')
     # name = 'remove all files'
     # schedule.every().minutes.do(run_threaded, run_spider())
     # schedule.every(1).minutes.do(run_threaded, process_and_save())
