@@ -77,14 +77,15 @@ def process_and_save(client):
                                     "sentiment": t.socre(rowjson["text"])
                                     }
                             doc = citydb.create_document(newjson)
+
+
                     except:
                         pass
                     row = f.readline()
-
+    print('finish the saving part')
     remove_per_hours()
 
 def remove_per_hours():
-    # time.sleep(3600)
     data = {'melbourne.json': 'melbourne',
             'sydney.json': 'sydney',
             'adelaide.json': 'adelaide',
@@ -95,5 +96,7 @@ def remove_per_hours():
     for datafile,_ in data.items():
         if os.path.exists(datafile):
             os.remove(datafile)
+
+
 
 

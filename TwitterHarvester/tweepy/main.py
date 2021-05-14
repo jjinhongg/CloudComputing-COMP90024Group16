@@ -14,7 +14,8 @@ if __name__ == '__main__':
     # schedule.every(10).minutes.do(run_spider, name)
     # schedule.every(1).minutes.do(process_and_save)
     # schedule.every(60).minutes.do(remove_per_hours, name)
-    client = couchdb_init()
+    # client = couchdb_init()
     while True:
+        client = couchdb_init()
         run_spider()
         process_and_save(client)
