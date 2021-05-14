@@ -7,23 +7,26 @@ def tweepy_init():
     init the tweepy account
     :return:  accout
     '''
-    config = None
-    with open('config.json', 'rb') as f:
-        config = json.loads(f.read())
-    key = 'zixuanz'
-    account = config.get('accounts').get(key)
+    # config = None
+    # with open('config.json', 'rb') as f:
+    #     config = json.loads(f.read())
+    # key = 'zixuanz'
+    # account = config.get('accounts').get(key)
 
-    consumer_key = account.get('consumer_key')
-    consumer_secret = account.get('consumer_secret')
-    access_token = account.get('access_token')
-    access_token_secret = account.get('access_token_secret')
+    # consumer_key = account.get('consumer_key')
+    # consumer_secret = account.get('consumer_secret')
+    # access_token = account.get('access_token')
+    # access_token_secret = account.get('access_token_secret')
+ 
+    consumer_key = "NlxfH8KHuVhKUPZZeSh90y12o"
+    consumer_secret = "wJWb1D0qqM9b2nikhKy2ZTXus5acV6yQoHVCs6WJC1MzegsEKD"
+    access_token = "1367986631983046658-mMydlFKzFPtRPrZW13TTikgyHdpIaw"
+    access_token_secret = "EJR6yGb2HTgj4mkHa1joXj5tZspLhdA3hFkbCwiCzZicH"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
     api = tweepy.API(auth,wait_on_rate_limit=True)
     return api
-
-
 
 def run_spider():
     data = {'Melbourne.json': 'melbourne',

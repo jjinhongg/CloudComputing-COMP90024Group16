@@ -28,3 +28,8 @@ $ssh -i cloud.key ubuntu@172.26.133.205
  - db_3 on /dev/vdb 
 4. server4: 172.26.133.109 
  - db_4 on /dev/vdb 
+
+
+cd COMP90024/COMP90024Group16/TwitterHarvester/tweepy/
+docker ps
+docker-compose logs
