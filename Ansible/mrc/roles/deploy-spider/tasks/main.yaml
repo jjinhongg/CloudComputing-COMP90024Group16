@@ -1,14 +1,9 @@
 ---
-- name: git pull lastest repo
-  shell: git pull
-  args:
-    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
-
-- name: Shut down docker previous server
-  become: yes
-  shell: docker-compose down --rmi local
-  args:
-    chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
+# - name: Shut down docker previous server
+#   become: yes
+#   shell: docker-compose down --rmi local
+#   args:
+#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
 - name: Remove directory
   file:
@@ -25,6 +20,11 @@
   args:
     chdir: '/home/ubuntu/COMP90024'
 
+- name: git pull lastest repo
+  shell: git pull
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
+    
 - name: copy spider config to hosts
   copy:
     src: 'configs/spiderSetting.py'
@@ -37,12 +37,12 @@
 #   args:
 #     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
-- name: Run docker compose
-  become: yes
-  docker_compose:
-    project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
-    pull: false
-    build: yes
-    state: present
-    remove_orphans: no
-    recreate: always
+# - name: Run docker compose
+#   become: yes
+#   docker_compose:
+#     project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
+#     pull: false
+#     build: yes
+#     state: present
+#     remove_orphans: no
+#     recreate: always
