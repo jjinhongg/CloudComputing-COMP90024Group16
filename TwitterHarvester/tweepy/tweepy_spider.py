@@ -128,8 +128,6 @@ def run_spider():
     time.sleep(100)
 
 
-if __name__ == '__main__':
-    run_spider()
 
 
 
