@@ -1,6 +1,6 @@
 import threading
 from tweepy_spider import run_spider
-from save_data import process_and_save,remove_per_hours
+from save_data import process_and_save,couchdb_init
 import schedule
 
 
@@ -12,6 +12,7 @@ if __name__ == '__main__':
     # schedule.every(10).minutes.do(run_spider, name)
     # schedule.every(1).minutes.do(process_and_save)
     # schedule.every(60).minutes.do(remove_per_hours, name)
+    client = couchdb_init()
     while True:
         run_spider()
-        process_and_save()
+        process_and_save(client)

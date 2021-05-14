@@ -10,6 +10,13 @@ USERNAME = 'admin'
 PASSWORD = 'data-miner!'
 client = CouchDB(USERNAME, PASSWORD, url='http://172.26.133.205:5984', connect=True)
 
+
+def couchdb_init():
+    USERNAME = 'admin'
+    PASSWORD = 'data-miner!'
+    client = CouchDB(USERNAME, PASSWORD, url='http://172.26.133.205:5984', connect=True)
+    return client
+
 def create_db():
     # create a database for each city   
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
@@ -36,7 +43,8 @@ class SentimentScore():
 
 
 
-def process_and_save():
+def process_and_save(client):
+    # client = couchdb_init()
     data = {'melbourne.json': 'melbourne',
             'sydney.json': 'sydney',
             'adelaide.json': 'adelaide',
