@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8.2
 
 # there lines are dedicate for nectar server
 ENV http_proxy http://wwwproxy.unimelb.edu.au:8000/
@@ -9,7 +9,7 @@ ENV no_proxy localhost,127.0.0.1,localaddress,172.16.0.0/12,.melbourne.rc.nectar
 
 WORKDIR /usr/src/app
 
-COPY ../tweepy .
+COPY . .
 
 RUN pip install -r requirements.txt
 
