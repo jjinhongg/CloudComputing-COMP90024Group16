@@ -1,9 +1,14 @@
 ---
-# - name: Shut down docker previous server
-#   become: yes
-#   shell: docker-compose down --rmi local
-#   args:
-#     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
+- name: git pull lastest repo
+  shell: git pull
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
+
+- name: Shut down docker previous server
+  become: yes
+  shell: docker-compose down --rmi local
+  args:
+    chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
 
 - name: Remove directory
   file:
@@ -19,11 +24,6 @@
   shell: git clone https://github.com/williamjz/COMP90024Group16.git
   args:
     chdir: '/home/ubuntu/COMP90024'
-
-- name: git pull lastest repo
-  shell: git pull
-  args:
-    chdir: '/home/ubuntu/COMP90024/COMP90024Group16'
 
 - name: copy spider config to hosts
   copy:
