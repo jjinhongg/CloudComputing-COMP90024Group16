@@ -127,7 +127,21 @@ var t = null;
 </div>
 
 <script>
-  
+  var city_2018 = {}, city_2019 = {}, city_2020 = {}, city_2021 = {};
+  var lang_data = [];
+
+  var year = ["2018","2019", "2020", "2021"];
+  //geoCoordMap把所有可能出现的城市加到数组里面
+  var geoCoordMap = {
+      'adelaide': [138.6007, -34.9285],
+      'brisbane': [153.0260, -27.4705],
+      "canberra": [149.1300, -35.2809],
+      "melbourne": [144.9631, -37.8136],
+      "sydney": [151.2093, -33.8688],
+  };
+  var keys = Object.keys( geoCoordMap );
+  // console.log(keys)
+
   var vue = new Vue({
     el:'#app',
     data:{
@@ -167,6 +181,29 @@ var t = null;
                 .then(function (response) {
                   console.log(response);
                   that.city_tweets=response.data;
+                  city_2018['adelaide'] = that.city_tweets.adelaide['2018']
+                  city_2018['brisbane'] =  that.city_tweets.brisbane['2018']
+                  city_2018["canberra"] = that.city_tweets.canberra['2018']
+                  city_2018["melbourne"] = that.city_tweets.melbourne['2018']
+                  city_2018["sydney"] = that.city_tweets.sydney['2018']
+                    //2019年数据
+                  city_2019['adelaide'] = that.city_tweets.adelaide['2019']
+                  city_2019['brisbane'] =  that.city_tweets.brisbane['2019']
+                  city_2019["canberra"] = that.city_tweets.canberra['2019']
+                  city_2019["melbourne"] = that.city_tweets.melbourne['2019']
+                  city_2019["sydney"] = that.city_tweets.sydney['2019']
+                    //2020年数据
+                  city_2020['adelaide'] = that.city_tweets.adelaide['2020']
+                  city_2020['brisbane'] =  that.city_tweets.brisbane['2020']
+                  city_2020["canberra"] = that.city_tweets.canberra['2020']
+                  city_2020["melbourne"] = that.city_tweets.melbourne['2020']
+                  city_2020["sydney"] = that.city_tweets.sydney['2020']
+                    //2021年数据
+                  city_2021['adelaide'] = that.city_tweets.adelaide['2021']
+                  city_2021['brisbane'] =  that.city_tweets.brisbane['2021']
+                  city_2021["canberra"] = that.city_tweets.canberra['2021']
+                  city_2021["melbourne"] = that.city_tweets.melbourne['2021']
+                  city_2021["sydney"] = that.city_tweets.sydney['2021']
                   // console.log(this.city_tweets);
                 })
                 .catch(function (error) {
@@ -181,6 +218,12 @@ var t = null;
                 .then(function (response) {
                   console.log(response);
                   that.city_lang=response.data;
+                  for (loc in geoCoordMap){
+                    window[loc+'_lang'] = []
+                    for (var lang in that.city_lang[loc]){
+                        window[loc+'_lang'].push({"name": lang, "value": that.city_lang[loc][lang]})}                      
+                    lang_data.push(window[loc+'_lang'])}
+                  console.log(lang_data)
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -235,7 +278,7 @@ var t = null;
 <!-- <script type="text/javascript" src="../static/js/china.js"></script> -->
 <script type="text/javascript" src="../static/js/australia.js"></script>
 <!-- <script type="text/javascript" src="../static/js/area_echarts.js"></script> -->
-<script type="text/javascript" src="../static/js/dbdata.js"></script>
+<!-- <script type="text/javascript" src="../static/js/dbdata.js"></script> -->
 <script type="text/javascript" src="../static/js/area_echarts_test.js"></script>
 </body>
 </html>

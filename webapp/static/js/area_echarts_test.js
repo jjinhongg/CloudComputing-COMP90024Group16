@@ -5,6 +5,7 @@ var colors = [
 ];
 var colorIndex = 0;
 
+setTimeout(function(){
 $(function () {
     map();
     function map() {
@@ -14,6 +15,7 @@ $(function () {
         var mapData = [
             [],
             [],
+            [],
             []
         ];
     
@@ -21,7 +23,7 @@ $(function () {
         var categoryData = [];
         var barData = [];
         var pie_data = [];
-    
+        
         for (var key in geoCoordMap) {
             mapData[0].push({
                 "year": '2018',
@@ -43,6 +45,7 @@ $(function () {
                 "name": key,
                 "value": city_2021[key],
             });
+            console.log(city_2021[key])
         }
     
         for (var i = 0; i < mapData.length; i++) {
@@ -76,22 +79,19 @@ $(function () {
         // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
         for (var i = 0; i < keys.length; i++) {
             var keyname = keys[i]; 
+            console.log(lang_data[i])
+            console.log(keyname)
             pie_data.push({
                 // zlevel: 2,
                 // z:3,
                 name: keyname, //city
                 type: 'pie',
+                // radius: ['50%', '70%'],
                 radius: ['50%', '70%'],
                 center: ['50%', '50%'],
                 color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                data: [
-                    {value: lang1, name: 'EN'},
-                    {value: lang2, name: 'CN'},
-                    {value: lang3, name: 'JP'},
-                    {value: lang4, name: 'KR'},
-                    {value: lang5, name: 'FR'}
-                ].sort(function (a, b) { return a.value - b.value; }),
-                roseType: 'radius',
+                data: lang_data[i].sort(function (a, b) { return a.value - b.value; }),
+                // roseType: 'radius',
                 label: {
                     color: 'rgba(255, 255, 255, 0.3)',
                     normal: {
@@ -111,6 +111,11 @@ $(function () {
                         }
                     }
                 },
+                // label: {
+                //     normal: {
+                //         position: 'outer'
+                //     }
+                // },
                 labelLine: {
                     lineStyle: {
                         // color: 'rgba(255, 255, 255, 0.3)'
@@ -124,7 +129,8 @@ $(function () {
                     shadowBlur: 200,
                     shadowColor: 'rgba(0, 0, 0, 0.5)',
                     label:{  
-                        show:true,  
+                        show:true,
+                        position: 'outer',  
                         formatter:'{d}%'  
                     }, 
                 },
@@ -153,22 +159,22 @@ $(function () {
                     fontSize: '14'
                 }
             },
-            legend: {
-                // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
-                selectedMode: true, 
-                /* orient: 'vertical', */
-                /* x : 'right', //the legend is shown on the right
-                y: 'center', */ //The legend is centered above the vertical display
-                bottom:0,
-                itemWidth: 10, // the width of the legend mark
-                itemHeight: 10, //Graph height of the legend mark
-                Data:['EN', 'CN', 'JP', 'KR', 'FR'],
-                textStyle: { // style of legend text
-                color: 'rgba(255,255,255,.5)',
-                // Color: '#A6A8B6', //text color
-                fontSize: 10 // text size
-                }
-            },   		  
+            // legend: {
+            //     // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
+            //     selectedMode: true, 
+            //     /* orient: 'vertical', */
+            //     /* x : 'right', //the legend is shown on the right
+            //     y: 'center', */ //The legend is centered above the vertical display
+            //     bottom:0,
+            //     itemWidth: 10, // the width of the legend mark
+            //     itemHeight: 10, //Graph height of the legend mark
+            //     // Data:['EN', 'CN', 'JP', 'KR', 'FR'],
+            //     textStyle: { // style of legend text
+            //     color: 'rgba(255,255,255,.5)',
+            //     // Color: '#A6A8B6', //text color
+            //     fontSize: 10 // text size
+            //     }
+            // },   		  
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)",
@@ -180,13 +186,14 @@ $(function () {
             visualMap: {
                 show: false,
                 min: 0,
-                max: 300,
+                max: 1000000,
                 inRange: {
                     colorLightness: [0.5, 1]
                 }
             },
             series: [pie_data[0]]
         };
+        console.log(pie_data[0])
         // 饼状图初始化数据
         pieChart.setOption(option);
         window.addEventListener("resize",function(){
@@ -371,7 +378,8 @@ $(function () {
                         show: false
                     },
                     axisLabel: {
-                        margin: 2,
+                        show: false,
+                        margin: 5,
                         textStyle: {
                             color: '#aaa'
                         }
@@ -394,7 +402,7 @@ $(function () {
                         }
                     },
                     axisLabel: {
-                        interval: 0,
+                        interval: '0',
                         textStyle: {
                             color: '#ddd'
                         }
@@ -444,7 +452,7 @@ $(function () {
                             return b.value - a.value;
                         }).slice(0, 20)),
                         symbolSize: function(val) {
-                            return val[2] / 10;
+                            return val[2] / 10000;
                         },
                         showEffectOn: 'render',
                         rippleEffect: {
@@ -508,4 +516,4 @@ $(function () {
     }
 
 })
-
+},20000)
