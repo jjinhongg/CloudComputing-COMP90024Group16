@@ -202,10 +202,16 @@ def top_hashtags(client):
         if not djson['_id'] in citydb:
             citydb.create_document(djson)
         all_hashtags = []
+        # temp_tags = []
         view = View(citydb['_design/hashtags'], 'all_hashtags')
         for result in view.result:
+          if type(result['key'][0])== dict:
+            temp = list(result['key'][0]['text'])
+            all_hashtags = all_hashtags + temp
+
+          else:
             all_hashtags = all_hashtags + result['key']
-        hashtags_count = dict(Counter(all_hashtags))
+        hashtags_count = Counter(all_hashtags)
         hashtags_sorted = sorted(hashtags_count.items(),key = lambda x:x[1],reverse = True)[0:30]
         top_hashtags[city] = dict(hashtags_sorted)
     return top_hashtags

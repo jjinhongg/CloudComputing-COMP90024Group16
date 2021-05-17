@@ -4,7 +4,9 @@
 <meta charset="utf-8">
 <title>index</title>
 <script type="text/javascript" src="../static/js/jquery.js"></script>
-  <script type="text/javascript" src="../static/js/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- <script type="text/javascript" src="../static/js/axios.min.js"></script> -->
 <link rel="stylesheet" href="../static/css/comon0.css">
 </head>
 	<script>
@@ -31,7 +33,7 @@ $(document).ready(function(){
 	<iframe frameborder="0" src="../static/js/index.html" style="width: 100%; height: 100%"></iframe>
 	</div>
 <div class="loading">
-  <div class="loadbox"> <img src="../static/picture/loading.gif"> 页面加载中... </div>
+  <div class="loadbox"> <img src="../static/picture/loading.gif"> Loading... </div>
 </div>
 <div class="head">
   <h1>Tweet Analysis</h1>
@@ -125,17 +127,27 @@ var t = null;
 </div>
 
 <script>
+  
   var vue = new Vue({
     el:'#app',
     data:{
-      totalltweets:0
-
+      totalltweets:0,
+      city_tweets:0,
+      city_lang:0,
+      city_sentiment:0,
+      city_time_dis:0,
+      city_hashtags:0,
     },
-    mounted:function(){
-      this.get_cur_month_tweeters();
+    mounted (){
+     this.get_cur_month_tweets()
+     this.get_city_year_tweets()
+     this.get_city_lang_distribution()
+     this.get_city_sentiment()
+     this.get_city_timedistribution()
+     this.get_city_tophashtags()
     },
     methods:{
-      get_cur_month_tweeters:function(){
+      get_cur_month_tweets:function(){
         var that =this;
 
         axios.get("/totaltweeters")
@@ -147,16 +159,83 @@ var t = null;
                   console.log(error);
                 });
 
-      }
+      },
+      get_city_year_tweets:function(){
+        var that =this;
+
+        axios.get("/tweetperyearcity")
+                .then(function (response) {
+                  console.log(response);
+                  that.city_tweets=response.data;
+                  // console.log(this.city_tweets);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+      },
+      get_city_lang_distribution:function(){
+        var that =this;
+
+        axios.get("/languagedistribution")
+                .then(function (response) {
+                  console.log(response);
+                  that.city_lang=response.data;
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+      },
+      get_city_sentiment:function(){
+        var that =this;
+
+        axios.get("/sentiment")
+                .then(function (response) {
+                  console.log(response);
+                  that.city_sentiment=response.data;
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+      },
+      get_city_timedistribution(){
+        var that =this;
+
+        axios.get("/timedistribution")
+                .then(function (response) {
+                  console.log(response);
+                  that.city_time_dis=response.data;
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+      },
+      get_city_tophashtags(){
+        var that =this;
+
+        axios.get("/tophashtags")
+                .then(function (response) {
+                  console.log(response);
+                  that.city_hashtags=response.data;
+                })
+                .catch(function (error) {
+                  console.log(error.response.data);
+                });
+
+      },
     }
 
   });
 
 </script>
 <script type="text/javascript" src="../static/js/mapData.js"></script>
-<script type="text/javascript" src="../static/js/china.js"></script>
+<!-- <script type="text/javascript" src="../static/js/china.js"></script> -->
 <script type="text/javascript" src="../static/js/australia.js"></script>
 <!-- <script type="text/javascript" src="../static/js/area_echarts.js"></script> -->
+<script type="text/javascript" src="../static/js/dbdata.js"></script>
 <script type="text/javascript" src="../static/js/area_echarts_test.js"></script>
 </body>
 </html>

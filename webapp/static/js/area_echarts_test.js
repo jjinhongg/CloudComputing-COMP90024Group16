@@ -1,46 +1,3 @@
-//geoCoordMap把所有可能出现的城市加到数组里面
-
-var geoCoordMap = {
-    "MELBOURNE": [144.9631, -37.8136],
-    "SYDNEY": [151.2093, -33.8688],
-    'BRISBANE': [153.0260, -27.4705],
-    "CANBERRA": [149.1300, -35.2809],
-    'ADELAIDE': [138.6007, -34.9285],
-};
-var keys = Object.keys( geoCoordMap );
-
-//2017年数据
-var d1 = {
-    "MELBOURNE": 334,
-    "SYDNEY": 185,
-    'BRISBANE': 313,
-    "CANBERRA": 181,
-    'ADELAIDE': 379,
-    "New South Wales": 10,
-    "Victoria": 20
-
-};
-//2018年数据
-var d2 = {
-    "MELBOURNE": 365,
-    "SYDNEY": 213,
-    'BRISBANE': 352,
-    "CANBERRA": 187,
-    'ADELAIDE': 430,
-    "New South Wales": 10,
-    "Victoria": 20
-};
-//2019年数据
-var d3 = {
-    "MELBOURNE": 352,
-    "SYDNEY": 204,
-    'BRISBANE': 331,
-    "CANBERRA": 168,
-    'ADELAIDE': 421,
-    "New South Wales": 10,
-    "Victoria": 20
-};
-
 var colors = [
     ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
     ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
@@ -54,7 +11,6 @@ $(function () {
         var pieChart = echarts.init(document.getElementById('echart2')); //初始化饼图
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map_1'));
-        var year = ["2017", "2018","2019"];
         var mapData = [
             [],
             [],
@@ -68,19 +24,24 @@ $(function () {
     
         for (var key in geoCoordMap) {
             mapData[0].push({
-                "year": '2017',
-                "name": key,
-                "value": d1[key],
-            });
-            mapData[1].push({
                 "year": '2018',
                 "name": key,
-                "value": d2[key],
+                "value": city_2018[key],
             });
-            mapData[2].push({
+            mapData[1].push({
                 "year": '2019',
                 "name": key,
-                "value": d3[key],
+                "value": city_2019[key],
+            });
+            mapData[2].push({
+                "year": '2020',
+                "name": key,
+                "value": city_2020[key],
+            });
+            mapData[3].push({
+                "year": '2021',
+                "name": key,
+                "value": city_2021[key],
             });
         }
     
@@ -115,15 +76,10 @@ $(function () {
         // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
         for (var i = 0; i < keys.length; i++) {
             var keyname = keys[i]; 
-            var lang1 = parseInt(Math.random() * (200 - 0 + 1) + 0); //值取随机数
-            var lang2 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang3 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang4 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang5 = parseInt(Math.random() * (200 - 0 + 1) + 0);
             pie_data.push({
                 // zlevel: 2,
                 // z:3,
-                name: keyname,
+                name: keyname, //city
                 type: 'pie',
                 radius: ['50%', '70%'],
                 center: ['50%', '50%'],
@@ -289,7 +245,7 @@ $(function () {
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'cubicInOut',
                 grid: {
-                    right: '1%',
+                    right: '3%',
                     top: '15%',
                     bottom: '65%',
                     width: '20%'
@@ -454,7 +410,7 @@ $(function () {
                         geoIndex: 0,
                         aspectScale: 0.75, //长宽比
                         showLegendSymbol: false, // 存在legend时显示
-                        nameProperty: 'STATE_NAME',
+                        // nameProperty: 'STATE_NAME',
                         label: {
                             normal: {
                                 show: false
@@ -534,8 +490,10 @@ $(function () {
 
         myChart.on('click', function (params) {
             var city = params.name;
-            var index = mapData[0].findIndex(function(item) {
-                return item.name === city;
+            console.log(city)
+            var index = keys.findIndex(function(item) {
+                console.log(item)
+                return item == city;
             });
             // option['title']['text'] = city;
             option['title']['text'] = pie_data[index].name;
