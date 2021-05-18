@@ -99,7 +99,7 @@ def lang_dis(client):
         view = View(citydb['_design/language'], 'lang_count')
         with view.custom_result(group=True) as results:
             for result in results:
-                if result['key'] != 'und':
+                if result['key'] != 'und' and result['key'] != 'en':
                     lang_count[result['key']] = result['value']
         lang_dis[city] = lang_count
     return lang_dis

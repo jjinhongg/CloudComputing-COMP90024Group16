@@ -26,7 +26,7 @@ $(document).ready(function(){
 	</script>
 	<script type="text/javascript" src="../static/js/echarts.min.js"></script>
 <script src="../static/js/vue.min.js"></script>
-	<script language="JavaScript" src="../static/js/js.js"></script>
+	<!-- <script language="JavaScript" src="../static/js/js.js"></script> -->
 <body>
 <div  id="app">
 <div class="canvas" style="opacity: .2">
@@ -52,37 +52,39 @@ var t = null;
        var h=dt.getHours();//获取时
        var m=dt.getMinutes();//获取分
        var s=dt.getSeconds();//获取秒
-       document.getElementById("showTime").innerHTML = "year:"+y+"month:"+mt+"day:"+day+"-"+h+":"+m+":"+s;
+       document.getElementById("showTime").innerHTML = "Date: "+y+"/"+mt+"/"+day+"-"+h+":"+m+":"+s;
        t = setTimeout(time,1000); //设定定时器，循环运行     
     } 
 
 </script>
-	
-	
 </div>
+
+
 <div class="mainbox"  >
   <ul class="clearfix">
     <li>
-      <div class="boxall" style="height: 3.2rem">
-        <div class="alltitle">tweet language</div>
+      <div class="boxall" style="height: 4.8rem">
+        <!-- <div style="width:50%;"></div> -->
+        <div class="alltitle">Regional Tweets: Time distribution</div>
         <div class="allnav" id="echart1"></div>
         <div class="boxfoot"></div>
       </div>
-      <div class="boxall" style="height: 3.2rem">
+      <div class="boxall" style="height: 4.8rem">
+        <!-- <div style="width:50%;"></div> -->
         <div class="alltitle">Regional Tweets: Language Distribution</div>
         <div class="allnav" id="echart2"></div>
         <div class="boxfoot"></div>
       </div>
-      <div class="boxall" style="height: 3.2rem">
+      <!-- <div class="boxall" style="height: 3.2rem">
         <div style="height:100%; width: 100%;">
 		  	<div class="sy" id="fb1"></div>
 				<div class="sy" id="fb2"></div>
 				<div class="sy" id="fb3"></div>
-		  </div>
-        <div class="boxfoot">
+		  </div> -->
+      <div class="boxfoot">
 			
 		  </div>
-      </div>
+
     </li>
     <li>
       <div class="bar">
@@ -105,21 +107,21 @@ var t = null;
       </div>
     </li>
     <li>
-          <div class="boxall" style="height:3.4rem">
+        <div class="boxall" style="height:4.8rem">
         <div class="alltitle">模块标题样式</div>
         <div class="allnav" id="echart4"></div>
         <div class="boxfoot"></div>
       </div>
-      <div class="boxall" style="height: 3.2rem">
+      <div class="boxall" style="height: 4.8rem">
         <div class="alltitle">模块标题样式</div>
         <div class="allnav" id="echart5"></div>
         <div class="boxfoot"></div>
       </div>
-      <div class="boxall" style="height: 3rem">
+      <!-- <div class="boxall" style="height: 3rem">
         <div class="alltitle">模块标题样式</div>
         <div class="allnav" id="echart6"></div>
         <div class="boxfoot"></div>
-      </div>
+      </div> -->
     </li>
   </ul>
 </div>
@@ -129,6 +131,8 @@ var t = null;
 <script>
   var city_2018 = {}, city_2019 = {}, city_2020 = {}, city_2021 = {};
   var lang_data = [];
+  var time_data = [];
+  var sent_data = [];
 
   var year = ["2018","2019", "2020", "2021"];
   //geoCoordMap把所有可能出现的城市加到数组里面
@@ -237,6 +241,11 @@ var t = null;
                 .then(function (response) {
                   console.log(response);
                   that.city_sentiment=response.data;
+                  for (loc in geoCoordMap){
+                    window[loc+'_sent'] = []
+                    for (var sent in that.city_sentiment[loc]){
+                        window[loc+'_sent'].push({"name": sent, "value": that.city_sentiment[loc][sent]})}                      
+                    sent_data.push(window[loc+'_sent'])}
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -250,6 +259,11 @@ var t = null;
                 .then(function (response) {
                   console.log(response);
                   that.city_time_dis=response.data;
+                  for (loc in geoCoordMap){
+                    window[loc+'_time'] = []
+                    for (var time in that.city_time_dis[loc]){
+                        window[loc+'_time'].push({"name": time, "value": that.city_time_dis[loc][time]})}                      
+                    time_data.push(window[loc+'_time'])}
                 })
                 .catch(function (error) {
                   console.log(error);
@@ -278,7 +292,7 @@ var t = null;
 <!-- <script type="text/javascript" src="../static/js/china.js"></script> -->
 <script type="text/javascript" src="../static/js/australia.js"></script>
 <!-- <script type="text/javascript" src="../static/js/area_echarts.js"></script> -->
-<!-- <script type="text/javascript" src="../static/js/dbdata.js"></script> -->
+<!-- <script type="text/javascript" src="../static/js/variables.js"></script> -->
 <script type="text/javascript" src="../static/js/area_echarts_test.js"></script>
 </body>
 </html>
