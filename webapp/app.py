@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, jsonify
 import time
 import utils
 import data_analysis
@@ -24,38 +24,38 @@ def gettime():
 @app.route("/totaltweeters")
 def get_current_twts():
     currenttwts = data_analysis.current_twts(client)
-    return currenttwts
+    return jsonify(currenttwts)
 
 # total tweet number each year each city
 @app.route("/tweetperyearcity")
 def get_total_twts():
     totaltwt = data_analysis.total_twts(client)
-    return totaltwt
+    return jsonify(totaltwt)
 
 # language distribution each city
 @app.route("/languagedistribution")
 def get_lang_dis():
     langdis = data_analysis.lang_dis(client)
-    return langdis
+    return jsonify(langdis)
 
 # average sentiment score each year each city
 @app.route("/sentiment")
 def get_sentiment():
     sentiscore = data_analysis.senti_score(client)
-    return sentiscore
+    return jsonify(sentiscore)
 
 # time(hour) distribution this month each city (UTC+10)
 @app.route("/timedistribution")
 def get_timedistribution():
     timedis = data_analysis.time_dis(client)
-    return timedis
+    return jsonify(timedis)
 
 
 # top 30 used hashtags this year each city
 @app.route("/tophashtags")
 def get_tophashtags():
     tophashtags = data_analysis.top_hashtags(client)
-    return tophashtags
+    return jsonify(tophashtags)
 
 if __name__ == '__main__':
     app.run()

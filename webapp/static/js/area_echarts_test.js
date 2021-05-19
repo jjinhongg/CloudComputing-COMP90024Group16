@@ -1,46 +1,3 @@
-//geoCoordMap把所有可能出现的城市加到数组里面
-
-var geoCoordMap = {
-    "MELBOURNE": [144.9631, -37.8136],
-    "SYDNEY": [151.2093, -33.8688],
-    'BRISBANE': [153.0260, -27.4705],
-    "CANBERRA": [149.1300, -35.2809],
-    'ADELAIDE': [138.6007, -34.9285],
-};
-var keys = Object.keys( geoCoordMap );
-
-//2017年数据
-var d1 = {
-    "MELBOURNE": 334,
-    "SYDNEY": 185,
-    'BRISBANE': 313,
-    "CANBERRA": 181,
-    'ADELAIDE': 379,
-    "New South Wales": 10,
-    "Victoria": 20
-
-};
-//2018年数据
-var d2 = {
-    "MELBOURNE": 365,
-    "SYDNEY": 213,
-    'BRISBANE': 352,
-    "CANBERRA": 187,
-    'ADELAIDE': 430,
-    "New South Wales": 10,
-    "Victoria": 20
-};
-//2019年数据
-var d3 = {
-    "MELBOURNE": 352,
-    "SYDNEY": 204,
-    'BRISBANE': 331,
-    "CANBERRA": 168,
-    'ADELAIDE': 421,
-    "New South Wales": 10,
-    "Victoria": 20
-};
-
 var colors = [
     ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
     ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
@@ -48,42 +5,56 @@ var colors = [
 ];
 var colorIndex = 0;
 
+
+
+setTimeout(function(){
 $(function () {
     map();
     function map() {
-        var pieChart = echarts.init(document.getElementById('echart2')); //初始化饼图
+        var langChart = echarts.init(document.getElementById('echart2')); //初始化语言分布图
+        var sentChart = echarts.init(document.getElementById('echart4')); //初始化语言分布图
+        var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map_1'));
-        var year = ["2017", "2018","2019"];
+
+        //--------------------------- Variables Initialisation ---------------------------\\
+        
         var mapData = [
+            [],
             [],
             [],
             []
         ];
-    
-        /*柱子Y名称*/
         var categoryData = [];
         var barData = [];
-        var pie_data = [];
-    
+        var langdis_data = [];
+        var timedis_data = [];
+        var sentdis_data = [];
+        
         for (var key in geoCoordMap) {
             mapData[0].push({
-                "year": '2017',
-                "name": key,
-                "value": d1[key],
-            });
-            mapData[1].push({
                 "year": '2018',
                 "name": key,
-                "value": d2[key],
+                "value": city_2018[key],
             });
-            mapData[2].push({
+            mapData[1].push({
                 "year": '2019',
                 "name": key,
-                "value": d3[key],
+                "value": city_2019[key],
             });
+            mapData[2].push({
+                "year": '2020',
+                "name": key,
+                "value": city_2020[key],
+            });
+            mapData[3].push({
+                "year": '2021',
+                "name": key,
+                "value": city_2021[key],
+            });
+            console.log(city_2021[key])
         }
-    
+        
         for (var i = 0; i < mapData.length; i++) {
             mapData[i].sort(function sortNumber(a, b) {
                 return a.value - b.value
@@ -95,8 +66,7 @@ $(function () {
                 categoryData[i].push(mapData[i][j].name);
             }
         }
-
-        var myChart = echarts.init(document.getElementById('map_1'));
+        
         var convertData = function(data) {
             var res = [];
             for (var i = 0; i < data.length; i++) {
@@ -110,69 +80,78 @@ $(function () {
             }
             return res;
         };
-
-        var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800']
+        
         // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
+        // Language Distribution Pie Chart
         for (var i = 0; i < keys.length; i++) {
             var keyname = keys[i]; 
-            var lang1 = parseInt(Math.random() * (200 - 0 + 1) + 0); //值取随机数
-            var lang2 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang3 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang4 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang5 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            pie_data.push({
-                // zlevel: 2,
-                // z:3,
-                name: keyname,
+            console.log(lang_data[i])
+            langdis_data.push({
+                name: keyname, //city
                 type: 'pie',
-                radius: ['50%', '70%'],
+                hoverAnimation: 'false',
+                radius: ['40%', '60%'],
                 center: ['50%', '50%'],
-                color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                data: [
-                    {value: lang1, name: 'EN'},
-                    {value: lang2, name: 'CN'},
-                    {value: lang3, name: 'JP'},
-                    {value: lang4, name: 'KR'},
-                    {value: lang5, name: 'FR'}
-                ].sort(function (a, b) { return a.value - b.value; }),
-                roseType: 'radius',
-                label: {
-                    color: 'rgba(255, 255, 255, 0.3)',
-                    normal: {
-                        Show: true, // ​​whether to display the label
-                        //// The location of the tag. The 'outside' is outside the pie slice and is connected to the corresponding sector by a visual guide. 'inside', 'inner' Same as 'inside', inside the pie slice. 'center' is at the center of the pie chart.
-                        position: 'left',
-                        // The content of the displayed label
-                        //a (series name), b (data item name), c (number), d (percentage)
-                        formatter: "{b}:{c}({d}%)", 
-                        emphasis: {
-                                 //The label style displayed by the mouse on the ring
-                            show: true,
-                            textStyle: {
-                                fontSize: '10',
-                                fontWeight: 'bold'
-                            }
-                        }
+                // color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                 },
-                labelLine: {
-                    lineStyle: {
-                        // color: 'rgba(255, 255, 255, 0.3)'
-                    },
-                    smooth: 0.2,
-                    length: 10,
-                    length2: 20
+                label:{
+                    color: 'rgba(255, 255, 255, 0.9)'
                 },
+                // label: {
+                //     color: 'rgba(255, 255, 255, 0.3)',
+                //     overflow: 'truncate',
+                //     edgeDistance: '25%',
+                //     bleedMargin: 10,
+                //     distanceToLabelLine: 5,
+                //     normal: {
+                //         Show: true, // ​​whether to display the label
+                //         //// The location of the tag. The 'outside' is outside the pie slice and is connected to the corresponding sector by a visual guide. 'inside', 'inner' Same as 'inside', inside the pie slice. 'center' is at the center of the pie chart.
+                //         position: 'left',
+                //         // The content of the displayed label
+                //         //a (series name), b (data item name), c (number), d (percentage)
+                //         formatter: "{b}:{c}({d}%)", 
+                //         emphasis: {
+                //                  //The label style displayed by the mouse on the ring
+                //             show: true,
+                //             textStyle: {
+                //                 fontSize: '6',
+                //                 fontWeight: 'bold'
+                //             }
+                //         }
+                //     }
+                // },
+                // labelLine: {
+                //     lineStyle: {
+                //         // color: 'rgba(255, 255, 255, 0.3)'
+                //     },
+                //     show: true,
+                //     smooth: 0.2,
+                //     length: 15,
+                //     length2: 30,
+                //     minTurnAngle: 0,
+                //     maxSurfaceAngle: 0
+                // },
                 itemStyle: {
-                    // color: '#c23531',
+                    color: '#00abff',
+                    // normal: {
+                    //     borderWidth: 1,
+                    //     borderColor: '#ff9900',
+                    // },
                     shadowBlur: 200,
                     shadowColor: 'rgba(0, 0, 0, 0.5)',
-                    label:{  
-                        show:true,  
-                        formatter:'{d}%'  
-                    }, 
+                    // label:{  
+                    //     show:true,
+                    //     position: 'outer',  
+                    //     formatter:'{d}%'  
+                    // }, 
                 },
-    
                 animationType: 'scale',
                 animationEasing: 'elasticOut',
                 animationDelay: function (idx) {
@@ -180,16 +159,93 @@ $(function () {
                 }
             })
         }
+        
+        // Language Distribution
+        // for (var i = 0; i < keys.length; i++) {
+        //     var keyname = keys[i]; 
+        //     console.log(lang_data[i])
+        //     langdis_data.push({
+        //         name: keyname, //city
+        //         type: 'bar',
+        //         data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+        //         itemStyle: {
+        //             normal: {
+        //                 color:'#2f89cf',
+        //                 opacity: 1,
+        //                 barBorderRadius: 5,
+        //             }
+        //         },
+        //         large: true 
+        //     })
+        // }
+        
+        // Time Distribution
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i]; 
+            console.log(time_data[i])
+            timedis_data.push(
+                {
+                    name: keyname,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        
+                        normal: {
+                            color: '#0184d5',
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(1, 132, 213, 0.4)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(1, 132, 213, 0.1)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#0184d5',
+                            borderColor: 'rgba(221, 220, 107, .1)',
+                            borderWidth: 12
+                        }
+                    },
+                    data: time_data[i]
+            
+                })
+        }
 
-
-
+        // Sentiment Distribution
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i]; 
+            console.log(sent_data[i])
+            sentdis_data.push({
+                name: keyname, //city
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                data: sent_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+            })
+        }        
+        
+        
+        
         // 饼状图配置
-        var option = {
+        var lang_option = {
             // backgroundColor: '#2c343c',
             title: {
                 zlevel: 2,
                 // z:3,
-                text: pie_data[0]['name'],
+                text: langdis_data[0]['name'],
                 top: 'middle',
                 left: 'center',
                 textStyle: {
@@ -197,44 +253,386 @@ $(function () {
                     fontSize: '14'
                 }
             },
-            legend: {
-                // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
-                selectedMode: true, 
-                /* orient: 'vertical', */
-                /* x : 'right', //the legend is shown on the right
-                y: 'center', */ //The legend is centered above the vertical display
-                bottom:0,
-                itemWidth: 10, // the width of the legend mark
-                itemHeight: 10, //Graph height of the legend mark
-                Data:['EN', 'CN', 'JP', 'KR', 'FR'],
-                textStyle: { // style of legend text
-                color: 'rgba(255,255,255,.5)',
-                // Color: '#A6A8B6', //text color
-                fontSize: 10 // text size
-                }
-            },   		  
+            // legend: {
+            //     // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
+            //     selectedMode: true, 
+            //     /* orient: 'vertical', */
+            //     /* x : 'right', //the legend is shown on the right
+            //     y: 'center', */ //The legend is centered above the vertical display
+            //     bottom:0,
+            //     itemWidth: 10, // the width of the legend mark
+            //     itemHeight: 10, //Graph height of the legend mark
+            //     // Data:['EN', 'CN', 'JP', 'KR', 'FR'],
+            //     textStyle: { // style of legend text
+            //     color: 'rgba(255,255,255,.5)',
+            //     // Color: '#A6A8B6', //text color
+            //     fontSize: 10 // text size
+            //     }
+            // },   		  
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)",
                 textStyle: { // style of legend text
                             Color:'#fff', //text color
-                            fontSize: 10 // text size
+                            fontSize: 12 // text size
                 }
             },
             visualMap: {
                 show: false,
-                min: 0,
-                max: 300,
+                min: Math.min(...Object.values(vue.city_lang[keys[0]])),
+                max: Math.max(...Object.values(vue.city_lang[keys[0]])),
                 inRange: {
-                    colorLightness: [0.5, 1]
+                    colorLightness: [0.2, 0.5]
                 }
             },
-            series: [pie_data[0]]
+            series: [langdis_data[0]]
         };
-        // 饼状图初始化数据
-        pieChart.setOption(option);
+        
+        // var lang_option = {
+        //     title: {
+        //         zlevel: 2,
+        //         // z:3,
+        //         text: langdis_data[0]['name'].toUpperCase(),
+        //         // top: '2%',
+        //         left: 'center',
+        //         textStyle: {
+        //             color: '#fff',
+        //             fontSize: '14'
+        //         }
+        //     },
+        //     toolbox: {
+        //         feature: {
+        //             dataZoom: {
+        //                 yAxisIndex: false
+        //             },
+        //             saveAsImage: {
+        //                 pixelRatio: 2
+        //             }
+        //         }
+        //     },
+        //     tooltip: {
+        //         trigger: 'item',
+        //         formatter: "{a} <br/>{b}: {c}",
+        //         textStyle: { // style of legend text
+        //                     Color:'#fff', //text color
+        //                     fontSize: 12 // text size
+        //         }
+        //     },
+        //     grid: {
+        //         left: '2%',
+        //         top:'20px',
+        //         right: '2%',
+        //         bottom: '15%',
+        //        containLabel: true
+        //     },
+        //     dataZoom: [{
+        //         type: 'inside'
+        //     }, {
+        //         type: 'slider',
+        //     }],
+        //     xAxis: {
+        //         type: 'category',
+        //         data: Object.keys(vue.city_lang[keys[0]]),
+        //         silent: false,
+        //         splitLine: {
+        //             show: false 
+        //         },
+        //         splitArea: {
+        //             show: false
+        //         },
+        //         axisLine: {
+        //             show: true,
+        //             lineStyle: {
+        //                 color: "rgba(255,255,255,.1)",
+        //                 width: 1,
+        //                 type: "solid"
+        //             },
+        //         },
+        //         axisTick: {
+        //             show: false,
+        //         },
+        //         axisLabel:  {
+        //                 interval: 5,
+        //                // rotate:50,
+        //                 show: true,
+        //                 splitNumber: 5,
+        //                 textStyle: {
+        //                      color: "rgba(255,255,255,.6)",
+        //                     fontSize: '10',
+        //                 },
+        //             },
+        //     },
+        //     yAxis: {
+        //         axisLabel: {
+        //             //formatter: '{value} %'
+        //              show:true,
+        //               textStyle: {
+        //                       color: "rgba(255,255,255,.6)",
+        //                      fontSize: '12',
+        //                  },
+        //          },
+        //          axisTick: {
+        //              show: false,
+        //          },
+        //          axisLine: {
+        //              show: true,
+        //              lineStyle: {
+        //                  color: "rgba(255,255,255,.1)",
+        //                  width: 1,
+        //                  type: "solid"
+        //              },
+        //          },
+        //          splitLine: {
+        //              lineStyle: {
+        //                 color: "rgba(255,255,255,.1)",
+        //              }
+        //          },
+        //         splitArea: {
+        //             show: false
+        //         }
+        //     },
+        //     series: [langdis_data[0]]
+        // };
+        
+        var time_option = {
+            title: {
+                zlevel: 2,
+                // z:3,
+                text: timedis_data[0]['name'].toUpperCase(),
+                // top: '2%',
+                left: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '14'
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: false
+                    },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#dddc6b'
+                    }
+                },
+                formatter: "{a} <br/>{b}: {c}",
+                textStyle: { // style of legend text
+                            Color:'#fff', //text color
+                            fontSize: 12 // text size
+                }
+            },
+            grid: {
+                left: '2%',
+                top:'20px',
+                right: '2%',
+                bottom: '15%',
+               containLabel: true
+            },
+            dataZoom: [{
+                type: 'inside'
+            }, {
+                type: 'slider',
+            }],
+            xAxis: {
+                type: 'category',
+                data: Object.keys(vue.city_time_dis[keys[0]]),
+                silent: false,
+                splitLine: {
+                    show: false
+                },
+                splitArea: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                        width: 1,
+                        type: "solid"
+                    },
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLabel:  {
+                        interval: 0,
+                       // rotate:50,
+                        show: true,
+                        splitNumber: 5,
+                        textStyle: {
+                             color: "rgba(255,255,255,.6)",
+                            fontSize: '10',
+                        },
+                    },
+            },
+            yAxis: {
+                axisLabel: {
+                    //formatter: '{value} %'
+                     show:true,
+                      textStyle: {
+                              color: "rgba(255,255,255,.6)",
+                             fontSize: '12',
+                         },
+                 },
+                 axisTick: {
+                     show: false,
+                 },
+                 axisLine: {
+                     show: true,
+                     lineStyle: {
+                         color: "rgba(255,255,255,.1)",
+                         width: 1,
+                         type: "solid"
+                     },
+                 },
+                 splitLine: {
+                     lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                     }
+                 },
+                splitArea: {
+                    show: false
+                }
+            },
+            series: [timedis_data[0]]
+        };
+
+        var sent_option = {
+            // title: {
+            //     zlevel: 2,
+            //     // z:3,
+            //     // text: sentdis_data[0]['name'].toUpperCase(),
+            //     // top: '2%',
+            //     left: 'center',
+            //     textStyle: {
+            //         color: '#fff',
+            //         fontSize: '14'
+            //     }
+            // },
+            toolbox: {
+                feature: {
+                    // dataZoom: {
+                    //     yAxisIndex: false
+                    // },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                // axisPointer: {
+                //     lineStyle: {
+                //         color: '#dddc6b'
+                //     }
+                // },
+                // formatter: "{a} <br/>{b}: {c}",
+                // textStyle: { // style of legend text
+                //             Color:'#fff', //text color
+                //             fontSize: 12 // text size
+                // }
+            },
+            grid: {
+                left: '2%',
+                top:'20px',
+                right: '2%',
+                bottom: '15%',
+               containLabel: true
+            },
+            // dataZoom: [{
+            //     type: 'inside'
+            // }, {
+            //     type: 'slider',
+            // }],
+            xAxis: {
+                type: 'category',
+                data: Object.keys(vue.city_sentiment[keys[0]]),
+                silent: false,
+                splitLine: {
+                    show: false 
+                },
+                splitArea: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                        width: 1,
+                        type: "solid"
+                    },
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLabel:  {
+                        interval: 0,
+                       // rotate:50,
+                        show: true,
+                        splitNumber: 5,
+                        textStyle: {
+                             color: "rgba(255,255,255,.6)",
+                            fontSize: '10',
+                        },
+                    },
+            },
+            yAxis: {
+                axisLabel: {
+                    //formatter: '{value} %'
+                     show:true,
+                      textStyle: {
+                              color: "rgba(255,255,255,.6)",
+                             fontSize: '12',
+                         },
+                 },
+                 axisTick: {
+                     show: false,
+                 },
+                 axisLine: {
+                     show: true,
+                     lineStyle: {
+                         color: "rgba(255,255,255,.1)",
+                         width: 1,
+                         type: "solid"
+                     },
+                 },
+                 splitLine: {
+                     lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                     }
+                 },
+                splitArea: {
+                    show: false
+                }
+            },
+            legend:{
+                show: true,
+                textStyle:{
+                    color: "#fff"
+                }
+            },
+            series: [sentdis_data[0], sentdis_data[1], sentdis_data[2], sentdis_data[3], sentdis_data[4]]
+        };
+        
+        //--------------------------- Charts Initialisation ---------------------------\\
+
+        // console.log(langdis_data[0])
+        // 语言分布图初始化数据
+        langChart.setOption(lang_option);
+        timeChart.setOption(time_option);
+        sentChart.setOption(sent_option);
         window.addEventListener("resize",function(){
-            pieChart.resize();
+            langChart.resize();
+            timeChart.resize();
+            sentChart.resize();
         });
 
 
@@ -289,7 +687,7 @@ $(function () {
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'cubicInOut',
                 grid: {
-                    right: '1%',
+                    right: '3%',
                     top: '15%',
                     bottom: '65%',
                     width: '20%'
@@ -379,18 +777,19 @@ $(function () {
             optionXyMap01.options.push({
                 // backgroundColor: '#013954',
                 title:
-                    [{
-                            text: 'Area Tweets',
-                            left: '42%',
-                            top: '8%',
-                            textStyle: {
-                                color: '#fff',
-                                fontSize: 25
-                            }
-                        },
+                    [
+                    // {
+                    //         text: 'Area Tweets',
+                    //         left: '42%',
+                    //         top: '8%',
+                    //         textStyle: {
+                    //             color: '#fff',
+                    //             fontSize: 25
+                    //         }
+                    //     },
                         {
                             id: 'statistic',
-                            text: year[n] + " Statistics",
+                            text: year[n] + "Tweets",
                             left: '70%',
                             top: '8%',
                             textStyle: {
@@ -415,7 +814,8 @@ $(function () {
                         show: false
                     },
                     axisLabel: {
-                        margin: 2,
+                        show: false,
+                        margin: 5,
                         textStyle: {
                             color: '#aaa'
                         }
@@ -438,7 +838,7 @@ $(function () {
                         }
                     },
                     axisLabel: {
-                        interval: 0,
+                        interval: '0',
                         textStyle: {
                             color: '#ddd'
                         }
@@ -454,7 +854,7 @@ $(function () {
                         geoIndex: 0,
                         aspectScale: 0.75, //长宽比
                         showLegendSymbol: false, // 存在legend时显示
-                        nameProperty: 'STATE_NAME',
+                        // nameProperty: 'STATE_NAME',
                         label: {
                             normal: {
                                 show: false
@@ -488,7 +888,7 @@ $(function () {
                             return b.value - a.value;
                         }).slice(0, 20)),
                         symbolSize: function(val) {
-                            return val[2] / 10;
+                            return val[2] / 10000;
                         },
                         showEffectOn: 'render',
                         rippleEffect: {
@@ -534,20 +934,35 @@ $(function () {
 
         myChart.on('click', function (params) {
             var city = params.name;
-            var index = mapData[0].findIndex(function(item) {
-                return item.name === city;
+            console.log(city)
+            var index = keys.findIndex(function(item) {
+                console.log(item)
+                return item == city;
             });
             // option['title']['text'] = city;
-            option['title']['text'] = pie_data[index].name;
-            option['series'] = [pie_data[index]];
-            pieChart.setOption(option);
+            lang_option['title']['text'] = langdis_data[index].name.toUpperCase();
+            // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
+            lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
+            lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
+            lang_option['series'] = [langdis_data[index]];
+            langChart.setOption(lang_option);
+
+            time_option['title']['text'] = timedis_data[index].name.toUpperCase();
+            time_option['xAxis']['data'] = Object.keys(vue.city_time_dis[keys[index]]);
+            time_option['series'] = [timedis_data[index]];
+            timeChart.setOption(time_option);
+
+            sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
+            sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
+            sent_option['series'] = [sentdis_data[index]];
+            sentChart.setOption(sent_option);
         });
 
         window.addEventListener("resize",function(){
-            pieChart.resize();
+            langChart.resize();
         });
 
     }
 
 })
-
+},15000)

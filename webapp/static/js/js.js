@@ -1,13 +1,13 @@
 ﻿
 $(function () {
-echarts_1();
+// echarts_1();
 // echarts_2();
-echarts_4();
-echarts_31();
-echarts_32();
-echarts_33();
-echarts_5();
-echarts_6();
+// echarts_4();
+// echarts_31();
+// echarts_32();
+// echarts_33();
+// echarts_5();
+// echarts_6();
 function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
@@ -378,7 +378,7 @@ axisLabel:  {
 		{
         name: '安卓',
         type: 'line',
-         smooth: true,
+        smooth: true,
         symbol: 'circle',
         symbolSize: 5,
         showSymbol: false,

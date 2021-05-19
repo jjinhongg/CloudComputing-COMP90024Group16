@@ -99,7 +99,7 @@ def lang_dis(client):
         view = View(citydb['_design/language'], 'lang_count')
         with view.custom_result(group=True) as results:
             for result in results:
-                if result['key'] != 'und':
+                if result['key'] != 'und' and result['key'] != 'en':
                     lang_count[result['key']] = result['value']
         lang_dis[city] = lang_count
     return lang_dis
@@ -202,10 +202,16 @@ def top_hashtags(client):
         if not djson['_id'] in citydb:
             citydb.create_document(djson)
         all_hashtags = []
+        # temp_tags = []
         view = View(citydb['_design/hashtags'], 'all_hashtags')
         for result in view.result:
+          if type(result['key'][0])== dict:
+            temp = list(result['key'][0]['text'])
+            all_hashtags = all_hashtags + temp
+
+          else:
             all_hashtags = all_hashtags + result['key']
-        hashtags_count = dict(Counter(all_hashtags))
+        hashtags_count = Counter(all_hashtags)
         hashtags_sorted = sorted(hashtags_count.items(),key = lambda x:x[1],reverse = True)[0:30]
         top_hashtags[city] = dict(hashtags_sorted)
     return top_hashtags
