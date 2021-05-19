@@ -9,7 +9,7 @@
 ###### How to run the playbook
 ```
 $cd Ansible/mrc
-$. openrc.sh; ansible-playbook -i hosts master.yaml
+$. openrc.sh; ansible-playbook -i inventory/hosts master.yaml
 ```
 
 ###### How to connect to instances
