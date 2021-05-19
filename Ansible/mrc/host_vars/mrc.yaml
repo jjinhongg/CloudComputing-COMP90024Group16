@@ -48,16 +48,6 @@ volume_ids: []
 volume_path: /volume
 backup_path: /backup
 
-docker_swarm_ports:
-  - port: 2377
-    protocol: tcp
-  - port: 7946
-    protocol: tcp
-  - port: 7946
-    protocol: udp
-  - port: 4789
-    protocol: udp
-
 # Security group
 security_groups:
   - name: administration
