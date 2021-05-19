@@ -5,11 +5,13 @@
 <title>index</title>
 <script type="text/javascript" src="../static/js/jquery.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+<script src="https://cdn.anychart.com/releases/v8/js/anychart-tag-cloud.min.js"></script>
 
   <!-- <script type="text/javascript" src="../static/js/axios.min.js"></script> -->
 <link rel="stylesheet" href="../static/css/comon0.css">
 </head>
-	<script>
+<script>
 	$(window).load(function(){  
              $(".loading").fadeOut()
             })  
@@ -23,9 +25,11 @@ $(document).ready(function(){
 	 $("html").css({fontSize:whei/20})
 });
 	});
-	</script>
-	<script type="text/javascript" src="../static/js/echarts.min.js"></script>
-<script src="../static/js/vue.min.js"></script>
+</script>
+<!-- <script type="text/javascript" src="../static/js/echarts.min.js"></script> -->
+<script type="text/javascript" src="../static/js/echarts5.min.js"></script>
+<script type="text/javascript" src="../static/js/echarts-wordcloud.min.js"></script>
+<script type="text/javascript" src="../static/js/vue.min.js"></script>
 	<!-- <script language="JavaScript" src="../static/js/js.js"></script> -->
 <body>
 <div  id="app">
@@ -133,6 +137,7 @@ var t = null;
   var lang_data = [];
   var time_data = [];
   var sent_data = [];
+  var hashtags_data = [];
 
   var year = ["2018","2019", "2020", "2021"];
   //geoCoordMap把所有可能出现的城市加到数组里面
@@ -277,6 +282,11 @@ var t = null;
                 .then(function (response) {
                   console.log(response);
                   that.city_hashtags=response.data;
+                  for (loc in geoCoordMap){
+                    window[loc+'_hashtags'] = []
+                    for (var tags in that.city_hashtags[loc]){
+                        window[loc+'_hashtags'].push({"name": tags, "value": that.city_hashtags[loc][tags]})}                      
+                    hashtags_data.push(window[loc+'_hashtags'])}
                 })
                 .catch(function (error) {
                   console.log(error.response.data);

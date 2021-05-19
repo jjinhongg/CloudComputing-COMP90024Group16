@@ -6,18 +6,20 @@ var colors = [
 var colorIndex = 0;
 
 
-
 setTimeout(function(){
 $(function () {
     map();
     function map() {
+        var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
         var langChart = echarts.init(document.getElementById('echart2')); //初始化语言分布图
         var sentChart = echarts.init(document.getElementById('echart4')); //初始化语言分布图
-        var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
+        var wordCloud = echarts.init(document.getElementById('echart5')); //初始化语言分布图
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map_1'));
 
         //--------------------------- Variables Initialisation ---------------------------\\
+
+        console.log(hashtags_data)
         
         var mapData = [
             [],
@@ -30,6 +32,7 @@ $(function () {
         var langdis_data = [];
         var timedis_data = [];
         var sentdis_data = [];
+        var tophashtags_data = [];
         
         for (var key in geoCoordMap) {
             mapData[0].push({
@@ -127,17 +130,17 @@ $(function () {
                 //         }
                 //     }
                 // },
-                // labelLine: {
-                //     lineStyle: {
-                //         // color: 'rgba(255, 255, 255, 0.3)'
-                //     },
-                //     show: true,
-                //     smooth: 0.2,
-                //     length: 15,
-                //     length2: 30,
-                //     minTurnAngle: 0,
-                //     maxSurfaceAngle: 0
-                // },
+                labelLine: {
+                    lineStyle: {
+                        // color: 'rgba(255, 255, 255, 0.3)'
+                    },
+                    show: true,
+                    smooth: 0.2,
+                    length: 15,
+                    length2: 30,
+                    minTurnAngle: 0,
+                    maxSurfaceAngle: 0
+                },
                 itemStyle: {
                     color: '#00abff',
                     // normal: {
@@ -237,7 +240,46 @@ $(function () {
             })
         }        
         
-        
+        // WordCloud
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i]; 
+            console.log(hashtags_data[i])
+            tophashtags_data.push({
+                    name: keyname,
+                    type: 'wordCloud',
+                    sizeRange: [10, 50],//文字范围
+                    //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
+                    rotationRange: [-45, 90],
+                    rotationStep: 45,
+                    textRotation: [0, 45, 90, -45],
+                    //形状
+                    shape: 'circle',
+                    // Global text style
+                    textStyle: {
+                        fontFamily: 'sans-serif',
+                        fontWeight: 'bold',
+                        // Color can be a callback function or a color string
+                        color: function () {
+                            // Random color
+                            return 'rgb(' + [
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160)
+                            ].join(',') + ')';
+                        }
+                    },
+                    //悬停上去的字体的阴影设置
+                    emphasis: {
+                        focus: 'self',
+            
+                        textStyle: {
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    data: hashtags_data[i]
+                })
+            }
         
         // 饼状图配置
         var lang_option = {
@@ -622,6 +664,23 @@ $(function () {
             series: [sentdis_data[0], sentdis_data[1], sentdis_data[2], sentdis_data[3], sentdis_data[4]]
         };
         
+        var wordCloud_option = {
+            toolbox: {
+                feature: {
+                    // dataZoom: {
+                    //     yAxisIndex: false
+                    // },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                show: true
+            },
+            series: [tophashtags_data[0]]
+        };        
+        
         //--------------------------- Charts Initialisation ---------------------------\\
 
         // console.log(langdis_data[0])
@@ -629,10 +688,13 @@ $(function () {
         langChart.setOption(lang_option);
         timeChart.setOption(time_option);
         sentChart.setOption(sent_option);
+        //使用制定的配置项和数据显示图表
+        wordCloud.setOption(wordCloud_option);
         window.addEventListener("resize",function(){
             langChart.resize();
             timeChart.resize();
             sentChart.resize();
+            wordCloud.resize();
         });
 
 
@@ -702,7 +764,7 @@ $(function () {
                     }
                 },
                 geo: { //地图设置
-                    nameProperty: "STATE_NAME",
+                    // nameProperty: "STATE_NAME",
                     show: true,
                     map: 'australia',
                     roam: false,
@@ -713,6 +775,18 @@ $(function () {
                     // This makes sure that it will not exceed the area of 100x100
                     layoutSize: 500,
                     // center: [133.7751, -25.2744],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (p) => {
+                            let val = p.value[2];
+                            if (window.isNaN(val)) {
+                                val = 0;
+                            }
+                            let txtCon =
+                                "<div style='text-align:left'>" + p.name + ":<br />Total Tweets：" + val.toFixed(2) + '</div>';
+                            return txtCon;
+                        }
+                    },
                     label: {
                         emphasis: {
                             show: false
@@ -845,7 +919,9 @@ $(function () {
                     },
                     data: categoryData[n]
                 },
-
+                tooltip:{
+                    show: true
+                },
                 series: [
                     //地图
                     {
@@ -952,10 +1028,16 @@ $(function () {
             time_option['series'] = [timedis_data[index]];
             timeChart.setOption(time_option);
 
-            sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
-            sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
-            sent_option['series'] = [sentdis_data[index]];
-            sentChart.setOption(sent_option);
+            // sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
+            // sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
+            // sent_option['series'] = [sentdis_data[index]];
+            // sentChart.setOption(sent_option);
+
+            // wordCloud_option['title']['text'] = tophashtags_data[index].name.toUpperCase();
+            // wordCloud_option['xAxis']['data'] = Object.keys(vue.city_hashtags[keys[index]]);
+            wordCloud_option['series'] = [tophashtags_data[index]];
+            console.log(tophashtags_data[index])
+            wordCloud.setOption(wordCloud_option);
         });
 
         window.addEventListener("resize",function(){
