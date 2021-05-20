@@ -17,6 +17,9 @@ if __name__ == '__main__':
     # client = couchdb_init()
     while True:
         # client = couchdb_init()
-        run_spider()
+        try:
+            run_spider()
+        except:
+            continue
         client = couchdb_init()
         process_and_save(client)

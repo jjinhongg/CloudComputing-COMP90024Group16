@@ -88,7 +88,9 @@ def run_spider():
     cities_geo = {"melbourne": (-37.8136, 144.9631), "sydney": (-33.8688, 151.2093),
                   "adelaide": (-34.9285, 138.6007), "canberra": (-35.2809, 149.1300),
                   "brisbane": (-27.4705, 153.0260)}
+
     api = tweepy_init()
+
     # available_loc = api.trends_available()
 
     for datafile, dbname in data.items():
@@ -99,7 +101,7 @@ def run_spider():
         coordinates = str(cities_geo[dbname][0])+','+str(cities_geo[dbname][1])+ ',20km'
         result_type = 'recent'
         until_date = '2021-5-10'
-        max_tweets = 1000
+        max_tweets = 10000
 
         tweets = tweepy.Cursor(api.search, geocode=coordinates,result_type=result_type,
                                count=100).items(max_tweets)
