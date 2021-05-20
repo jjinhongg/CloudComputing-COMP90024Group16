@@ -66,7 +66,7 @@ $(function () {
             categoryData.push([]);
             for (var j = 0; j < mapData[i].length; j++) {
                 barData[i].push(mapData[i][j].value);
-                categoryData[i].push(mapData[i][j].name);
+                categoryData[i].push(mapData[i][j].name.toUpperCase());
             }
         }
         
@@ -76,7 +76,7 @@ $(function () {
                 var geoCoord = geoCoordMap[data[i].name];
                 if (geoCoord) {
                     res.push({
-                        name: data[i].name,
+                        name: data[i].name.toUpperCase(),
                         value: geoCoord.concat(data[i].value)
                     });
                 }
@@ -87,7 +87,7 @@ $(function () {
         // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
         // Language Distribution Pie Chart
         for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i]; 
+            var keyname = keys[i].toUpperCase(); 
             console.log(lang_data[i])
             langdis_data.push({
                 name: keyname, //city
@@ -184,7 +184,7 @@ $(function () {
         
         // Time Distribution
         for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i]; 
+            var keyname = keys[i].toUpperCase(); 
             console.log(time_data[i])
             timedis_data.push(
                 {
@@ -220,6 +220,25 @@ $(function () {
                             borderWidth: 12
                         }
                     },
+                    markArea: {
+                        label:{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                        },
+                        itemStyle: {
+                            color: 'rgba(255, 173, 177, 0.4)'
+                        },
+                        data: [ [{
+                            name: 'Morning Peak',
+                            xAxis: '7'
+                        }, {
+                            xAxis: '10'
+                        }], [{
+                            name: 'Evening Peak',
+                            xAxis: '17'
+                        }, {
+                            xAxis: '21'
+                        }] ]
+                    },
                     data: time_data[i]
             
                 })
@@ -227,7 +246,7 @@ $(function () {
 
         // Sentiment Distribution
         for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i]; 
+            var keyname = keys[i].toUpperCase(); 
             console.log(sent_data[i])
             sentdis_data.push({
                 name: keyname, //city
@@ -242,12 +261,12 @@ $(function () {
         
         // WordCloud
         for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i]; 
+            var keyname = keys[i].toUpperCase(); 
             console.log(hashtags_data[i])
             tophashtags_data.push({
                     name: keyname,
                     type: 'wordCloud',
-                    sizeRange: [10, 50],//文字范围
+                    sizeRange: [30, 80],//文字范围
                     //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
                     rotationRange: [-45, 90],
                     rotationStep: 45,
@@ -262,9 +281,9 @@ $(function () {
                         color: function () {
                             // Random color
                             return 'rgb(' + [
-                                Math.round(Math.random() * 160),
-                                Math.round(Math.random() * 160),
-                                Math.round(Math.random() * 160)
+                                Math.round(Math.random() * 180),
+                                Math.round(Math.random() * 180),
+                                Math.round(Math.random() * 180)
                             ].join(',') + ')';
                         }
                     },
@@ -443,6 +462,7 @@ $(function () {
                 text: timedis_data[0]['name'].toUpperCase(),
                 // top: '2%',
                 left: 'center',
+                top: 'center',
                 textStyle: {
                     color: '#fff',
                     fontSize: '14'
@@ -465,7 +485,7 @@ $(function () {
                         color: '#dddc6b'
                     }
                 },
-                formatter: "{a} <br/>{b}: {c}",
+                // formatter: "{a} <br/>{b}: {c}",
                 textStyle: { // style of legend text
                             Color:'#fff', //text color
                             fontSize: 12 // text size
@@ -543,6 +563,29 @@ $(function () {
                 splitArea: {
                     show: false
                 }
+            },
+            visualMap: {
+                show: false,
+                dimension: 0,
+                pieces: [{
+                    lte: 7,
+                    color: '#0184d5'
+                }, {
+                    gt: 7,
+                    lte: 10,
+                    color: 'red'
+                }, {
+                    gt: 10,
+                    lte: 17,
+                    color: '#0184d5'
+                }, {
+                    gt: 17,
+                    lte: 21,
+                    color: 'red'
+                }, {
+                    gt: 17,
+                    color: '#0184d5'
+                }]
             },
             series: [timedis_data[0]]
         };
@@ -683,7 +726,7 @@ $(function () {
         
         //--------------------------- Charts Initialisation ---------------------------\\
 
-        // console.log(langdis_data[0])
+        console.log(langdis_data[0])
         // 语言分布图初始化数据
         langChart.setOption(lang_option);
         timeChart.setOption(time_option);
@@ -760,6 +803,16 @@ $(function () {
                         type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
                         shadowStyle: {
                             color: 'rgba(150,150,150,0.1)' //hover颜色
+                        }
+                    }
+                },
+                toolbox: {
+                    feature: {
+                        // dataZoom: {
+                        //     yAxisIndex: false
+                        // },
+                        saveAsImage: {
+                            pixelRatio: 2
                         }
                     }
                 },
@@ -973,6 +1026,7 @@ $(function () {
                         hoverAnimation: true,
                         label: {
                             normal: {
+                                color: 'rgba(255, 255, 255, 0.9)',
                                 formatter: '{b}',
                                 position: 'right',
                                 show: true
@@ -1013,17 +1067,17 @@ $(function () {
             console.log(city)
             var index = keys.findIndex(function(item) {
                 console.log(item)
-                return item == city;
+                return item == city.toLowerCase();
             });
             // option['title']['text'] = city;
-            lang_option['title']['text'] = langdis_data[index].name.toUpperCase();
+            lang_option['title']['text'] = langdis_data[index].name;
             // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
             lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
             lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
             lang_option['series'] = [langdis_data[index]];
             langChart.setOption(lang_option);
 
-            time_option['title']['text'] = timedis_data[index].name.toUpperCase();
+            time_option['title']['text'] = timedis_data[index].name;
             time_option['xAxis']['data'] = Object.keys(vue.city_time_dis[keys[index]]);
             time_option['series'] = [timedis_data[index]];
             timeChart.setOption(time_option);
@@ -1047,4 +1101,4 @@ $(function () {
     }
 
 })
-},15000)
+},13000)
