@@ -10,6 +10,7 @@ setTimeout(function(){
 $(function () {
     map();
     function map() {
+
         var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
         var langChart = echarts.init(document.getElementById('echart2')); //初始化语言分布图
         var sentChart = echarts.init(document.getElementById('echart4')); //初始化语言分布图
@@ -95,7 +96,7 @@ $(function () {
                 hoverAnimation: 'false',
                 radius: ['40%', '60%'],
                 center: ['50%', '50%'],
-                // color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
                 data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
                 emphasis: {
                     itemStyle: {
@@ -105,10 +106,21 @@ $(function () {
                     }
                 },
                 label:{
-                    color: 'rgba(255, 255, 255, 0.9)'
+                    // color: 'rgba(255, 255, 255, 0.9)',
+                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                    // formatter: "{b}:{c}({d}%)",
+                    formatter: "{b}:{d}%",
+                    emphasis: {
+                            //The label style displayed by the mouse on the ring
+                    show: true,
+                    textStyle: {
+                        fontSize: '12',
+                        fontWeight: 'bold'
+                        }   
+                    }                   
                 },
                 // label: {
-                //     color: 'rgba(255, 255, 255, 0.3)',
+                //     color: 'rgba(255, 255, 255, 0.9)',
                 //     overflow: 'truncate',
                 //     edgeDistance: '25%',
                 //     bleedMargin: 10,
@@ -142,7 +154,7 @@ $(function () {
                     maxSurfaceAngle: 0
                 },
                 itemStyle: {
-                    color: '#00abff',
+                    // color: '#00abff',
                     // normal: {
                     //     borderWidth: 1,
                     //     borderColor: '#ff9900',
@@ -266,7 +278,7 @@ $(function () {
             tophashtags_data.push({
                     name: keyname,
                     type: 'wordCloud',
-                    sizeRange: [30, 80],//文字范围
+                    sizeRange: [30, 70],//文字范围
                     //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
                     rotationRange: [-45, 90],
                     rotationStep: 45,
@@ -338,14 +350,14 @@ $(function () {
                             fontSize: 12 // text size
                 }
             },
-            visualMap: {
-                show: false,
-                min: Math.min(...Object.values(vue.city_lang[keys[0]])),
-                max: Math.max(...Object.values(vue.city_lang[keys[0]])),
-                inRange: {
-                    colorLightness: [0.2, 0.5]
-                }
-            },
+            // visualMap: {
+            //     show: false,
+            //     min: Math.min(...Object.values(vue.city_lang[keys[0]])),
+            //     max: Math.max(...Object.values(vue.city_lang[keys[0]])),
+            //     inRange: {
+            //         colorLightness: [0.2, 0.5]
+            //     }
+            // },
             series: [langdis_data[0]]
         };
         
@@ -728,6 +740,9 @@ $(function () {
 
         console.log(langdis_data[0])
         // 语言分布图初始化数据
+        // setInterval(langChart.setOption(lang_option),5000);
+        // setInterval(timeChart.setOption(time_option),5000);
+        // setInterval(sentChart.setOption(sent_option),5000);
         langChart.setOption(lang_option);
         timeChart.setOption(time_option);
         sentChart.setOption(sent_option);
@@ -1072,8 +1087,8 @@ $(function () {
             // option['title']['text'] = city;
             lang_option['title']['text'] = langdis_data[index].name;
             // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
-            lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
-            lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
+            // lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
+            // lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
             lang_option['series'] = [langdis_data[index]];
             langChart.setOption(lang_option);
 
@@ -1101,4 +1116,4 @@ $(function () {
     }
 
 })
-},13000)
+},5000)

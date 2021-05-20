@@ -101,7 +101,12 @@ def lang_dis(client):
             for result in results:
                 if result['key'] != 'und' and result['key'] != 'en':
                     lang_count[result['key']] = result['value']
-        lang_dis[city] = lang_count
+            lang_sorted = sorted(lang_count.items(),key = lambda x:x[1],reverse = True)
+        for i in range(len(lang_sorted)):
+            if i >= 10:
+                lang_sorted[i] = ('others',lang_sorted[i][1])
+        lang_sorted_dict = dict(list(Counter(key for key, num in lang_sorted for idx in range(num)).items()))
+        lang_dis[city] = lang_sorted_dict
     return lang_dis
 
 
