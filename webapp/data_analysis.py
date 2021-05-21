@@ -6,8 +6,8 @@ from collections import Counter
 
 
 # current tweet number for this month
-def current_twts(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def current_twts():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     date = '''
     {
@@ -41,8 +41,8 @@ def current_twts(client):
 
 
 # total tweet number each year each city 
-def total_twts(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def total_twts():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     date = '''
     {
@@ -75,8 +75,8 @@ def total_twts(client):
 
     
 # language distribution each city
-def lang_dis(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def lang_dis():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     language = '''
     {
@@ -111,8 +111,8 @@ def lang_dis(client):
 
 
 # average sentiment score each year each city
-def senti_score(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def senti_score():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     sentiment = '''
     {
@@ -157,8 +157,8 @@ def senti_score(client):
 
 
 # time(hour) distribution this month each city (UTC+10)
-def time_dis(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def time_dis():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     hour = '''
     {
@@ -187,8 +187,8 @@ def time_dis(client):
 
 
 # top 30 used hashtags this year each city
-def top_hashtags(client):
-    #client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
+def top_hashtags():
+    client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     hashtags = '''
     {
