@@ -111,8 +111,7 @@ def lang_dis():
                 for j in iso639:
                     if lang_sorted[i][0] == j['639-1']:
                         lang_sorted[i] = (j['ISO language name'].split(", ")[0],lang_sorted[i][1])
-                    elif lang_sorted[i][0] == 'in':
-                        lang_sorted[i] = ('Indonesian',lang_sorted[i][1])
+                        
         lang_sorted_dict = dict(list(Counter(key for key, num in lang_sorted for idx in range(num)).items()))
         lang_dis[city] = lang_sorted_dict
     return lang_dis
