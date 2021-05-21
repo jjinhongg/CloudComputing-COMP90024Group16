@@ -76,6 +76,8 @@ def total_twts():
     
 # language distribution each city
 def lang_dis():
+    f = open('./data/iso639.json', encoding="utf-8")
+    iso639 = json.load(f)
     client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     language = '''
@@ -105,6 +107,12 @@ def lang_dis():
         for i in range(len(lang_sorted)):
             if i >= 10:
                 lang_sorted[i] = ('others',lang_sorted[i][1])
+            else:
+                for j in iso639:
+                    if lang_sorted[i][0] == j['639-1']:
+                        lang_sorted[i] = (j['ISO language name'].split(", ")[0],lang_sorted[i][1])
+                    elif lang_sorted[i][0] == 'in':
+                        lang_sorted[i] = ('Indonesian',lang_sorted[i][1])
         lang_sorted_dict = dict(list(Counter(key for key, num in lang_sorted for idx in range(num)).items()))
         lang_dis[city] = lang_sorted_dict
     return lang_dis

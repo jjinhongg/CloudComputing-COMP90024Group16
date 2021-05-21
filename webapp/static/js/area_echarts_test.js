@@ -1,14 +1,17 @@
 var colors = [
-    ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
+    ["#1DE9B6", "#EBEBEB", "#9DFBF8", "#FDCA40", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
     ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
     ["#DD6B66", "#759AA0", "#E69D87", "#8DC1A9", "#EA7E53", "#EEDD78", "#73A373", "#73B9BC", "#7289AB", "#91CA8C", "#F49F42"],
+    ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90']
 ];
+// var colors = ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90']
 var colorIndex = 0;
 
 
-setTimeout(function(){
+// setTimeout(function(){
 $(function () {
-    map();
+    setInterval(map,10000);
+    // map();
     function map() {
 
         var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
@@ -94,7 +97,7 @@ $(function () {
                 name: keyname, //city
                 type: 'pie',
                 hoverAnimation: 'false',
-                radius: ['40%', '60%'],
+                radius: ['30%', '52%'],
                 center: ['50%', '50%'],
                 color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
                 data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
@@ -148,8 +151,8 @@ $(function () {
                     },
                     show: true,
                     smooth: 0.2,
-                    length: 15,
-                    length2: 30,
+                    length: 12,
+                    length2: 18,
                     minTurnAngle: 0,
                     maxSurfaceAngle: 0
                 },
@@ -274,7 +277,7 @@ $(function () {
         // WordCloud
         for (var i = 0; i < keys.length; i++) {
             var keyname = keys[i].toUpperCase(); 
-            console.log(hashtags_data[i])
+            // console.log(hashtags_data[i])
             tophashtags_data.push({
                     name: keyname,
                     type: 'wordCloud',
@@ -290,11 +293,16 @@ $(function () {
                         fontFamily: 'sans-serif',
                         fontWeight: 'bold',
                         // Color can be a callback function or a color string
-                        color: function (){ 
-                            return "hsl(" + 360 * Math.random() + ',' +
-                                       (70 + 20 * Math.random()) + '%,' + 
-                                       (60 + 30 * Math.random()) + '%)'
-                          }
+                        // color: ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', 'D2FDFF']
+                        color: function(){
+                            var color = ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90', '#DBB494']
+                            return color[Math.floor(Math.random() * color.length)];
+                        }
+                        // color: function (){ 
+                        //     return "hsl(" + 360 * Math.random() + ',' +
+                        //                (70 + 20 * Math.random()) + '%,' + 
+                        //                (60 + 30 * Math.random()) + '%)'
+                        //   }
                         // color: function () {
                         //     // Random color
                         //     return 'rgb(' + [
@@ -328,7 +336,7 @@ $(function () {
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '14'
+                    fontSize: '18'
                 }
             },
             // legend: {
@@ -482,7 +490,7 @@ $(function () {
                 top: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '14'
+                    fontSize: '18'
                 }
             },
             toolbox: {
@@ -725,6 +733,18 @@ $(function () {
         };
         
         var wordCloud_option = {
+            title: {
+                zlevel: 2,
+                // z:3,
+                text: tophashtags_data[0]['name'].toUpperCase(),
+                // top: '2%',
+                left: 'center',
+                top: '1%',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '20'
+                }
+            },
             toolbox: {
                 feature: {
                     // dataZoom: {
@@ -744,14 +764,14 @@ $(function () {
         //--------------------------- Charts Initialisation ---------------------------\\
 
         console.log(langdis_data[0])
-        // 语言分布图初始化数据
+        // 初始化数据
         // setInterval(langChart.setOption(lang_option),5000);
         // setInterval(timeChart.setOption(time_option),5000);
         // setInterval(sentChart.setOption(sent_option),5000);
+        // setInterval(wordCloud.setOption(sent_option),5000);
         langChart.setOption(lang_option);
         timeChart.setOption(time_option);
         sentChart.setOption(sent_option);
-        //使用制定的配置项和数据显示图表
         wordCloud.setOption(wordCloud_option);
         window.addEventListener("resize",function(){
             langChart.resize();
@@ -1121,4 +1141,4 @@ $(function () {
     }
 
 })
-},5000)
+// },10000)

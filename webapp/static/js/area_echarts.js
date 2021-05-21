@@ -1,486 +1,3 @@
-//geoCoordMap把所有可能出现的城市加到数组里面
-var geoCoordMap = {
-    "杭州": [119.5313, 29.8773],
-    "苏州": [118.8062, 31.9208],
-    '上海': [121.4648, 31.2891],
-    "天津": [117.4219, 39.4189],
-    '深圳': [114.072026, 22.552194],
-    "成都": [103.9526, 30.7617],
-    "郑州": [113.4668, 34.6234],
-    "宁波": [121.640618, 29.86206],
-    "合肥": [117.29, 32.0581],
-    "重庆": [108.384366, 30.439702],
-    "广州": [113.12244, 23.009505],
-    "大连": [123.1238, 42.1216],
-    "青岛": [117.1582, 36.8701],
-    '北京': [116.4551, 40.2539],
-    '义乌': [120.067209, 29.346921],
-    '东莞': [113.764742, 23.02039],
-    "长沙": [113.0823, 28.2568],
-    "贵阳": [106.6992, 26.7682],
-    '珠海': [113.556111, 22.250876],
-    '威海': [122.109148, 37.516889],
-    "泉州": [118.58, 24.93],
-    "赤峰": [118.87, 42.28],
-    "厦门": [118.1, 24.46],
-    "福州": [119.3, 26.08],
-    "抚顺": [123.97, 41.97],
-    "汕头": [116.69, 23.39],
-    "宁波": [121.56, 29.86],
-    "海口": [110.35, 20.02],
-    "岳阳": [113.09, 29.37],
-    "武汉": [114.31, 30.52],
-    "义乌": [120.06, 29.32],
-    "唐山": [118.02, 39.63],
-    "石家庄": [114.48, 38.03],
-    "哈尔滨": [126.63, 45.75],
-    "兰州": [103.73, 36.03],
-    "贵阳": [106.71, 26.57],
-    "呼和浩特": [111.65, 40.82],
-    "南昌": [115.89, 28.68],
-    "佛山": [113.11, 23.05],
-    "汕头": [116.69, 23.39],
-    "烟台": [121.39, 37.52],
-    "威海": [122.1, 37.5],
-};
-var keys = Object.keys( geoCoordMap );
-//2013年数据
-var d1 = {
-   "杭州": 10,
-    "苏州": 2,
-    '上海': 21,
-    "天津": 4,
-    '深圳': 7,
-     "郑州":7,
-    "成都":5,
-    "宁波":2,
-    "合肥": 1,
-    "重庆": 3,
-    "广州": 19,
-    "大连": 1,
-    "青岛": 2,
-    '北京': 16,
-    '义乌': 2,
-    '东莞': 1,
-    "长沙": 3,
-    "贵阳": 0,
-    '珠海': 0,
-    '威海': 0,
-    '南昌': 1,
-    '西安': 2,
-    '南京': 6,
-    '海口': 0,
-    '厦门': 3,
-    '沈阳': 3,
-    '无锡': 0,
-    '呼和浩特':0,
-    '长春':0,
-    '哈尔滨':1,
-    '武汉':5,
-    '南宁':1,
-    '昆明':1,
-    '兰州':0,
-    '唐山':0,
-    '石家庄':2,
-    '太原':1,
-    '赤峰':0,
-    '抚顺':0,
-    '珲春':0,
-    '绥芬河':0,
-    '徐州':0,
-    '南通':1,
-    '温州':2,
-    '绍兴':0,
-    '芜湖':0,
-    '福州':5,
-    '泉州':2,
-    '赣州':2,
-    '济南':3,
-    '烟台':0,
-    '洛阳':1,
-    '黄石':0,
-    '岳阳':0,
-    '汕头':0,
-    '佛山':0,
-    '泸州':0,
-    '海东':0,
-    '银川':0,
-};
-
-//2014年数据
-var d2 = {
-  "杭州": 131,
-    "苏州": 51,
-    '上海': 114,
-    "天津": 58,
-    '深圳': 104,
-     "郑州":66,
-    "成都":35,
-    "宁波":59,
-    "合肥": 28,
-    "重庆": 68,
-    "广州": 120,
-    "大连": 24,
-    "青岛": 58,
-    '北京': 118,
-    '义乌': 36,
-    '东莞': 46,
-    "长沙": 34,
-    "贵阳": 8,
-    '珠海': 11,
-    '威海': 7,
-    '南昌': 24,
-    '西安': 35,
-    '南京': 42,
-    '海口': 6,
-    '厦门': 59,
-    '沈阳': 18,
-    '无锡': 21,
-    '呼和浩特':7,
-    '长春':13,
-    '哈尔滨':16,
-    '武汉':52,
-    '南宁':14,
-    '昆明':10,
-    '兰州':5,
-    '唐山':3,
-    '石家庄':24,
-    '太原':13,
-    '赤峰':0,
-    '抚顺':0,
-    '珲春':1,
-    '绥芬河':3,
-    '徐州':5,
-    '南通':12,
-    '温州':32,
-    '绍兴':11,
-    '芜湖':3,
-    '福州':72,
-    '泉州':47,
-    '赣州':3,
-    '济南':40,
-    '烟台':14,
-    '洛阳':7,
-    '黄石':1,
-    '岳阳':1,
-    '汕头':8,
-    '佛山':31,
-    '泸州':0,
-    '海东':0,
-    '银川':37,
-};
-//2015年数据
-var d3 = {
-   "杭州": 311,
-    "苏州": 174,
-    '上海': 308,
-    "天津": 192,
-    '深圳': 304,
-     "郑州":194,
-    "成都":179,
-    "宁波":191,
-    "合肥": 130,
-    "重庆": 189,
-    "广州": 345,
-    "大连": 139,
-    "青岛": 182,
-    '北京': 336,
-    '义乌': 136,
-    '东莞': 159,
-    "长沙": 151,
-    "贵阳": 81,
-    '珠海': 96,
-    '威海': 80,
-    '南昌': 112,
-    '西安': 163,
-    '南京': 155,
-    '海口': 59,
-    '厦门': 170,
-    '沈阳': 102,
-    '无锡': 110,
-    '呼和浩特':54,
-    '长春':76,
-    '哈尔滨':113,
-    '武汉':187,
-    '南宁':104,
-    '昆明':100,
-    '兰州':48,
-    '唐山':48,
-    '石家庄':110,
-    '太原':80,
-    '赤峰':8,
-    '抚顺':7,
-    '珲春':19,
-    '绥芬河':16,
-    '徐州':63,
-    '南通':78,
-    '温州':111,
-    '绍兴':88,
-    '芜湖':29,
-    '福州':189,
-    '泉州':148,
-    '赣州':31,
-    '济南':161,
-    '烟台':85,
-    '洛阳':49,
-    '黄石':10,
-    '岳阳':15,
-    '汕头':74,
-    '佛山':153,
-    '泸州':10,
-    '海东':0,
-    '银川':34,
-};
-//2016年数据
-var d4 = {
-    "杭州": 296,
-    "苏州": 184,
-    '上海': 332,
-    "天津": 136,
-    '深圳': 327,
-     "郑州":208,
-    "成都":235,
-    "宁波":200,
-    "合肥": 142,
-    "重庆": 191,
-    "广州": 327,
-    "大连": 154,
-    "青岛": 168,
-    '北京': 358,
-    '义乌': 133,
-    '东莞': 166,
-    "长沙": 159,
-    "贵阳": 81,
-    '珠海': 86,
-    '威海': 58,
-    '南昌': 118,
-    '西安': 180,
-    '南京': 170,
-    '海口': 78,
-    '厦门': 160,
-    '沈阳': 114,
-    '无锡': 119,
-    '呼和浩特':80,
-    '长春':92,
-    '哈尔滨':123,
-    '武汉':190,
-    '南宁':122,
-    '昆明':128,
-    '兰州':69,
-    '唐山':60,
-    '石家庄':118,
-    '太原':93,
-    '赤峰':16,
-    '抚顺':9,
-    '珲春':21,
-    '绥芬河':16,
-    '徐州':78,
-    '南通':93,
-    '温州':122,
-    '绍兴':95,
-    '芜湖':36,
-    '福州':187,
-    '泉州':148,
-    '赣州':47,
-    '济南':161,
-    '烟台':87,
-    '洛阳':55,
-    '黄石':11,
-    '岳阳':26,
-    '汕头':78,
-    '佛山':150,
-    '泸州':10,
-    '海东':0,
-    '银川':45,
-};
-//2017年数据
-var d5 = {
-    "杭州": 334,
-    "苏州": 185,
-    '上海': 313,
-    "天津": 181,
-    '深圳': 379,
-     "郑州":231,
-    "成都":215,
-    "宁波":183,
-    "合肥": 145,
-    "重庆": 205,
-    "广州": 344,
-    "大连": 166,
-    "青岛": 170,
-    '北京': 351,
-    '义乌': 150,
-    '东莞': 176,
-    "长沙": 174,
-    "贵阳": 89,
-    '珠海': 91,
-    '威海': 61,
-    '南昌': 135,
-    '西安': 181,
-    '南京': 183,
-    '海口': 80,
-    '厦门': 167,
-    '沈阳': 130,
-    '无锡': 121,
-    '呼和浩特':89,
-    '长春':122,
-    '哈尔滨':139,
-    '武汉':219,
-    '南宁':138,
-    '昆明':125,
-    '兰州':71,
-    '唐山':71,
-    '石家庄':136,
-    '太原':127,
-    '赤峰':47,
-    '抚顺':9,
-    '珲春':30,
-    '绥芬河':21,
-    '徐州':88,
-    '南通':90,
-    '温州':138,
-    '绍兴':92,
-    '芜湖':26,
-    '福州':283,
-    '泉州':158,
-    '赣州':30,
-    '济南':171,
-    '烟台':81,
-    '洛阳':86,
-    '黄石':15,
-    '岳阳':41,
-    '汕头':96,
-    '佛山':165,
-    '泸州':49,
-    '海东':0,
-    '银川':70,
-   
-};
-//2018年数据
-var d6 = {
-    "杭州": 365,
-    "苏州": 213,
-    '上海': 352,
-    "天津": 187,
-    '深圳': 430,
-     "郑州":251,
-    "成都":226,
-    "宁波":196,
-    "合肥": 165,
-    "重庆": 234,
-    "广州": 364,
-    "大连": 151,
-    "青岛": 193,
-    '北京': 358,
-    '义乌': 162,
-    '东莞': 197,
-    "长沙": 212,
-    "贵阳": 94,
-    '珠海': 108,
-    '威海': 70,
-    '南昌': 167,
-    '西安': 188,
-    '南京': 203,
-    '海口': 102,
-    '厦门': 187,
-    '沈阳': 148,
-    '无锡': 133,
-    '呼和浩特':88,
-    '长春':121,
-    '哈尔滨':143,
-    '武汉':224,
-    '南宁':153,
-    '昆明':144,
-    '兰州':77,
-    '唐山':98,
-    '石家庄':150,
-    '太原':147,
-    '赤峰':16,
-    '抚顺':16,
-    '珲春':31,
-    '绥芬河':18,
-    '徐州':98,
-    '南通':106,
-    '温州':153,
-    '绍兴':112,
-    '芜湖':36,
-    '福州':196,
-    '泉州':178,
-    '赣州':71,
-    '济南':165,
-    '烟台':88,
-    '洛阳':78,
-    '黄石':14,
-    '岳阳':39,
-    '汕头':115,
-    '佛山':185,
-    '泸州':12,
-    '海东':1,
-    '银川':49,
-};
-//2019年数据
-var d7 = {
-    "杭州": 352,
-    "苏州": 204,
-    '上海': 331,
-    "天津": 168,
-    '深圳': 421,
-     "郑州":271,
-    "成都":231,
-    "宁波":199,
-    "合肥": 172,
-    "重庆": 141,
-    "广州": 365,
-    "大连": 132,
-    "青岛": 205,
-    '北京': 239,
-    '义乌': 147,
-    '东莞': 193,
-    "长沙": 213,
-    "贵阳": 105,
-    '珠海': 99,
-    '威海': 76,
-    '南昌': 163,
-    '西安': 184,
-    '南京': 193,
-    '海口': 109,
-    '厦门': 170,
-    '沈阳': 147,
-    '无锡': 138,
-    '呼和浩特':81,
-    '长春':126,
-    '哈尔滨':141,
-    '武汉':241,
-    '南宁':154,
-    '昆明':145,
-    '兰州':89,
-    '唐山':103,
-    '石家庄':146,
-    '太原':137,
-    '赤峰':33,
-    '抚顺':12,
-    '珲春':22,
-    '绥芬河':23,
-    '徐州':101,
-    '南通':100,
-    '温州':134,
-    '绍兴':102,
-    '芜湖':52,
-    '福州':190,
-    '泉州':156,
-    '赣州':80,
-    '济南':161,
-    '烟台':81,
-    '洛阳':100,
-    '黄石':24,
-    '岳阳':48,
-    '汕头':118,
-    '佛山':164,
-    '泸州':14,
-    '海东':0,
-    '银川':61,
-};
-
 var colors = [
     ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
     ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
@@ -488,66 +5,58 @@ var colors = [
 ];
 var colorIndex = 0;
 
+
+// setTimeout(function(){
 $(function () {
-    map();
-    function map() {
-        var pieChart = echarts.init(document.getElementById('echart2')); //初始化饼图
+
+        var timeChart = echarts.init(document.getElementById('echart1')); //初始化语言分布图
+        var langChart = echarts.init(document.getElementById('echart2')); //初始化语言分布图
+        var sentChart = echarts.init(document.getElementById('echart4')); //初始化语言分布图
+        var wordCloud = echarts.init(document.getElementById('echart5')); //初始化语言分布图
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('map_1'));
-        var year = ["2017", "2018","2019"];
+
+        //--------------------------- Variables Initialisation ---------------------------\\
+
+        console.log(hashtags_data)
+        
         var mapData = [
-            [],
-            [],
-            [],
             [],
             [],
             [],
             []
         ];
-    
-        /*柱子Y名称*/
         var categoryData = [];
         var barData = [];
-        var pie_data = [];
-    
+        var langdis_data = [];
+        var timedis_data = [];
+        var sentdis_data = [];
+        var tophashtags_data = [];
+        
         for (var key in geoCoordMap) {
             mapData[0].push({
-                "year": '2013',
-                "name": key,
-                "value": d1[key],
-            });
-            mapData[1].push({
-                "year": '2014',
-                "name": key,
-                "value": d2[key],
-            });
-            mapData[2].push({
-                "year": '2015',
-                "name": key,
-                "value": d3[key],
-            });
-            mapData[3].push({
-                "year": '2016',
-                "name": key,
-                "value": d4[key],
-            });
-            mapData[4].push({
-                "year": '2017',
-                "name": key,
-                "value": d5[key],
-            });
-            mapData[5].push({
                 "year": '2018',
                 "name": key,
-                "value": d6[key],
+                "value": city_2018[key],
             });
-              mapData[6].push({
+            mapData[1].push({
                 "year": '2019',
                 "name": key,
-                "value": d7[key],
+                "value": city_2019[key],
             });
+            mapData[2].push({
+                "year": '2020',
+                "name": key,
+                "value": city_2020[key],
+            });
+            mapData[3].push({
+                "year": '2021',
+                "name": key,
+                "value": city_2021[key],
+            });
+            console.log(city_2021[key])
         }
-    
+        
         for (var i = 0; i < mapData.length; i++) {
             mapData[i].sort(function sortNumber(a, b) {
                 return a.value - b.value
@@ -556,87 +65,106 @@ $(function () {
             categoryData.push([]);
             for (var j = 0; j < mapData[i].length; j++) {
                 barData[i].push(mapData[i][j].value);
-                categoryData[i].push(mapData[i][j].name);
+                categoryData[i].push(mapData[i][j].name.toUpperCase());
             }
         }
-
-        var myChart = echarts.init(document.getElementById('map_1'));
+        
         var convertData = function(data) {
             var res = [];
             for (var i = 0; i < data.length; i++) {
                 var geoCoord = geoCoordMap[data[i].name];
                 if (geoCoord) {
                     res.push({
-                        name: data[i].name,
+                        name: data[i].name.toUpperCase(),
                         value: geoCoord.concat(data[i].value)
                     });
                 }
             }
             return res;
         };
-
-        var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800']
+        
         // var piecolor=['#00ffff','#00cfff','#006ced','#ffe000','#ffa800','#ff5b00','#ff3000']
+        // Language Distribution Pie Chart
         for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i]; 
-            var lang1 = parseInt(Math.random() * (200 - 0 + 1) + 0); //值取随机数
-            var lang2 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang3 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang4 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            var lang5 = parseInt(Math.random() * (200 - 0 + 1) + 0);
-            pie_data.push({
-                // zlevel: 2,
-                // z:3,
-                name: keyname,
+            var keyname = keys[i].toUpperCase(); 
+            console.log(lang_data[i])
+            langdis_data.push({
+                name: keyname, //city
                 type: 'pie',
-                radius: ['40%', '60%'],
+                hoverAnimation: 'false',
+                radius: ['30%', '52%'],
                 center: ['50%', '50%'],
                 color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                data: [
-                    {value: lang1, name: 'EN'},
-                    {value: lang2, name: 'CN'},
-                    {value: lang3, name: 'JP'},
-                    {value: lang4, name: 'KR'},
-                    {value: lang5, name: 'FR'}
-                ].sort(function (a, b) { return a.value - b.value; }),
-                roseType: 'radius',
-                label: {
-                    color: 'rgba(255, 255, 255, 0.3)',
-                    normal: {
-                        Show: true, // ​​whether to display the label
-                        //// The location of the tag. The 'outside' is outside the pie slice and is connected to the corresponding sector by a visual guide. 'inside', 'inner' Same as 'inside', inside the pie slice. 'center' is at the center of the pie chart.
-                        position: 'left',
-                        // The content of the displayed label
-                        //a (series name), b (data item name), c (number), d (percentage)
-                        formatter: "{b}:{c}({d}%)", 
-                        emphasis: {
-                                 //The label style displayed by the mouse on the ring
-                            show: true,
-                            textStyle: {
-                                fontSize: '10',
-                                fontWeight: 'bold'
-                            }
-                        }
+                data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                 },
+                label:{
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    // formatter: "{b}:{c}({d}%)",
+                    formatter: "{b}: {d}%",
+                    emphasis: {
+                    //The label style displayed by the mouse on the ring
+                    show: true,
+                    textStyle: {
+                        // color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                        fontSize: '13',
+                        fontWeight: 'bold'
+                        }   
+                    }                   
+                },
+                // label: {
+                //     color: 'rgba(255, 255, 255, 0.9)',
+                //     overflow: 'truncate',
+                //     edgeDistance: '25%',
+                //     bleedMargin: 10,
+                //     distanceToLabelLine: 5,
+                //     normal: {
+                //         Show: true, // ​​whether to display the label
+                //         //// The location of the tag. The 'outside' is outside the pie slice and is connected to the corresponding sector by a visual guide. 'inside', 'inner' Same as 'inside', inside the pie slice. 'center' is at the center of the pie chart.
+                //         position: 'left',
+                //         // The content of the displayed label
+                //         //a (series name), b (data item name), c (number), d (percentage)
+                //         formatter: "{b}:{c}({d}%)", 
+                //         emphasis: {
+                //                  //The label style displayed by the mouse on the ring
+                //             show: true,
+                //             textStyle: {
+                //                 fontSize: '6',
+                //                 fontWeight: 'bold'
+                //             }
+                //         }
+                //     }
+                // },
                 labelLine: {
                     lineStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)'
+                        // color: 'rgba(255, 255, 255, 0.3)'
                     },
+                    show: true,
                     smooth: 0.2,
-                    length: 10,
-                    length2: 20
+                    length: 12,
+                    length2: 18,
+                    minTurnAngle: 0,
+                    maxSurfaceAngle: 0
                 },
                 itemStyle: {
-                    // color: '#c23531',
+                    // color: '#00abff',
+                    // normal: {
+                    //     borderWidth: 1,
+                    //     borderColor: '#ff9900',
+                    // },
                     shadowBlur: 200,
                     shadowColor: 'rgba(0, 0, 0, 0.5)',
-                    label:{  
-                        show:true,  
-                        formatter:'{d}%'  
-                    }, 
+                    // label:{  
+                    //     show:true,
+                    //     position: 'outer',  
+                    //     formatter:'{d}%'  
+                    // }, 
                 },
-    
                 animationType: 'scale',
                 animationEasing: 'elasticOut',
                 animationDelay: function (idx) {
@@ -644,61 +172,590 @@ $(function () {
                 }
             })
         }
+        
+        // Language Distribution
+        // for (var i = 0; i < keys.length; i++) {
+        //     var keyname = keys[i]; 
+        //     console.log(lang_data[i])
+        //     langdis_data.push({
+        //         name: keyname, //city
+        //         type: 'bar',
+        //         data: lang_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+        //         itemStyle: {
+        //             normal: {
+        //                 color:'#2f89cf',
+        //                 opacity: 1,
+        //                 barBorderRadius: 5,
+        //             }
+        //         },
+        //         large: true 
+        //     })
+        // }
+        
+        // Time Distribution
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i].toUpperCase(); 
+            console.log(time_data[i])
+            timedis_data.push(
+                {
+                    name: keyname,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    showSymbol: false,
+                    lineStyle: {
+                        
+                        normal: {
+                            color: '#0184d5',
+                            width: 2
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgba(1, 132, 213, 0.4)'
+                            }, {
+                                offset: 0.8,
+                                color: 'rgba(1, 132, 213, 0.1)'
+                            }], false),
+                            shadowColor: 'rgba(0, 0, 0, 0.1)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#0184d5',
+                            borderColor: 'rgba(221, 220, 107, .1)',
+                            borderWidth: 12
+                        }
+                    },
+                    markArea: {
+                        label:{
+                            color: 'rgba(255, 255, 255, 0.9)',
+                        },
+                        itemStyle: {
+                            color: 'rgba(255, 173, 177, 0.4)'
+                        },
+                        data: [ [{
+                            name: 'Morning Peak',
+                            xAxis: '7'
+                        }, {
+                            xAxis: '10'
+                        }], [{
+                            name: 'Evening Peak',
+                            xAxis: '17'
+                        }, {
+                            xAxis: '21'
+                        }] ]
+                    },
+                    data: time_data[i]
+            
+                })
+        }
 
-
-
+        // Sentiment Distribution
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i].toUpperCase(); 
+            console.log(sent_data[i])
+            sentdis_data.push({
+                name: keyname, //city
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 5,
+                showSymbol: false,
+                data: sent_data[i], //.sort(function (a, b) { return a.value - b.value; }),
+            })
+        }        
+        
+        // WordCloud
+        for (var i = 0; i < keys.length; i++) {
+            var keyname = keys[i].toUpperCase(); 
+            // console.log(hashtags_data[i])
+            tophashtags_data.push({
+                    name: keyname,
+                    type: 'wordCloud',
+                    sizeRange: [30, 70],//文字范围
+                    //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
+                    rotationRange: [-45, 90],
+                    rotationStep: 45,
+                    textRotation: [0, 45, 90, -45],
+                    //形状
+                    shape: 'circle',
+                    // Global text style
+                    textStyle: {
+                        fontFamily: 'sans-serif',
+                        fontWeight: 'bold',
+                        // Color can be a callback function or a color string
+                        color: function (){ 
+                            return "hsl(" + 360 * Math.random() + ',' +
+                                       (70 + 20 * Math.random()) + '%,' + 
+                                       (60 + 30 * Math.random()) + '%)'
+                          }
+                        // color: function () {
+                        //     // Random color
+                        //     return 'rgb(' + [
+                        //         Math.round(Math.random() * 255),
+                        //         Math.round(Math.random() * 255),
+                        //         Math.round(Math.random() * 255)
+                        //     ].join(',') + ')';
+                        // }
+                    },
+                    //悬停上去的字体的阴影设置
+                    emphasis: {
+                        focus: 'self',
+            
+                        textStyle: {
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    data: hashtags_data[i]
+                })
+            }
+        
         // 饼状图配置
-        var option = {
+        var lang_option = {
             // backgroundColor: '#2c343c',
             title: {
                 zlevel: 2,
                 // z:3,
-                text: pie_data[0]['name'],
+                text: langdis_data[0]['name'],
                 top: 'middle',
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize: '16'
+                    fontSize: '14'
                 }
             },
-            legend: {
-                // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
-                selectedMode: true, 
-                /* orient: 'vertical', */
-                /* x : 'right', //the legend is shown on the right
-                y: 'center', */ //The legend is centered above the vertical display
-                bottom:0,
-                itemWidth: 10, // the width of the legend mark
-                itemHeight: 10, //Graph height of the legend mark
-                Data:['EN', 'CN', 'JP', 'KR', 'FR'],
-                textStyle: { // style of legend text
-                color: 'rgba(255,255,255,.5)',
-                // Color: '#A6A8B6', //text color
-                fontSize: 10 // text size
-                }
-            },   		  
+            // legend: {
+            //     // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
+            //     selectedMode: true, 
+            //     /* orient: 'vertical', */
+            //     /* x : 'right', //the legend is shown on the right
+            //     y: 'center', */ //The legend is centered above the vertical display
+            //     bottom:0,
+            //     itemWidth: 10, // the width of the legend mark
+            //     itemHeight: 10, //Graph height of the legend mark
+            //     // Data:['EN', 'CN', 'JP', 'KR', 'FR'],
+            //     textStyle: { // style of legend text
+            //     color: 'rgba(255,255,255,.5)',
+            //     // Color: '#A6A8B6', //text color
+            //     fontSize: 10 // text size
+            //     }
+            // },   		  
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)",
+                // formatter: "{a} <br/>{b}: {c} ({d}%)",
+                // textStyle: { // style of legend text
+                //             Color:'#fff', //text color
+                //             fontSize: 12 // text size
+                // }
+            },
+            // visualMap: {
+            //     show: false,
+            //     min: Math.min(...Object.values(vue.city_lang[keys[0]])),
+            //     max: Math.max(...Object.values(vue.city_lang[keys[0]])),
+            //     inRange: {
+            //         colorLightness: [0.2, 0.5]
+            //     }
+            // },
+            series: [langdis_data[0]]
+        };
+        
+        // var lang_option = {
+        //     title: {
+        //         zlevel: 2,
+        //         // z:3,
+        //         text: langdis_data[0]['name'].toUpperCase(),
+        //         // top: '2%',
+        //         left: 'center',
+        //         textStyle: {
+        //             color: '#fff',
+        //             fontSize: '14'
+        //         }
+        //     },
+        //     toolbox: {
+        //         feature: {
+        //             dataZoom: {
+        //                 yAxisIndex: false
+        //             },
+        //             saveAsImage: {
+        //                 pixelRatio: 2
+        //             }
+        //         }
+        //     },
+        //     tooltip: {
+        //         trigger: 'item',
+        //         formatter: "{a} <br/>{b}: {c}",
+        //         textStyle: { // style of legend text
+        //                     Color:'#fff', //text color
+        //                     fontSize: 12 // text size
+        //         }
+        //     },
+        //     grid: {
+        //         left: '2%',
+        //         top:'20px',
+        //         right: '2%',
+        //         bottom: '15%',
+        //        containLabel: true
+        //     },
+        //     dataZoom: [{
+        //         type: 'inside'
+        //     }, {
+        //         type: 'slider',
+        //     }],
+        //     xAxis: {
+        //         type: 'category',
+        //         data: Object.keys(vue.city_lang[keys[0]]),
+        //         silent: false,
+        //         splitLine: {
+        //             show: false 
+        //         },
+        //         splitArea: {
+        //             show: false
+        //         },
+        //         axisLine: {
+        //             show: true,
+        //             lineStyle: {
+        //                 color: "rgba(255,255,255,.1)",
+        //                 width: 1,
+        //                 type: "solid"
+        //             },
+        //         },
+        //         axisTick: {
+        //             show: false,
+        //         },
+        //         axisLabel:  {
+        //                 interval: 5,
+        //                // rotate:50,
+        //                 show: true,
+        //                 splitNumber: 5,
+        //                 textStyle: {
+        //                      color: "rgba(255,255,255,.6)",
+        //                     fontSize: '10',
+        //                 },
+        //             },
+        //     },
+        //     yAxis: {
+        //         axisLabel: {
+        //             //formatter: '{value} %'
+        //              show:true,
+        //               textStyle: {
+        //                       color: "rgba(255,255,255,.6)",
+        //                      fontSize: '12',
+        //                  },
+        //          },
+        //          axisTick: {
+        //              show: false,
+        //          },
+        //          axisLine: {
+        //              show: true,
+        //              lineStyle: {
+        //                  color: "rgba(255,255,255,.1)",
+        //                  width: 1,
+        //                  type: "solid"
+        //              },
+        //          },
+        //          splitLine: {
+        //              lineStyle: {
+        //                 color: "rgba(255,255,255,.1)",
+        //              }
+        //          },
+        //         splitArea: {
+        //             show: false
+        //         }
+        //     },
+        //     series: [langdis_data[0]]
+        // };
+        
+        var time_option = {
+            title: {
+                zlevel: 2,
+                // z:3,
+                text: timedis_data[0]['name'].toUpperCase(),
+                // top: '2%',
+                left: 'center',
+                top: 'center',
+                textStyle: {
+                    color: '#fff',
+                    fontSize: '14'
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: false
+                    },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#dddc6b'
+                    }
+                },
+                // formatter: "{a} <br/>{b}: {c}",
                 textStyle: { // style of legend text
                             Color:'#fff', //text color
-                            fontSize: 10 // text size
+                            fontSize: 12 // text size
+                }
+            },
+            grid: {
+                left: '2%',
+                top:'20px',
+                right: '2%',
+                bottom: '15%',
+               containLabel: true
+            },
+            dataZoom: [{
+                type: 'inside'
+            }, {
+                type: 'slider',
+            }],
+            xAxis: {
+                type: 'category',
+                data: Object.keys(vue.city_time_dis[keys[0]]),
+                silent: false,
+                splitLine: {
+                    show: false
+                },
+                splitArea: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                        width: 1,
+                        type: "solid"
+                    },
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLabel:  {
+                        interval: 0,
+                       // rotate:50,
+                        show: true,
+                        splitNumber: 5,
+                        textStyle: {
+                             color: "rgba(255,255,255,.6)",
+                            fontSize: '10',
+                        },
+                    },
+            },
+            yAxis: {
+                axisLabel: {
+                    //formatter: '{value} %'
+                     show:true,
+                      textStyle: {
+                              color: "rgba(255,255,255,.6)",
+                             fontSize: '12',
+                         },
+                 },
+                 axisTick: {
+                     show: false,
+                 },
+                 axisLine: {
+                     show: true,
+                     lineStyle: {
+                         color: "rgba(255,255,255,.1)",
+                         width: 1,
+                         type: "solid"
+                     },
+                 },
+                 splitLine: {
+                     lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                     }
+                 },
+                splitArea: {
+                    show: false
                 }
             },
             visualMap: {
                 show: false,
-                min: 0,
-                max: 300,
-                inRange: {
-                    colorLightness: [0.5, 1]
+                dimension: 0,
+                pieces: [{
+                    lte: 7,
+                    color: '#0184d5'
+                }, {
+                    gt: 7,
+                    lte: 10,
+                    color: 'red'
+                }, {
+                    gt: 10,
+                    lte: 17,
+                    color: '#0184d5'
+                }, {
+                    gt: 17,
+                    lte: 21,
+                    color: 'red'
+                }, {
+                    gt: 17,
+                    color: '#0184d5'
+                }]
+            },
+            series: [timedis_data[0]]
+        };
+
+        var sent_option = {
+            // title: {
+            //     zlevel: 2,
+            //     // z:3,
+            //     // text: sentdis_data[0]['name'].toUpperCase(),
+            //     // top: '2%',
+            //     left: 'center',
+            //     textStyle: {
+            //         color: '#fff',
+            //         fontSize: '14'
+            //     }
+            // },
+            toolbox: {
+                feature: {
+                    // dataZoom: {
+                    //     yAxisIndex: false
+                    // },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
                 }
             },
-            series: [pie_data[0]]
+            tooltip: {
+                trigger: 'axis',
+                // axisPointer: {
+                //     lineStyle: {
+                //         color: '#dddc6b'
+                //     }
+                // },
+                // formatter: "{a} <br/>{b}: {c}",
+                // textStyle: { // style of legend text
+                //             Color:'#fff', //text color
+                //             fontSize: 12 // text size
+                // }
+            },
+            grid: {
+                left: '2%',
+                // top:'20px',
+                right: '2%',
+                bottom: '5%',
+               containLabel: true
+            },
+            // dataZoom: [{
+            //     type: 'inside'
+            // }, {
+            //     type: 'slider',
+            // }],
+            xAxis: {
+                type: 'category',
+                data: Object.keys(vue.city_sentiment[keys[0]]),
+                silent: false,
+                splitLine: {
+                    show: false 
+                },
+                splitArea: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                        width: 1,
+                        type: "solid"
+                    },
+                },
+                axisTick: {
+                    show: false,
+                },
+                axisLabel:  {
+                        interval: 0,
+                       // rotate:50,
+                        show: true,
+                        splitNumber: 5,
+                        textStyle: {
+                             color: "rgba(255,255,255,.6)",
+                            fontSize: '10',
+                        },
+                    },
+            },
+            yAxis: {
+                axisLabel: {
+                    //formatter: '{value} %'
+                     show:true,
+                      textStyle: {
+                              color: "rgba(255,255,255,.6)",
+                             fontSize: '12',
+                         },
+                 },
+                 axisTick: {
+                     show: false,
+                 },
+                 axisLine: {
+                     show: true,
+                     lineStyle: {
+                         color: "rgba(255,255,255,.1)",
+                         width: 1,
+                         type: "solid"
+                     },
+                 },
+                 splitLine: {
+                     lineStyle: {
+                        color: "rgba(255,255,255,.1)",
+                     }
+                 },
+                splitArea: {
+                    show: false
+                }
+            },
+            legend:{
+                show: true,
+                textStyle:{
+                    color: "#fff"
+                }
+            },
+            series: [sentdis_data[0], sentdis_data[1], sentdis_data[2], sentdis_data[3], sentdis_data[4]]
         };
-        // 饼状图初始化数据
-        pieChart.setOption(option);
+        
+        var wordCloud_option = {
+            toolbox: {
+                feature: {
+                    // dataZoom: {
+                    //     yAxisIndex: false
+                    // },
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
+            tooltip: {
+                show: true
+            },
+            series: [tophashtags_data[0]]
+        };        
+        
+        //--------------------------- Charts Initialisation ---------------------------\\
+
+        console.log(langdis_data[0])
+        // 初始化数据
+        setInterval(langChart.setOption(lang_option),5000);
+        setInterval(timeChart.setOption(time_option),5000);
+        setInterval(sentChart.setOption(sent_option),5000);
+        setInterval(wordCloud.setOption(wordCloud_option),5000);
+        // langChart.setOption(lang_option);
+        // timeChart.setOption(time_option);
+        // sentChart.setOption(sent_option);
+        // wordCloud.setOption(wordCloud_option);
         window.addEventListener("resize",function(){
-            pieChart.resize();
+            langChart.resize();
+            timeChart.resize();
+            sentChart.resize();
+            wordCloud.resize();
         });
 
 
@@ -753,9 +810,9 @@ $(function () {
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'cubicInOut',
                 grid: {
-                    right: '1%',
+                    right: '3%',
                     top: '15%',
-                    bottom: '10%',
+                    bottom: '65%',
                     width: '20%'
                 },
                 tooltip: {
@@ -767,9 +824,20 @@ $(function () {
                         }
                     }
                 },
+                toolbox: {
+                    feature: {
+                        // dataZoom: {
+                        //     yAxisIndex: false
+                        // },
+                        saveAsImage: {
+                            pixelRatio: 2
+                        }
+                    }
+                },
                 geo: { //地图设置
+                    // nameProperty: "STATE_NAME",
                     show: true,
-                    map: 'china',
+                    map: 'australia',
                     roam: false,
                     zoom: 1,
                     layoutCenter: ['50%', '50%'],
@@ -777,7 +845,19 @@ $(function () {
                     // Otherwise, height is set to be 100.
                     // This makes sure that it will not exceed the area of 100x100
                     layoutSize: 500,
-                    center: [113.83531246, 34.0267395887],
+                    // center: [133.7751, -25.2744],
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: (p) => {
+                            let val = p.value[2];
+                            if (window.isNaN(val)) {
+                                val = 0;
+                            }
+                            let txtCon =
+                                "<div style='text-align:left'>" + p.name + ":<br />Total Tweets：" + val.toFixed(2) + '</div>';
+                            return txtCon;
+                        }
+                    },
                     label: {
                         emphasis: {
                             show: false
@@ -842,18 +922,19 @@ $(function () {
             optionXyMap01.options.push({
                 // backgroundColor: '#013954',
                 title:
-                    [{
-                            text: 'Area Tweets',
-                            left: '42%',
-                            top: '8%',
-                            textStyle: {
-                                color: '#fff',
-                                fontSize: 25
-                            }
-                        },
+                    [
+                    // {
+                    //         text: 'Area Tweets',
+                    //         left: '42%',
+                    //         top: '8%',
+                    //         textStyle: {
+                    //             color: '#fff',
+                    //             fontSize: 25
+                    //         }
+                    //     },
                         {
                             id: 'statistic',
-                            text: year[n] + " Statistics",
+                            text: year[n] + "Tweets",
                             left: '70%',
                             top: '8%',
                             textStyle: {
@@ -878,7 +959,8 @@ $(function () {
                         show: false
                     },
                     axisLabel: {
-                        margin: 2,
+                        show: false,
+                        margin: 5,
                         textStyle: {
                             color: '#aaa'
                         }
@@ -901,22 +983,25 @@ $(function () {
                         }
                     },
                     axisLabel: {
-                        interval: 0,
+                        interval: '0',
                         textStyle: {
                             color: '#ddd'
                         }
                     },
                     data: categoryData[n]
                 },
-
+                tooltip:{
+                    show: true
+                },
                 series: [
                     //地图
                     {
                         type: 'map',
-                        map: 'china',
+                        map: 'australia',
                         geoIndex: 0,
                         aspectScale: 0.75, //长宽比
                         showLegendSymbol: false, // 存在legend时显示
+                        // nameProperty: 'STATE_NAME',
                         label: {
                             normal: {
                                 show: false
@@ -939,7 +1024,7 @@ $(function () {
                             }
                         },
                         animation: false,
-                        data: mapData[n]
+                        data: mapData
                     },
                     //地图中闪烁的点
                     {
@@ -950,7 +1035,7 @@ $(function () {
                             return b.value - a.value;
                         }).slice(0, 20)),
                         symbolSize: function(val) {
-                            return val[2] / 10;
+                            return val[2] / 10000;
                         },
                         showEffectOn: 'render',
                         rippleEffect: {
@@ -959,6 +1044,7 @@ $(function () {
                         hoverAnimation: true,
                         label: {
                             normal: {
+                                color: 'rgba(255, 255, 255, 0.9)',
                                 formatter: '{b}',
                                 position: 'right',
                                 show: true
@@ -996,19 +1082,39 @@ $(function () {
 
         myChart.on('click', function (params) {
             var city = params.name;
-            var index = mapData[0].findIndex(function(item) {
-                return item.name === city;
+            console.log(city)
+            var index = keys.findIndex(function(item) {
+                console.log(item)
+                return item == city.toLowerCase();
             });
-            option['title']['text'] = city;
-            option['series'] = [pie_data[index]];
-            pieChart.setOption(option);
+            // option['title']['text'] = city;
+            lang_option['title']['text'] = langdis_data[index].name;
+            // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
+            // lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
+            // lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
+            lang_option['series'] = [langdis_data[index]];
+            langChart.setOption(lang_option);
+
+            time_option['title']['text'] = timedis_data[index].name;
+            time_option['xAxis']['data'] = Object.keys(vue.city_time_dis[keys[index]]);
+            time_option['series'] = [timedis_data[index]];
+            timeChart.setOption(time_option);
+
+            // sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
+            // sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
+            // sent_option['series'] = [sentdis_data[index]];
+            // sentChart.setOption(sent_option);
+
+            // wordCloud_option['title']['text'] = tophashtags_data[index].name.toUpperCase();
+            // wordCloud_option['xAxis']['data'] = Object.keys(vue.city_hashtags[keys[index]]);
+            wordCloud_option['series'] = [tophashtags_data[index]];
+            console.log(tophashtags_data[index])
+            wordCloud.setOption(wordCloud_option);
         });
 
         window.addEventListener("resize",function(){
-            pieChart.resize();
+            langChart.resize();
         });
 
-    }
-
 })
-
+// },9000)
