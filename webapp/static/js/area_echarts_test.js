@@ -106,15 +106,15 @@ $(function () {
                     }
                 },
                 label:{
-                    // color: 'rgba(255, 255, 255, 0.9)',
-                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                    color: 'rgba(255, 255, 255, 0.9)',
                     // formatter: "{b}:{c}({d}%)",
-                    formatter: "{b}:{d}%",
+                    formatter: "{b}: {d}%",
                     emphasis: {
-                            //The label style displayed by the mouse on the ring
+                    //The label style displayed by the mouse on the ring
                     show: true,
                     textStyle: {
-                        fontSize: '12',
+                        // color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
+                        fontSize: '13',
                         fontWeight: 'bold'
                         }   
                     }                   
@@ -290,14 +290,19 @@ $(function () {
                         fontFamily: 'sans-serif',
                         fontWeight: 'bold',
                         // Color can be a callback function or a color string
-                        color: function () {
-                            // Random color
-                            return 'rgb(' + [
-                                Math.round(Math.random() * 180),
-                                Math.round(Math.random() * 180),
-                                Math.round(Math.random() * 180)
-                            ].join(',') + ')';
-                        }
+                        color: function (){ 
+                            return "hsl(" + 360 * Math.random() + ',' +
+                                       (70 + 20 * Math.random()) + '%,' + 
+                                       (60 + 30 * Math.random()) + '%)'
+                          }
+                        // color: function () {
+                        //     // Random color
+                        //     return 'rgb(' + [
+                        //         Math.round(Math.random() * 255),
+                        //         Math.round(Math.random() * 255),
+                        //         Math.round(Math.random() * 255)
+                        //     ].join(',') + ')';
+                        // }
                     },
                     //悬停上去的字体的阴影设置
                     emphasis: {
@@ -344,11 +349,11 @@ $(function () {
             // },   		  
             tooltip: {
                 trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)",
-                textStyle: { // style of legend text
-                            Color:'#fff', //text color
-                            fontSize: 12 // text size
-                }
+                // formatter: "{a} <br/>{b}: {c} ({d}%)",
+                // textStyle: { // style of legend text
+                //             Color:'#fff', //text color
+                //             fontSize: 12 // text size
+                // }
             },
             // visualMap: {
             //     show: false,
@@ -639,9 +644,9 @@ $(function () {
             },
             grid: {
                 left: '2%',
-                top:'20px',
+                // top:'20px',
                 right: '2%',
-                bottom: '15%',
+                bottom: '5%',
                containLabel: true
             },
             // dataZoom: [{
