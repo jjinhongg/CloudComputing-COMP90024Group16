@@ -98,7 +98,7 @@ def run_spider():
         # g = geocoder.osm(loc)
         # closest_loc = api.geo_search(g.lat, g.lng)
         # print(closest_loc)
-        coordinates = str(cities_geo[dbname][0])+','+str(cities_geo[dbname][1])+ ',20km'
+        coordinates = str(cities_geo[dbname][0])+','+str(cities_geo[dbname][1])+ ',200km'
         result_type = 'recent'
         until_date = '2021-5-10'
         max_tweets = 10000
@@ -127,7 +127,7 @@ def run_spider():
         #     wp.write(json.dumps(newjson)+'\n')
 
 
-    time.sleep(1800)
+    time.sleep(100)
 
 
 
