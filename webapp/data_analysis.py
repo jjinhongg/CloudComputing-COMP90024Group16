@@ -1,5 +1,6 @@
 from cloudant.client import CouchDB
 from cloudant.view import View
+from cloudant.result import Result
 import json
 import time
 from collections import Counter
@@ -193,37 +194,16 @@ def time_dis():
     return time_dis
 
 
-# top 30 used hashtags this year each city
+# top 30 used hashtags each year each city
 def top_hashtags():
     client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
-    hashtags = '''
-    {
-      "_id" : "_design/hashtags",
-      "views" : {
-        "all_hashtags" : {
-          "map" : "function(doc){if ((!(doc.hashtags.length === 0)) && (doc.date.substr(0,4)==='2021')) {emit(doc.hashtags)}}"
-        }
-      }
-    }
-    '''
+    years = ['2018','2019','2020','2021']
     top_hashtags = {}
-    for city in cities:
-        citydb = client[city]
-        djson = json.loads(hashtags)
-        if not djson['_id'] in citydb:
-            citydb.create_document(djson)
-        all_hashtags = []
-        # temp_tags = []
-        view = View(citydb['_design/hashtags'], 'all_hashtags')
-        for result in view.result:
-          if type(result['key'][0])== dict:
-            temp = list(result['key'][0]['text'])
-            all_hashtags = all_hashtags + temp
-
-          else:
-            all_hashtags = all_hashtags + result['key']
-        hashtags_count = Counter(all_hashtags)
-        hashtags_sorted = sorted(hashtags_count.items(),key = lambda x:x[1],reverse = True)[0:30]
-        top_hashtags[city] = dict(hashtags_sorted)
+    results = Result(client['hashtags'].all_docs, include_docs=True)
+    for t in results:
+        s = {}
+        for year in years:
+            s[year] = t['doc'][year]
+        top_hashtags[t['doc']['_id']] = s
     return top_hashtags
