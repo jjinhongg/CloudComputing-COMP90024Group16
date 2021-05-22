@@ -77,7 +77,7 @@ def total_twts():
     
 # language distribution each city
 def lang_dis():
-    f = open('./data/iso639.json', encoding="utf-8")
+    f = open('data/iso639.json', encoding="utf-8")
     iso639 = json.load(f)
     client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
@@ -204,6 +204,9 @@ def top_hashtags():
     for t in results:
         s = {}
         for year in years:
-            s[year] = t['doc'][year]
+            s[year] = []
+            for doc in t['doc'][year]:
+                s[year].append({"name": doc[0], "value": doc[1]})
+            # s[year] = dict(t['doc'][year])
         top_hashtags[t['doc']['_id']] = s
     return top_hashtags

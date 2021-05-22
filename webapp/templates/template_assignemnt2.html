@@ -283,11 +283,12 @@ $(document).ready(function(){
                 .then(function (response) {
                   console.log(response);
                   that.city_hashtags=response.data;
-                  for (loc in geoCoordMap){
-                    window[loc+'_hashtags'] = []
-                    for (var tags in that.city_hashtags[loc]){
-                        window[loc+'_hashtags'].push({"name": tags, "value": that.city_hashtags[loc][tags]})}                      
-                    hashtags_data.push(window[loc+'_hashtags'])}
+                  // for (loc in geoCoordMap){
+                  //   window[loc+'_hashtags'] = []
+                  //   for (var tags in that.city_hashtags[loc]){
+                  //       window[loc+'_hashtags'].push({"name": tags, "value": that.city_hashtags[loc][tags]})}                      
+                  //   hashtags_data.push(window[loc+'_hashtags'])}
+                  hashtags_data = JSON.parse(JSON.stringify(that.city_hashtags))
                 })
                 .catch(function (error) {
                   console.log(error.response.data);

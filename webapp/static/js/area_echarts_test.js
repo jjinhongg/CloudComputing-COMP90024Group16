@@ -37,6 +37,7 @@ $(function () {
         var timedis_data = [];
         var sentdis_data = [];
         var tophashtags_data = [];
+        var wordyearindex = 3, wordlocationindex = 0
         
         for (var key in geoCoordMap) {
             mapData[0].push({
@@ -274,56 +275,56 @@ $(function () {
             })
         }        
         
-        // WordCloud
-        for (var i = 0; i < keys.length; i++) {
-            var keyname = keys[i].toUpperCase(); 
-            // console.log(hashtags_data[i])
-            tophashtags_data.push({
-                    name: keyname,
-                    type: 'wordCloud',
-                    sizeRange: [30, 70],//文字范围
-                    //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
-                    rotationRange: [-45, 90],
-                    rotationStep: 45,
-                    textRotation: [0, 45, 90, -45],
-                    //形状
-                    shape: 'circle',
-                    // Global text style
-                    textStyle: {
-                        fontFamily: 'sans-serif',
-                        fontWeight: 'bold',
-                        // Color can be a callback function or a color string
-                        // color: ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', 'D2FDFF']
-                        color: function(){
-                            var color = ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90', '#DBB494']
-                            return color[Math.floor(Math.random() * color.length)];
-                        }
-                        // color: function (){ 
-                        //     return "hsl(" + 360 * Math.random() + ',' +
-                        //                (70 + 20 * Math.random()) + '%,' + 
-                        //                (60 + 30 * Math.random()) + '%)'
-                        //   }
-                        // color: function () {
-                        //     // Random color
-                        //     return 'rgb(' + [
-                        //         Math.round(Math.random() * 255),
-                        //         Math.round(Math.random() * 255),
-                        //         Math.round(Math.random() * 255)
-                        //     ].join(',') + ')';
-                        // }
-                    },
-                    //悬停上去的字体的阴影设置
-                    emphasis: {
-                        focus: 'self',
+        // // WordCloud
+        // for (var i = 0; i < keys.length; i++) {
+        //     var keyname = keys[i].toUpperCase(); 
+        //     // console.log(hashtags_data[i])
+        //     tophashtags_data.push({
+        //             name: keyname,
+        //             type: 'wordCloud',
+        //             sizeRange: [30, 70],//文字范围
+        //             //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
+        //             rotationRange: [-45, 90],
+        //             rotationStep: 45,
+        //             textRotation: [0, 45, 90, -45],
+        //             //形状
+        //             shape: 'circle',
+        //             // Global text style
+        //             textStyle: {
+        //                 fontFamily: 'sans-serif',
+        //                 fontWeight: 'bold',
+        //                 // Color can be a callback function or a color string
+        //                 // color: ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', 'D2FDFF']
+        //                 color: function(){
+        //                     var color = ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90', '#DBB494']
+        //                     return color[Math.floor(Math.random() * color.length)];
+        //                 }
+        //                 // color: function (){ 
+        //                 //     return "hsl(" + 360 * Math.random() + ',' +
+        //                 //                (70 + 20 * Math.random()) + '%,' + 
+        //                 //                (60 + 30 * Math.random()) + '%)'
+        //                 //   }
+        //                 // color: function () {
+        //                 //     // Random color
+        //                 //     return 'rgb(' + [
+        //                 //         Math.round(Math.random() * 255),
+        //                 //         Math.round(Math.random() * 255),
+        //                 //         Math.round(Math.random() * 255)
+        //                 //     ].join(',') + ')';
+        //                 // }
+        //             },
+        //             //悬停上去的字体的阴影设置
+        //             emphasis: {
+        //                 focus: 'self',
             
-                        textStyle: {
-                            shadowBlur: 10,
-                            shadowColor: '#333'
-                        }
-                    },
-                    data: hashtags_data[i]
-                })
-            }
+        //                 textStyle: {
+        //                     shadowBlur: 10,
+        //                     shadowColor: '#333'
+        //                 }
+        //             },
+        //             data: hashtags_data[i]
+        //         })
+        //     }
         
         // 饼状图配置
         var lang_option = {
@@ -731,12 +732,13 @@ $(function () {
             },
             series: [sentdis_data[0], sentdis_data[1], sentdis_data[2], sentdis_data[3], sentdis_data[4]]
         };
-        
+        console.log(hashtags_data['adelaide'])
         var wordCloud_option = {
             title: {
                 zlevel: 2,
                 // z:3,
-                text: tophashtags_data[0]['name'].toUpperCase(),
+                
+                text: keys[wordlocationindex].toUpperCase(),
                 // top: '2%',
                 left: 'center',
                 top: '1%',
@@ -747,9 +749,6 @@ $(function () {
             },
             toolbox: {
                 feature: {
-                    // dataZoom: {
-                    //     yAxisIndex: false
-                    // },
                     saveAsImage: {
                         pixelRatio: 2
                     }
@@ -758,9 +757,33 @@ $(function () {
             tooltip: {
                 show: true
             },
-            series: [tophashtags_data[0]]
+            series: {
+            type: 'wordCloud',
+            sizeRange: [30, 70],//文字范围
+            //文本旋转范围，文本将通过rotationStep45在[-90,90]范围内随机旋转
+            rotationRange: [-45, 90],
+            rotationStep: 45,
+            textRotation: [0, 45, 90, -45],
+            shape: 'circle',
+            textStyle: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                color: function(){
+                    var color = ['#3772FF','#DF2935','#FDCA40','#E6E8E6','#ADC6FF', '#F4B8BC', '#FEE9AE', '#FFFFFF', '#77EBF8', '#17BEBB', '#D2FDFF', '#ADFBFF','#3ABEFF', '#F4EC90', '#DBB494']
+                    return color[Math.floor(Math.random() * color.length)];
+                }
+            },
+            emphasis: {
+                focus: 'self',
+    
+                textStyle: {
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            data: hashtags_data[keys[wordlocationindex]][year[wordyearindex]]
+            }
         };        
-        
         //--------------------------- Charts Initialisation ---------------------------\\
 
         console.log(langdis_data[0])
@@ -1109,28 +1132,40 @@ $(function () {
                 console.log(item)
                 return item == city.toLowerCase();
             });
-            // option['title']['text'] = city;
-            lang_option['title']['text'] = langdis_data[index].name;
-            // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
-            // lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
-            // lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
-            lang_option['series'] = [langdis_data[index]];
-            langChart.setOption(lang_option);
+            var yearidx = year.findIndex(function(item) {
+                return item == city ;
+            });
 
-            time_option['title']['text'] = timedis_data[index].name;
-            time_option['xAxis']['data'] = Object.keys(vue.city_time_dis[keys[index]]);
-            time_option['series'] = [timedis_data[index]];
-            timeChart.setOption(time_option);
+            if (index !== -1){
 
-            // sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
-            // sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
-            // sent_option['series'] = [sentdis_data[index]];
-            // sentChart.setOption(sent_option);
+                wordlocationindex = index
+                // option['title']['text'] = city;
+                lang_option['title']['text'] = langdis_data[index].name;
+                // lang_option['xAxis']['data'] = Object.keys(vue.city_lang[keys[index]]);
+                // lang_option['visualMap']['min'] = Math.min(...Object.values(vue.city_lang[keys[index]]));
+                // lang_option['visualMap']['max'] = Math.max(...Object.values(vue.city_lang[keys[index]]));
+                lang_option['series'] = [langdis_data[index]];
+                langChart.setOption(lang_option);
 
-            // wordCloud_option['title']['text'] = tophashtags_data[index].name.toUpperCase();
-            // wordCloud_option['xAxis']['data'] = Object.keys(vue.city_hashtags[keys[index]]);
-            wordCloud_option['series'] = [tophashtags_data[index]];
-            console.log(tophashtags_data[index])
+                time_option['title']['text'] = timedis_data[index].name;
+                time_option['xAxis']['data'] = Object.keys(vue.city_time_dis[keys[index]]);
+                time_option['series'] = [timedis_data[index]];
+                timeChart.setOption(time_option);
+
+                // sent_option['title']['text'] = sentdis_data[index].name.toUpperCase();
+                // sent_option['xAxis']['data'] = Object.keys(vue.city_sentiments[keys[index]]);
+                // sent_option['series'] = [sentdis_data[index]];
+                // sentChart.setOption(sent_option);
+            }
+            
+            if (yearidx !== -1){
+                wordyearindex = yearidx
+            }
+            
+            wordCloud_option['series']['data'] = hashtags_data[keys[wordlocationindex]][year[wordyearindex]]
+            wordCloud_option['title']['text'] = keys[wordlocationindex].toUpperCase()
+            // wordCloud_option['series'] = [tophashtags_data[index]];
+            // console.log(tophashtags_data[index])
             wordCloud.setOption(wordCloud_option);
         });
 
