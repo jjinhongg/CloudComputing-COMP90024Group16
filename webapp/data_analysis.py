@@ -77,8 +77,9 @@ def total_twts():
     
 # language distribution each city
 def lang_dis():
-    f = open('data/iso639.json', encoding="utf-8")
-    iso639 = json.load(f)
+    with open('static/json/iso639.json', encoding="utf-8") as f:
+    # f = open('data/iso639.json', encoding="utf-8")
+      iso639 = json.load(f)
     client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
     cities = ["melbourne", "sydney", "adelaide", "canberra", "brisbane"]
     language = '''
