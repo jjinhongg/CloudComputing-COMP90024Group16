@@ -22,6 +22,7 @@ cd Ansible/mrc
 ```
 
 To deploy, there are two cases:
+
 (1) Create instances and set up remote instances and start the service. 
 ```
 . openrc.sh; ansible-playbook -i inventory/host --extra-var db-action=backup
