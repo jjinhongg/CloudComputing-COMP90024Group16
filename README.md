@@ -7,11 +7,11 @@ As Twitter is among the most widely used social media platforms in recent days, 
 
 
 ## 2. Techonology Stack
-automation tool - Ansible
-database - CouchDB Cluster
-data analysis - MapReduce
-webapp - Flask
-- All services are deployed using Docker Containers
+- automation tool - Ansible
+- database - CouchDB Cluster
+- data analysis - MapReduce
+- webapp - Flask
+- [x] All services are deployed using Docker Containers
 
 
 ## 3. Deployment Guide
