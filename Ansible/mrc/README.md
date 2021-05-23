@@ -5,6 +5,8 @@
  - *mrc.yaml* creates instances with necessary security groups, voulmes attached
  - *remote-setup.yaml* sets up all necesary proxy and docker proxy, install docker and also mount volumes in all instances
  - *couchdb.yaml* creates couchdb clusters using docker containers
+ - *spider.yaml* running twitter harvester and data analysis using docker containers
+ - *webapp.yaml* running our web service using docker containers
 
 ###### How to run the playbook
 ```
