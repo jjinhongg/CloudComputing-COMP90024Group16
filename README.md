@@ -16,11 +16,19 @@ webapp - Flask
 
 ## 3. Deployment Guide
 Make sure you are connecting to the Unimelb AnyConnect VPN even though you are using the campus network. Ansible may hang if being run from the unimelb network without proxy
-Clone the repo from https://github.com/williamjz/COMP90024Group16.git and change directory to mrc using command $cd Ansible/mrc
+Clone this repo and change directory to mrc using command 
+```
+cd Ansible/mrc
+```
 
 To deploy, there are two cases:
 (1) Create instances and set up remote instances and start the service. 
-	$. openrc.sh; ansible-playbook -i inventory/host --extra-var db-action=backup
+```
+. openrc.sh; ansible-playbook -i inventory/host --extra-var db-action=backup
+```
+
 
 (2) Remote instances are all set and only run the service.
-	$. openrc.sh; ansible-playbook -i inventory.host --extra-var db-action=backup
+```
+. openrc.sh; ansible-playbook -i inventory.host --extra-var db-action=backup
+```
