@@ -1,0 +1,1 @@
+. openrc.sh; ansible-playbook --ask-become-pass master.yaml -i inventory/host
