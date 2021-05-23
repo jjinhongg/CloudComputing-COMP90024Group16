@@ -92,10 +92,4 @@ instances2:
     volumes: ['db_4']
     description: server4
 
-# ****************************** Volumes Mounting ******************************
-volume_path: /volume
-backup_path: /backup
-
-
-
   
