@@ -10,14 +10,14 @@
 
 ###### How to run the playbook
 ```
-$cd Ansible/mrc
-$. openrc.sh; ansible-playbook -i inventory/hosts master.yaml
+cd Ansible/mrc
+. openrc.sh; ansible-playbook -i inventory/hosts master.yaml
 ```
 
 ###### How to connect to instances
 ```
-$cd Ansible/mrc
-$ssh -i cloud.key ubuntu@172.26.133.205 
+cd Ansible/mrc
+ssh -i cloud.key ubuntu@172.26.133.205 
 ```
 
 ###### Hosts and associated attached volumes

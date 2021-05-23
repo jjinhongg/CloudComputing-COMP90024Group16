@@ -21,7 +21,7 @@
         service_name: couchdb_curl_service
       blockinfile:
         dest: /resotre.sh
-        block: "{{ lookup('template', '{{ role_path }}/../../templates/restore_db.j2') }}"
+        block: "{{ lookup('template', '{{ role_path }}/templates/restore_db.j2') }}"
         marker: "# END ANSIBLE MANAGED BLOCK"
       with_items: ['melbourne', 'sydney', 'brisbane', 'adelaide', 'canberra']
     - name: run the script
@@ -44,7 +44,7 @@
         service_name: couchdb_curl_service
       blockinfile:
         dest: /backup.sh
-        block: "{{ lookup('template', '{{ role_path }}/../../templates/backup_db.j2') }}"
+        block: "{{ lookup('template', '{{ role_path }}/templates/backup_db.j2') }}"
         marker: "# END ANSIBLE MANAGED BLOCK"
       with_items: ['melbourne', 'sydney', 'brisbane', 'adelaide', 'canberra']
     - name: run the backup script
