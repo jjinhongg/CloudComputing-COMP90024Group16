@@ -25,11 +25,11 @@ To deploy, there are two cases:
 
 (1) Create instances and set up remote instances and start the service. 
 ```
-. openrc.sh; ansible-playbook -i inventory/host --extra-var db-action=backup
+. openrc.sh; ansible-playbook -i inventory/host --extra-var db-action=backup master.yaml
 ```
 
 
 (2) Remote instances are all set and only run the service.
 ```
-. openrc.sh; ansible-playbook -i inventory.host --extra-var db-action=backup
+. openrc.sh; ansible-playbook -i inventory.host --extra-var db-action=backup webapp.yaml
 ```
