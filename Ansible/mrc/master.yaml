@@ -1,7 +1,7 @@
 ---
 
 - import_playbook: mrc.yaml
-# - import_playbook: remote-setup.yaml
-# - import_playbook: couchdb.yaml
-# - import_playbook: webapp.yaml
-# - import_playbook: spider.yaml
+- import_playbook: remote-setup.yaml
+- import_playbook: couchdb.yaml
+- import_playbook: webapp.yaml
+- import_playbook: spider.yaml
