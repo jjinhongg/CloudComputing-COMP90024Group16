@@ -1,1 +1,1 @@
-. openrc.sh; ansible-playbook --ask-become-pass master.yaml -i inventory/host
+. openrc.sh; ansible-playbook -i inventory/host --extra-var db_action=backup master.yaml

@@ -17,7 +17,7 @@
     - role: couchdb-finish-setup
 
  # Perform CouchDB replicate on masternode
-- hosts: Masternode
+- hosts: DataNodes
   vars_files:
     - host_vars/couchdb_settings.yaml
   gather_facts: true
