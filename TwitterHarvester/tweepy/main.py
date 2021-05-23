@@ -1,7 +1,8 @@
-import threading
+
 from tweepy_spider import run_spider
 from save_data import process_and_save,couchdb_init
-import schedule
+from update_hashtags import update_hashtags
+import time
 import nltk
 
 
@@ -15,6 +16,7 @@ if __name__ == '__main__':
     # schedule.every(1).minutes.do(process_and_save)
     # schedule.every(60).minutes.do(remove_per_hours, name)
     # client = couchdb_init()
+    start_time = time.time()
     while True:
         # client = couchdb_init()
         try:
@@ -23,3 +25,11 @@ if __name__ == '__main__':
             continue
         client = couchdb_init()
         process_and_save(client)
+
+        current_time = time.time()
+        if current_time - start_time >= 600:
+            try:
+                update_hashtags()
+                start_time = time.time()
+            except:
+                pass
