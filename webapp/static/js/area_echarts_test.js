@@ -340,6 +340,13 @@ $(function () {
                     fontSize: '18'
                 }
             },
+            toolbox: {
+                feature: {
+                    saveAsImage: {
+                        pixelRatio: 2
+                    }
+                }
+            },
             // legend: {
             //     // The mode selected by the legend controls whether the display state of the series can be changed by clicking on the legend. The legend selection is turned on by default and can be set to false to close.
             //     selectedMode: true, 

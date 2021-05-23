@@ -4,6 +4,9 @@ from cloudant.result import Result
 import json
 import time
 from collections import Counter
+from os.path import join, dirname, realpath
+
+UPLOADS_PATH = join(dirname(realpath(__file__)), 'static/json/iso639.json')
 
 
 # current tweet number for this month
@@ -77,7 +80,7 @@ def total_twts():
     
 # language distribution each city
 def lang_dis():
-    with open('static/json/iso639.json', encoding="utf-8") as f:
+    with open(UPLOADS_PATH, encoding="utf-8") as f:
     # f = open('data/iso639.json', encoding="utf-8")
       iso639 = json.load(f)
     client = CouchDB('admin', 'data-miner!', url='http://172.26.133.205:5984', connect=True)
