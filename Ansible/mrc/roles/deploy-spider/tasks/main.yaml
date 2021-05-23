@@ -45,13 +45,3 @@
   shell: docker-compose up --build -d
   args:
     chdir: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
-
-# - name: Run docker compose
-#   become: yes
-#   docker_compose:
-#     project_src: '/home/ubuntu/COMP90024/COMP90024Group16/TwitterHarvester/tweepy'
-#     pull: false
-#     build: yes
-#     state: present
-#     remove_orphans: no
-#     recreate: always

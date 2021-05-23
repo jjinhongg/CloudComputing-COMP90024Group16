@@ -1,30 +1,53 @@
-#
 ---
 
-# Stop existing Couch DB Docker containers and remove them (if any)
-- name: Stop CouchDB Docker container
-  become: yes
-  docker_container:
-    name: couchdb
-    state: absent
 
-# Create new docker container for CouchDB and start container
-- name: Create and start CouchDB Docker container
+- name: pause to wait for cluster init
+  pause:
+    minutes: 2
+  when: db_action in ["restore", "backup"] and current_ip == masternode
+
+- name: restore db
   become: yes
-  docker_container:
-    name: couchdb
-    image: "ibmcom/couchdb3:{{ VERSION }}"
-    state: started
-    recreate: true
-    ports:
-      - "5984:5984"
-      - "4369:4369"
-      - "9100-9200:9100-9200"
-    volumes:
-      - /volume/couchdb/data
-    pull: yes
-    env:
-      COUCHDB_USER: "{{ user }}"
-      COUCHDB_PASSWORD: "{{ pass }}"
-      COUCHDB_SECRET: "{{ cookie }}"
-      ERL_FLAGS: "-setcookie \"{{ cookie }}\" -name \"couchdb@{{ inventory_hostname }}\""
+  block:
+    - name: create restore script
+      copy:
+        content: ""
+        mode: a+x
+        dest: /resotre.sh
+        force: yes
+    - name: fill the restore script
+      vars:
+        db: "{{item}}"
+        service_name: couchdb_curl_service
+      blockinfile:
+        dest: /resotre.sh
+        block: "{{ lookup('template', '{{ role_path }}/../../templates/restore_db.j2') }}"
+        marker: "# END ANSIBLE MANAGED BLOCK"
+      with_items: ['melbourne', 'sydney', 'brisbane', 'adelaide', 'canberra']
+    - name: run the script
+      shell: |
+        bash /resotre.sh
+  when: db_action == "restore" and current_ip == masternode
+
+- name: backup db
+  become: yes
+  block:
+    - name: create backup script
+      copy:
+        content: ""
+        mode: a+x
+        dest: /backup.sh
+        force: yes
+    - name: fill the backup script
+      vars:
+        db: "{{item}}"
+        service_name: couchdb_curl_service
+      blockinfile:
+        dest: /backup.sh
+        block: "{{ lookup('template', '{{ role_path }}/../../templates/backup_db.j2') }}"
+        marker: "# END ANSIBLE MANAGED BLOCK"
+      with_items: ['melbourne', 'sydney', 'brisbane', 'adelaide', 'canberra']
+    - name: run the backup script
+      shell: |
+        bash /backup.sh
+  when: db_action == "backup" and current_ip == masternode
