@@ -1,6 +1,5 @@
-# Location: Melbourne
-#
 ---
+
 volumes:
   - device: /dev/vdb
     mountpoint: /data

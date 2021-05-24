@@ -1,6 +1,5 @@
 ---
 
-
 - name: pause to wait for cluster init
   pause:
     minutes: 2

@@ -23,13 +23,6 @@
   with_items:
     - ["data", "local.d"]
 
-- name: create haproxy folder if not exists
-  become: yes
-  file:
-    path: /{{ volume_path }}/haproxy
-    state: directory
-    mode: '0755'
-
 - name: Create a ext4 filesystem on /dev/vdc
   become: yes
   filesystem:

@@ -17,10 +17,13 @@
     - role: couchdb-finish-setup
 
  # Perform CouchDB replicate on masternode
-- hosts: DataNodes
-  vars_files:
-    - host_vars/couchdb_settings.yaml
-  gather_facts: true
+# - hosts: DataNodes
+#   vars:
+#     current_ip: "{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}"
+#     masternode: "{{hostvars[groups['DataNodes'][0]]['ansible_default_ipv4']['address']}}" 
+#   vars_files:
+#     - host_vars/couchdb_settings.yaml
+#   gather_facts: true
 
-  roles:
-    - role: couchdb-replicate
+#   roles:
+#     - role: couchdb-replicate
