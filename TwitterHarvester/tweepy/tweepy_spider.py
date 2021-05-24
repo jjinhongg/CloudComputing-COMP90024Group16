@@ -98,10 +98,10 @@ def run_spider():
         # g = geocoder.osm(loc)
         # closest_loc = api.geo_search(g.lat, g.lng)
         # print(closest_loc)
-        coordinates = str(cities_geo[dbname][0])+','+str(cities_geo[dbname][1])+ ',200km'
+        coordinates = str(cities_geo[dbname][0])+','+str(cities_geo[dbname][1])+ ',20km'
         result_type = 'recent'
         until_date = '2021-5-10'
-        max_tweets = 10000
+        max_tweets = 1000
 
         tweets = tweepy.Cursor(api.search, geocode=coordinates,result_type=result_type,
                                count=100).items(max_tweets)
