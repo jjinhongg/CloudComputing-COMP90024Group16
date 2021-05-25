@@ -15,7 +15,6 @@
 from flask import Flask
 from flask import render_template, jsonify
 import time
-import utils
 import data_analysis
 from cloudant.client import CouchDB
 from cloudant.client import Cloudant
