@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5dfdb2a4-9e92-41e9-b3f9-ae16ec565ee5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1rv5Sv5oEeoaC0zNbJF8KyHjTBG" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5dfdb2a4-9e92-41e9-b3f9-ae16ec565ee5" name="Default Changelist" comment="" />
+      <created>1619843726140</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619843726140</updated>
+      <workItem from="1619843728720" duration="762000" />
+      <workItem from="1620575288048" duration="6421000" />
+      <workItem from="1620791631999" duration="35000" />
+      <workItem from="1620801669544" duration="4551000" />
+      <workItem from="1621178312315" duration="1993000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1121" y="571" key="FileChooserDialogImpl" timestamp="1621180993810">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1121" y="571" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1621180993810" />
+    <state x="796" y="435" width="596" height="532" key="find.popup" timestamp="1619843960695">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="796" y="435" width="596" height="532" key="find.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1619843960695" />
+    <state x="716" y="440" key="new project wizard" timestamp="1621181008349">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="716" y="440" key="new project wizard/0.0.2560.1400@0.0.2560.1400" timestamp="1621181008349" />
+  </component>
+</project>

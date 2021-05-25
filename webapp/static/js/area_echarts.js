@@ -1,3 +1,17 @@
+// # Group 16
+//
+// # Team members:
+//
+//     # Zenan Ji (Student ID: 1122396) - city: Nanjing
+//
+// # Weijie Ye (Student ID: 1160818) - city: Fuzhou
+//
+// # Wenqin Liu (Student ID: 807291) - city: Guangdong
+//
+// # Jinhong Yong (Student ID: 1198833) - city: Kuala Lumpur
+//
+// # Zixuan Zeng (Student ID: 1088297) - city: Melbourne
+
 var colors = [
     ["#1DE9B6", "#F46E36", "#04B9FF", "#5DBD32", "#FFC809", "#FB95D5", "#BDA29A", "#6E7074", "#546570", "#C4CCD3"],
     ["#37A2DA", "#67E0E3", "#32C5E9", "#9FE6B8", "#FFDB5C", "#FF9F7F", "#FB7293", "#E062AE", "#E690D1", "#E7BCF3", "#9D96F5", "#8378EA", "#8378EA"],
